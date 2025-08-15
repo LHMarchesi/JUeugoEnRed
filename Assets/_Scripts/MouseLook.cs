@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class MouseLook : MonoBehaviour
@@ -6,24 +7,28 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private Transform playerBody;
     private float xRotation = 0f;
 
+    public PhotonView photonView;
 
-void Start()
+    void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        photonView = GetComponentInParent<PhotonView>();
+
     }
 
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        if (photonView.IsMine)
+        {
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+            xRotation -= mouseY;
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        playerBody.Rotate(Vector3.up * mouseX);
-
-      
+            transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+            playerBody.Rotate(Vector3.up * mouseX);
+        }
     }
 
 }
