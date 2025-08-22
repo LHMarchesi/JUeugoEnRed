@@ -714,7 +714,7 @@ GameObject:
   - component: {fileID: 811715144}
   - component: {fileID: 811715145}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Server
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -7,13 +7,19 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private Transform playerBody;
     private float xRotation = 0f;
 
-    public PhotonView photonView;
+    private PhotonView photonView;
+    private Camera camera;
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         photonView = GetComponentInParent<PhotonView>();
-
+       
+        camera = GetComponent<Camera>();
+        if(!photonView.IsMine)
+        { 
+            camera.enabled = false;
+        }
     }
 
     void Update()

@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class PlayerItemHandler : MonoBehaviour
@@ -8,15 +9,20 @@ public class PlayerItemHandler : MonoBehaviour
 
     private GameObject currentItem;
     private Camera cam;
+    private PhotonView photonView;
 
     void Start()
     {
-        cam = Camera.main;
+        cam = GetComponentInChildren<Camera>();
+        if (!photonView.IsMine)
+        {
+            GetComponent<Camera>().enabled = false;
+        }
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1)) // Botón derecho
+        if (Input.GetMouseButtonDown(1)) // Botï¿½n derecho
         {
             if (currentItem == null)
             {
@@ -37,7 +43,7 @@ public class PlayerItemHandler : MonoBehaviour
             if (hit.collider.CompareTag("PickUp")) // Solo objetos con esta etiqueta
             {
                 currentItem = hit.collider.gameObject;
-                currentItem.GetComponent<Rigidbody>().isKinematic = true; // Evita física
+                currentItem.GetComponent<Rigidbody>().isKinematic = true; // Evita fï¿½sica
                 currentItem.transform.SetParent(itemHolder);
                 currentItem.transform.localPosition = Vector3.zero;
                 currentItem.transform.localRotation = Quaternion.identity;
