@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class PlayerItemHandler : MonoBehaviour
 {
-    public Transform itemHolder;         
-    public float interactDistance;  
-    public LayerMask interactableMask;    
+    public Transform itemHolder;
+    public float interactDistance;
+    public LayerMask interactableMask;
 
-    private GameObject currentItem;
+    private Item currentItem;
     private Camera cam;
     private PhotonView photonView;
 
@@ -22,7 +22,7 @@ public class PlayerItemHandler : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1)) // Bot�n derecho
+        if (Input.GetMouseButtonDown(1)) 
         {
             if (currentItem == null)
             {
@@ -30,7 +30,8 @@ public class PlayerItemHandler : MonoBehaviour
             }
             else
             {
-                DropItem();
+                currentItem.Drop();
+                currentItem = null;
             }
         }
     }
@@ -40,23 +41,17 @@ public class PlayerItemHandler : MonoBehaviour
         Vector3 rayOrigin = cam.transform.position + cam.transform.forward * 0.5f;
         if (Physics.Raycast(rayOrigin, cam.transform.forward, out RaycastHit hit, interactDistance, interactableMask))
         {
-            if (hit.collider.CompareTag("PickUp")) // Solo objetos con esta etiqueta
+            Ipickuppeable ipickuppeable = hit.collider.GetComponent<Ipickuppeable>();
+            if (ipickuppeable != null) 
             {
-                currentItem = hit.collider.gameObject;
-                currentItem.GetComponent<Rigidbody>().isKinematic = true; // Evita f�sica
-                currentItem.transform.SetParent(itemHolder);
-                currentItem.transform.localPosition = Vector3.zero;
-                currentItem.transform.localRotation = Quaternion.identity;
+                Item itemPicked = ipickuppeable.PickUp();
+                currentItem = itemPicked;
+
+                itemPicked.GetComponent<Rigidbody>().isKinematic = true;
+                itemPicked.transform.SetParent(itemHolder);
+                itemPicked.transform.localPosition = Vector3.zero;
+                itemPicked.transform.localRotation = Quaternion.identity;
             }
         }
-    }
-
-    void DropItem()
-    {
-        currentItem.transform.SetParent(null);
-        Rigidbody rb = currentItem.GetComponent<Rigidbody>();
-        rb.isKinematic = false;
-        rb.AddForce(cam.transform.forward * 2f, ForceMode.Impulse); // Opcional, que caiga adelante
-        currentItem = null;
     }
 }
