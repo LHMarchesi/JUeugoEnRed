@@ -1,10 +1,13 @@
 using Photon.Pun;
 using UnityEngine;
-public class PlayerMovement : MonoBehaviour
+
+public class PlayerController : MonoBehaviour
 {
     [SerializeField] private CharacterController controller;
-    [SerializeField] private float speed = 12f;
+    [SerializeField] private float walkingSpeed;
+    [SerializeField] private float runningSpeed;
     [SerializeField] private float gravity = -9.81f;
+    [SerializeField] private float currentSpeed;
     [SerializeField] private float jumpHeight;
 
     [SerializeField] private Transform groundCheck;
@@ -15,10 +18,16 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
 
     private PhotonView photonView;
+    private PlayerContext playerContext;
+
+    public float RunningSpeed { get => runningSpeed; private set { } }
+    public float WalkingSpeed { get => walkingSpeed; private set { } }
+
 
     void Start()
     {
         photonView = GetComponent<PhotonView>();
+        playerContext = GetComponent<PlayerContext>();
     }
 
     void Update()
@@ -31,13 +40,14 @@ public class PlayerMovement : MonoBehaviour
                 velocity.y = -2f;
             }
 
-            float x = Input.GetAxis("Horizontal");
-            float z = Input.GetAxis("Vertical");
+            float x = playerContext.HandleInputs.GetMoveVector2().x;
+            float z = playerContext.HandleInputs.GetMoveVector2().y;
             Vector3 move = transform.right * x + transform.forward * z;
-            controller.Move(move * speed * Time.deltaTime);
+
+            controller.Move(move * currentSpeed * Time.deltaTime);
 
 
-            if (Input.GetButtonDown("Jump") && isGrounded)
+            if (playerContext.HandleInputs.IsJumping() && isGrounded)
             {
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             }
@@ -45,5 +55,15 @@ public class PlayerMovement : MonoBehaviour
             velocity.y += gravity * Time.deltaTime;
             controller.Move(velocity * Time.deltaTime);
         }
+    }
+
+    public bool IsGrounded()
+    {
+        return isGrounded;
+    }
+
+    public void ChangeSpeed(float newSpeed)
+    {
+        currentSpeed = newSpeed;
     }
 }

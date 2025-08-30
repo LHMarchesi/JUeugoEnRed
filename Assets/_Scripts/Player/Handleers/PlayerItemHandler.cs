@@ -13,6 +13,7 @@ public class PlayerItemHandler : MonoBehaviour
 
     void Start()
     {
+        photonView = GetComponent<PhotonView>();
         cam = GetComponentInChildren<Camera>();
         if (!photonView.IsMine)
         {
