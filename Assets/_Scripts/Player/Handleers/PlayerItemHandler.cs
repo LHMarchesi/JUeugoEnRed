@@ -1,4 +1,6 @@
 using Photon.Pun;
+using System;
+using System.Net;
 using UnityEngine;
 
 public class PlayerItemHandler : MonoBehaviour
@@ -8,8 +10,10 @@ public class PlayerItemHandler : MonoBehaviour
     public LayerMask interactableMask;
 
     private Item currentItem;
+    private Item currentWeapon;
     private Camera cam;
     private PhotonView photonView;
+    public Transform weaponHolder;
 
     void Start()
     {
@@ -23,17 +27,35 @@ public class PlayerItemHandler : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1)) 
+        if (Input.GetMouseButtonDown(1))
         {
-            if (currentItem == null)
+            if (currentItem == null && currentWeapon == null)
             {
                 TryPickup();
             }
             else
             {
-                currentItem.Drop();
-                currentItem = null;
+                DropHeld();
             }
+        }
+    }
+
+    private void DropHeld()
+    {
+        if (currentItem == null && currentWeapon == null) return;
+
+        // Si tienes un item 
+        if (currentItem != null)
+        {
+            currentItem.Drop();
+            currentItem = null;
+        }
+
+        // Si tienes un arma
+        if (currentWeapon != null)
+        {
+            currentWeapon.Drop();
+            currentWeapon = null;
         }
     }
 
@@ -42,9 +64,35 @@ public class PlayerItemHandler : MonoBehaviour
         Vector3 rayOrigin = cam.transform.position + cam.transform.forward * 0.5f;
         if (Physics.Raycast(rayOrigin, cam.transform.forward, out RaycastHit hit, interactDistance, interactableMask))
         {
+            Iweapon iweapon = hit.collider.GetComponent<Iweapon>();
             Ipickuppeable ipickuppeable = hit.collider.GetComponent<Ipickuppeable>();
-            if (ipickuppeable != null) 
+
+
+            if (iweapon != null)
             {
+                if (currentWeapon != null)   // Si ya tenemos un arma, soltamos la anterior
+                {
+                    currentWeapon.Drop();
+                    currentWeapon = null;
+                }
+
+                Item Weapon = iweapon as Item;
+                currentWeapon = Weapon;
+
+                Weapon.GetComponent<Rigidbody>().isKinematic = true;
+                Weapon.transform.SetParent(weaponHolder);
+                Weapon.transform.localPosition = Vector3.zero;
+                Weapon.transform.localRotation = Quaternion.identity;
+            }
+            else
+             if (ipickuppeable != null)
+            {
+                if (currentItem != null)  // Si ya tenemos un item, soltamos el anterior
+                {
+                    currentItem.Drop();
+                    currentItem = null;
+                }
+
                 Item itemPicked = ipickuppeable.PickUp();
                 currentItem = itemPicked;
 
@@ -55,4 +103,11 @@ public class PlayerItemHandler : MonoBehaviour
             }
         }
     }
+
+    
+}
+
+public interface Iweapon
+{
+    void Attack();
 }

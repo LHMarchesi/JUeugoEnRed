@@ -21,7 +21,7 @@ public class Item : MonoBehaviourPun, Ipickuppeable
         rb.isKinematic = false;
     }
 
-    public Item PickUp()
+    public virtual Item PickUp()
     {
         return this;
     }
