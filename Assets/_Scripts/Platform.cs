@@ -34,10 +34,15 @@ public class Platform : MonoBehaviour
 
                 item.transform.SetParent(targetHolder, true);
                 item.transform.localPosition = Vector3.zero; 
-                item.transform.localRotation = Quaternion.identity;
                 item.transform.localScale = originalScale;
             }
         }
 
+    }
+    private void Update()
+    {
+        downHolder.transform.Rotate(Vector3.up * Time.deltaTime * 20);  
+        topHolder.transform.Rotate(Vector3.up * Time.deltaTime * 20);
+        middleHolder.transform.Rotate(Vector3.up * Time.deltaTime * 20);
     }
 }

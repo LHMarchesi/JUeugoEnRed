@@ -14,11 +14,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float groundDistance = 0.4f;
     [SerializeField] private LayerMask groundMask;
 
+
     private Vector3 velocity;
     private bool isGrounded;
 
     private PhotonView photonView;
     private PlayerContext playerContext;
+    private Vector3 conveyorSpeed;
 
     public float RunningSpeed { get => runningSpeed; private set { } }
     public float WalkingSpeed { get => walkingSpeed; private set { } }
@@ -44,7 +46,7 @@ public class PlayerController : MonoBehaviour
             float z = playerContext.HandleInputs.GetMoveVector2().y;
             Vector3 move = transform.right * x + transform.forward * z;
 
-            controller.Move(move * currentSpeed * Time.deltaTime);
+            controller.Move((move + conveyorSpeed) * currentSpeed * Time.deltaTime);
 
 
             if (playerContext.HandleInputs.IsJumping() && isGrounded)
@@ -65,5 +67,10 @@ public class PlayerController : MonoBehaviour
     public void ChangeSpeed(float newSpeed)
     {
         currentSpeed = newSpeed;
+    }
+
+    public void SetConveyorSpeed(Vector3 speed)
+    {
+        conveyorSpeed = speed;
     }
 }
