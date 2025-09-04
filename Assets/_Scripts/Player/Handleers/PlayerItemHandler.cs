@@ -10,7 +10,7 @@ public class PlayerItemHandler : MonoBehaviour
     public LayerMask interactableMask;
 
     private Item currentItem;
-    private Item currentWeapon;
+    private Weapon currentWeapon;
     private Camera cam;
     private PhotonView photonView;
     public Transform weaponHolder;
@@ -76,13 +76,15 @@ public class PlayerItemHandler : MonoBehaviour
                     currentWeapon = null;
                 }
 
-                Item Weapon = iweapon as Item;
-                currentWeapon = Weapon;
+                Weapon weaponPicked = iweapon as Weapon;   // casteo directo a Weapon
+                currentWeapon = weaponPicked;
 
-                Weapon.GetComponent<Rigidbody>().isKinematic = true;
-                Weapon.transform.SetParent(weaponHolder);
-                Weapon.transform.localPosition = Vector3.zero;
-                Weapon.transform.localRotation = Quaternion.identity;
+                weaponPicked.GetComponent<Rigidbody>().isKinematic = true;
+                weaponPicked.transform.SetParent(weaponHolder);
+                weaponPicked.transform.localPosition = Vector3.zero;
+                weaponPicked.transform.localRotation = Quaternion.identity;
+
+                EquipWeapon(weaponPicked);
             }
             else
              if (ipickuppeable != null)
@@ -104,10 +106,9 @@ public class PlayerItemHandler : MonoBehaviour
         }
     }
 
-    
-}
-
-public interface Iweapon
-{
-    void Attack();
+    public void EquipWeapon(Weapon weapon)
+    {
+        weapon.playerCamera = cam; // referencia de la cámara del jugador
+        weapon.canAttack = true;
+    }
 }

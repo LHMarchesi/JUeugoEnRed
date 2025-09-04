@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 166d2998d65159b4cb95d78535b85ec1, type: 3}
   m_Name: DollHead
   m_EditorClassIdentifier: 
-  type: 2
+  type: 3
   itemName: Doll Head
   description: 

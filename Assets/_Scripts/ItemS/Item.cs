@@ -2,7 +2,7 @@ using Photon.Pun;
 using UnityEngine;
 public enum ItemType
 {
-    down, middle, top
+    none,down, middle, top
 }
 public interface Ipickuppeable
 {
@@ -12,7 +12,7 @@ public interface Ipickuppeable
 public class Item : MonoBehaviourPun, Ipickuppeable
 {
     public ItemStats stats;
-    public void Drop()
+    public virtual void Drop()
     {
         transform.SetParent(null);
         Rigidbody rb = GetComponent<Rigidbody>();
