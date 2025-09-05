@@ -67,8 +67,6 @@ public class Platform : MonoBehaviour
     {
         if (HasAllPieces())
         {
-            Debug.Log("✅ ¡Objeto creado: " + currentRecipe.recipeName + "!");
-
             Instantiate(currentRecipe.finalItemPrefab,
                         craftedItemSpawn.position + Vector3.up * 2,
                         Quaternion.identity);
@@ -87,7 +85,13 @@ public class Platform : MonoBehaviour
         foreach (var kvp in placedItems)
         {
             if (kvp.Value != null)
-                Destroy(kvp.Value.gameObject);
+            {
+                ObjectPooler pool = kvp.Value.GetPool();
+                if (pool != null)
+                {
+                    pool.ReleaseObject(kvp.Value.gameObject);
+                }
+            }
         }
         placedItems.Clear();
     }

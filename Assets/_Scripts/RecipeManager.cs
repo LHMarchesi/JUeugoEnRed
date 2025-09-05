@@ -33,6 +33,13 @@ public class RecipeManager : MonoBehaviour
         craftingPlatform.currentRecipe = currentRecipe;
 
         // Mostrar en UI
-        uiText.text = "Receta actual: " + currentRecipe.recipeName;
+        string ingredientesTexto = "";
+        foreach (var item in currentRecipe.requiredItems)
+        {
+            ingredientesTexto += "\n• " + item.itemName; 
+        }
+
+        uiText.text = "Receta actual: " + currentRecipe.recipeName +
+                      "\nIngredientes:" + ingredientesTexto;
     }
 }
