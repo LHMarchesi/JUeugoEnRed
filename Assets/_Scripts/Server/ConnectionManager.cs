@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ConnectionManager : Singleton<ConnectionManager>
 {
@@ -41,7 +42,12 @@ public class ConnectionManager : Singleton<ConnectionManager>
         if (OnJoinRoom != null)
             OnJoinedRoomEvent += OnJoinRoom;
 
-        photonPunManager.JoinOrCreateRoom();
+        photonPunManager.JoinOrCreateRoom(OnJoinRoom);
+    }
+
+    public void LoadScene(int scene)
+    {
+        photonPunManager.LoadSceneForAll(scene);
     }
 
     public void CreatePlayer(Transform spawnPos)

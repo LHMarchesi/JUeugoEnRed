@@ -8,17 +8,17 @@ public class MouseLook : MonoBehaviour
     private float xRotation = 0f;
 
     private PhotonView photonView;
-    private Camera camera;
+    private Camera cam;
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         photonView = GetComponentInParent<PhotonView>();
        
-        camera = GetComponent<Camera>();
+        cam = GetComponent<Camera>();
         if(!photonView.IsMine)
         { 
-            camera.enabled = false;
+            cam.enabled = false;
         }
     }
 

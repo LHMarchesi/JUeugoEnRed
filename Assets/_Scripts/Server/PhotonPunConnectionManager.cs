@@ -75,7 +75,7 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
         };
 
         // Intenta unirse a una sala aleatoria, si no existe la crea
-        OnJoinedRoomEvent += OnJoin;
+        OnJoinedRoomEvent = OnJoin;
         PhotonNetwork.JoinRandomOrCreateRoom(null, 0, MatchmakingMode.FillRoom, null, null, null, options);
     }
 
@@ -92,7 +92,7 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
         OnConnectedToServer?.Invoke();
     }
 
-    public void LoadSceneForAll(string sceneName)
+    public void LoadSceneForAll(int sceneName)
     {
         PhotonNetwork.LoadLevel(sceneName);
     }

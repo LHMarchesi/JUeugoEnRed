@@ -407,7 +407,8 @@ MonoBehaviour:
   interactableMask:
     serializedVersion: 2
     m_Bits: 1
-  weaponHolder: {fileID: 0}
+  cam: {fileID: 5965534511314588940}
+  weaponHolder: {fileID: 1188406374}
 --- !u!114 &5965534512272406657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -635,6 +636,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 7753981301245997386}
+  cam: {fileID: 5965534511314588940}
   walkBobSpeed: 8
   walkBobAmount: 0.15
   runBobSpeed: 15

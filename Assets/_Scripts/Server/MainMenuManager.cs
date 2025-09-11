@@ -39,6 +39,6 @@ public class MainMenuManager : MonoBehaviour
     public void GoToGameScene()
     {
         Debug.Log("Loading Game Scene...");
-        SceneManager.LoadScene(2);
+        ConnectionManager.Instance.LoadScene(2);
     }
 }

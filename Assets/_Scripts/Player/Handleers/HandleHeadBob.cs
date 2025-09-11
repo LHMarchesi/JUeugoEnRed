@@ -1,9 +1,11 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class HandleHeadBob : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Transform cameraTransform;
+    [SerializeField] private Camera cam;
 
 
     [Header("Bobbing Settings")]
@@ -20,42 +22,50 @@ public class HandleHeadBob : MonoBehaviour
     private PlayerContext playerContext;
     private Vector3 initialPosition;
     private float bobTimer;
-    private Camera mainCamera;
+    private PhotonView photonView;
 
     void Start()
     {
         playerContext = GetComponent<PlayerContext>();
         initialPosition = cameraTransform.localPosition;
-        mainCamera = Camera.main;
+
+        photonView = GetComponentInParent<PhotonView>();
+        if (!photonView.IsMine)
+        {
+            cam.enabled = false;
+        }
     }
 
     void Update()
     {
-        Vector2 input = playerContext.HandleInputs.GetMoveVector2();
-        bool isGrounded = playerContext.PlayerController.IsGrounded();
-        bool isMoving = input.magnitude > 0.1f && isGrounded;
-
-        bool isRunning = playerContext.HandleInputs.IsRunning();
-
-        float bobSpeed = isRunning ? runBobSpeed : walkBobSpeed;
-        float bobAmount = isRunning ? runBobAmount : walkBobAmount;
-
-        if (isMoving)
+        if (photonView.IsMine)
         {
-            bobTimer += Time.deltaTime * bobSpeed;
-            float bobX = Mathf.Cos(bobTimer * 0.5f) * bobAmount * 0.5f;
-            float bobY = Mathf.Sin(bobTimer) * bobAmount;
+            Vector2 input = playerContext.HandleInputs.GetMoveVector2();
+            bool isGrounded = playerContext.PlayerController.IsGrounded();
+            bool isMoving = input.magnitude > 0.1f && isGrounded;
 
-            cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, initialPosition + new Vector3(bobX, bobY, 0f), Time.deltaTime * 5f);
-        }
-        else
-        {
-            bobTimer = 0;
-            cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, initialPosition, Time.deltaTime * 5f);
-        }
+            bool isRunning = playerContext.HandleInputs.IsRunning();
 
-        float targetFOV = isRunning ? runFOV : baseFOV;
-        mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, targetFOV, Time.deltaTime * fovTransitionSpeed);
+            float bobSpeed = isRunning ? runBobSpeed : walkBobSpeed;
+            float bobAmount = isRunning ? runBobAmount : walkBobAmount;
+
+            if (isMoving)
+            {
+                bobTimer += Time.deltaTime * bobSpeed;
+                float bobX = Mathf.Cos(bobTimer * 0.5f) * bobAmount * 0.5f;
+                float bobY = Mathf.Sin(bobTimer) * bobAmount;
+
+                cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, initialPosition + new Vector3(bobX, bobY, 0f), Time.deltaTime * 5f);
+            }
+            else
+            {
+                bobTimer = 0;
+                cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, initialPosition, Time.deltaTime * 5f);
+            }
+
+            float targetFOV = isRunning ? runFOV : baseFOV;
+            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetFOV, Time.deltaTime * fovTransitionSpeed);
+        }
     }
 
 }

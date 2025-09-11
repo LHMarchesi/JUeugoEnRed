@@ -11,31 +11,33 @@ public class PlayerItemHandler : MonoBehaviour
 
     private Item currentItem;
     private Weapon currentWeapon;
-    private Camera cam;
+    [SerializeField] private Camera cam;
     private PhotonView photonView;
     public Transform weaponHolder;
 
     void Start()
     {
         photonView = GetComponent<PhotonView>();
-        cam = GetComponentInChildren<Camera>();
         if (!photonView.IsMine)
         {
-            GetComponent<Camera>().enabled = false;
+            cam.enabled = false;
         }
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (photonView.IsMine)
         {
-            if (currentItem == null && currentWeapon == null)
+            if (Input.GetMouseButtonDown(1))
             {
-                TryPickup();
-            }
-            else
-            {
-                DropHeld();
+                if (currentItem == null && currentWeapon == null)
+                {
+                    TryPickup();
+                }
+                else
+                {
+                    DropHeld();
+                }
             }
         }
     }
