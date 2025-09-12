@@ -3,15 +3,11 @@ using UnityEngine;
 public class Item : MonoBehaviourPun, Ipickuppeable
 {
     public ItemStats stats;
-    public int ID;
     public ObjectPooler pooler;
     public bool isHeld;
     public virtual void Drop()
     {
         isHeld = false;
-        transform.SetParent(null);
-        Rigidbody rb = GetComponent<Rigidbody>();
-        rb.isKinematic = false;
     }
 
     public virtual Item PickUp()

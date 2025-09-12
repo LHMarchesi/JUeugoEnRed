@@ -12,8 +12,6 @@ public class ObjectPooler : Singleton<ObjectPooler>
 
     public override void Awake()
     {
- 
-        
             //Debug.Log("i am master");
             pools = new Dictionary<string, List<GameObject>>();
 
@@ -26,16 +24,11 @@ public class ObjectPooler : Singleton<ObjectPooler>
                     obj.SetActive(false);
                     prefabPool.Add(obj);
                 }
-
                 pools.Add(prefab.name, prefabPool);
-
                 Item item = prefab.GetComponent<Item>();
                 if (item != null)
                     item.SetPool(this);
-            
             }
-        
-        
     }
 
     public GameObject GetRandomPooledObject()

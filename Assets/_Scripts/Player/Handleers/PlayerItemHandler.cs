@@ -3,19 +3,20 @@ using UnityEngine;
 
 public class PlayerItemHandler : MonoBehaviour
 {
-    public Transform itemHolder;
-    public float interactDistance;
-    public LayerMask interactableMask;
-    public Spawner spawner;
+    [SerializeField] private Transform itemHolder;
+    [SerializeField] private Transform weaponHolder;
+    [SerializeField] private float interactDistance;
+    [SerializeField] private LayerMask interactableMask;
+    [SerializeField] private Camera cam;
 
     private Item currentItem;
     private Weapon currentWeapon;
-    [SerializeField] private Camera cam;
+    private PlayerContext playerContext;
     private PhotonView photonView;
-    public Transform weaponHolder;
 
     void Start()
     {
+        playerContext = GetComponent<PlayerContext>();
         photonView = GetComponent<PhotonView>();
         if (!photonView.IsMine)
         {
@@ -27,79 +28,71 @@ public class PlayerItemHandler : MonoBehaviour
     {
         if (photonView.IsMine)
         {
-            if (Input.GetMouseButtonDown(1))
+            if (playerContext.HandleInputs.IsInteracting())
             {
-                if (currentItem == null && currentWeapon == null)
-                {
-                    TryPickup();
-                }
-                else
-                {
-                    DropHeld();
-                }
+                TryPickup();
             }
-        }
-    }
 
-    private void DropHeld()
-    {
-        if (currentItem == null && currentWeapon == null) return;
-
-        // Si tienes un item 
-        if (currentItem != null)
-        {
-            currentItem.Drop();
-            currentItem = null;
-        }
-
-        // Si tienes un arma
-        if (currentWeapon != null)
-        {
-            currentWeapon.Drop();
-            currentWeapon = null;
-        }
-    }
-
-    void TryPickup()
-    {
-        Vector3 rayOrigin = cam.transform.position + cam.transform.forward * 0.5f;
-        if (Physics.Raycast(rayOrigin, cam.transform.forward, out RaycastHit hit, interactDistance, interactableMask))
-        {
-            Iweapon iweapon = hit.collider.GetComponent<Iweapon>();
-            Ipickuppeable ipickuppeable = hit.collider.GetComponent<Ipickuppeable>();
-
-            if (iweapon != null)
+            if (playerContext.HandleInputs.DropInput())
             {
-                Weapon weaponPicked = iweapon as Weapon;   // casteo directo a Weapon
-                currentWeapon = weaponPicked;
-
-                weaponPicked.GetComponent<Rigidbody>().isKinematic = true;
-                weaponPicked.transform.SetParent(weaponHolder);
-                weaponPicked.transform.localPosition = Vector3.zero;
-                weaponPicked.transform.localRotation = Quaternion.identity;
-
-                EquipWeapon(weaponPicked);
-            }
-            else
-             if (ipickuppeable != null)
-            {
-                Item itemPicked = ipickuppeable.PickUp();
-                int itemId = itemPicked.ID;
-                currentItem = itemPicked;
-
-                itemPicked.GetComponent<Rigidbody>().isKinematic = true;
-                photonView.RPC("SetPareent", RpcTarget.All, itemId);
+                DropHeld();
             }
         }
     }
 
     [PunRPC]
-    private void SetPareent(int itemId)
+    private void DropItem(int viewId, Vector3 dropPos)
     {
-        Item item = ItemHandler.Instance.GetFromDictionary(itemId);
-        if (item != null)
+        PhotonView view = PhotonView.Find(viewId);
+        if (view != null)
         {
+            Item item = view.GetComponent<Item>();
+            item.transform.SetParent(null);
+            item.GetComponent<Rigidbody>().isKinematic = false;
+            item.transform.position = dropPos;
+        }
+    }
+    private void DropHeld()
+    {
+        if (currentItem != null)
+        {
+            int viewId = currentItem.GetComponent<PhotonView>().ViewID;
+            Vector3 dropPos = transform.position + transform.forward;
+            photonView.RPC("DropItem", RpcTarget.All, viewId, dropPos);
+            currentItem = null;
+        }
+    }
+
+    void TryPickup()
+    {
+        if (currentItem != null || currentWeapon != null) return;
+
+        Vector3 rayOrigin = cam.transform.position + cam.transform.forward * 0.5f;
+        if (Physics.Raycast(rayOrigin, cam.transform.forward, out RaycastHit hit, interactDistance, interactableMask))
+        {
+            Ipickuppeable ipickuppeable = hit.collider.GetComponent<Ipickuppeable>();
+
+            if (ipickuppeable != null)
+            {
+                Item itemPicked = ipickuppeable.PickUp();
+                int viewId = itemPicked.gameObject.GetComponent<PhotonView>().ViewID;
+                Debug.Log(viewId);
+                photonView.RPC("SetParent", RpcTarget.All, viewId);
+                currentItem = itemPicked;
+
+            }
+        }
+    }
+
+    [PunRPC]
+    private void SetParent(int viewId)
+    {
+        PhotonView view = PhotonView.Find(viewId);
+        if (view != null)
+        {
+            Item item = view.GetComponent<Item>();
             item.transform.SetParent(itemHolder);
+            item.GetComponent<Rigidbody>().isKinematic = true;
             item.transform.localPosition = Vector3.zero;
             item.transform.localRotation = Quaternion.identity;
         }

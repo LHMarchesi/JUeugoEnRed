@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviourPunCallbacks
 {
-    private int iDCount;
     public ObjectPooler objectPooler;
     public Transform spawnPoint;
     public bool canSpawn;
@@ -13,7 +12,6 @@ public class Spawner : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        iDCount = 0;
         if (!PhotonNetwork.IsMasterClient)
             return;
 
@@ -36,6 +34,5 @@ public class Spawner : MonoBehaviourPunCallbacks
     public void SpawnObject()
     {
         GameObject obj = PhotonNetwork.Instantiate(prefabs[Random.Range(0, prefabs.Length)].name, spawnPoint.position, spawnPoint.rotation);
-        ItemHandler.Instance.AddToDictionary(iDCount, obj);
     }
 }

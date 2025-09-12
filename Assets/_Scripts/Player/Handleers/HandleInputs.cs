@@ -4,7 +4,8 @@ using UnityEngine.InputSystem;
 public class HandleInputs : MonoBehaviour
 {
     private Vector2 move, look;
-    private float isAttacking, isRunning, isJumping;
+    private float isAttacking, isRunning, isJumping, isInteracting;
+    private float isDroping;
 
     public void OnMove(InputAction.CallbackContext context) // Catch player input
     {
@@ -18,6 +19,16 @@ public class HandleInputs : MonoBehaviour
     public void OnAttack(InputAction.CallbackContext context) // Catch attack input
     {
         isAttacking = context.ReadValue<float>();
+    }
+    
+    public void OnTryInteract(InputAction.CallbackContext context) // Catch attack input
+    {
+        isInteracting = context.ReadValue<float>();
+    }
+    
+    public void OnTryDrop(InputAction.CallbackContext context) // Catch attack input
+    {
+        isDroping = context.ReadValue<float>();
     }
 
     public void OnRunning(InputAction.CallbackContext context) // Catch run input
@@ -35,6 +46,9 @@ public class HandleInputs : MonoBehaviour
     public Vector2 GetLookVector2() { return look; }
 
     public bool IsAttacking() { return isAttacking == 1f; }
+
+    public bool IsInteracting() { return isInteracting == 1f; }
+    public bool DropInput() { return isDroping == 1f; }
 
     public bool IsRunning() { return isRunning == 1f; }
 

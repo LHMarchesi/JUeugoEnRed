@@ -169,6 +169,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: cbdbb4d9175de2d499686757c8797dfb, type: 2}
-  ID: 0
   pooler: {fileID: 0}
   isHeld: 0
