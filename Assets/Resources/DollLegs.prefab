@@ -156,6 +156,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: bf1996f005c5a6f4eac110ccc0eabc2a, type: 2}
+  ID: 0
+  pooler: {fileID: 0}
+  isHeld: 0
 --- !u!65 &6849313183483449849
 BoxCollider:
   m_ObjectHideFlags: 0

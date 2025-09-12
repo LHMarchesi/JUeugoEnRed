@@ -407,6 +407,7 @@ MonoBehaviour:
   interactableMask:
     serializedVersion: 2
     m_Bits: 1
+  spawner: {fileID: 0}
   cam: {fileID: 5965534511314588940}
   weaponHolder: {fileID: 1188406374}
 --- !u!114 &5965534512272406657

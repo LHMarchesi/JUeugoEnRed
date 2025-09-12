@@ -1,6 +1,4 @@
 using Photon.Pun;
-using System;
-using System.Net;
 using UnityEngine;
 
 public class PlayerItemHandler : MonoBehaviour
@@ -8,6 +6,7 @@ public class PlayerItemHandler : MonoBehaviour
     public Transform itemHolder;
     public float interactDistance;
     public LayerMask interactableMask;
+    public Spawner spawner;
 
     private Item currentItem;
     private Weapon currentWeapon;
@@ -69,15 +68,8 @@ public class PlayerItemHandler : MonoBehaviour
             Iweapon iweapon = hit.collider.GetComponent<Iweapon>();
             Ipickuppeable ipickuppeable = hit.collider.GetComponent<Ipickuppeable>();
 
-
             if (iweapon != null)
             {
-                if (currentWeapon != null)   // Si ya tenemos un arma, soltamos la anterior
-                {
-                    currentWeapon.Drop();
-                    currentWeapon = null;
-                }
-
                 Weapon weaponPicked = iweapon as Weapon;   // casteo directo a Weapon
                 currentWeapon = weaponPicked;
 
@@ -91,20 +83,25 @@ public class PlayerItemHandler : MonoBehaviour
             else
              if (ipickuppeable != null)
             {
-                if (currentItem != null)  // Si ya tenemos un item, soltamos el anterior
-                {
-                    currentItem.Drop();
-                    currentItem = null;
-                }
-
                 Item itemPicked = ipickuppeable.PickUp();
+                int itemId = itemPicked.ID;
                 currentItem = itemPicked;
 
                 itemPicked.GetComponent<Rigidbody>().isKinematic = true;
-                itemPicked.transform.SetParent(itemHolder);
-                itemPicked.transform.localPosition = Vector3.zero;
-                itemPicked.transform.localRotation = Quaternion.identity;
+                photonView.RPC("SetPareent", RpcTarget.All, itemId);
             }
+        }
+    }
+
+    [PunRPC]
+    private void SetPareent(int itemId)
+    {
+        Item item = ItemHandler.Instance.GetFromDictionary(itemId);
+        if (item != null)
+        {
+            item.transform.SetParent(itemHolder);
+            item.transform.localPosition = Vector3.zero;
+            item.transform.localRotation = Quaternion.identity;
         }
     }
 

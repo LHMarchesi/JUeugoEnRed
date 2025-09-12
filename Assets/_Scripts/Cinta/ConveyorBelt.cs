@@ -4,30 +4,21 @@ using UnityEngine;
 public class ConveyorBelt : MonoBehaviour
 {
     [SerializeField] private float speed;
-    [SerializeField] private Vector3 direction = Vector3.right;
-    PlayerController playerController;
+    [SerializeField] private Transform direccion;
 
-    private void OnCollisionStay(Collision collision)
+    private void OnTriggerStay(Collider other)
     {
-        Rigidbody rb = collision.rigidbody;
-        if (rb != null)
+        Item item = other.GetComponent<Item>();
+        if (item != null && !item.isHeld)
         {
-            Vector3 move = direction.normalized * speed * Time.fixedDeltaTime;
-            rb.MovePosition(rb.position + move);
-        }
-        else if (collision.collider.CompareTag("Player"))
-        {
-            Debug.Log("Player on conveyor belt");
-            playerController = collision.collider.GetComponent<PlayerController>();
-            playerController.SetConveyorSpeed(direction.normalized * speed);
-        }
-    }
+            Transform itemTransform = other.transform;
 
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.collider.CompareTag("Player"))
-        {
-            playerController.SetConveyorSpeed(Vector3.zero);
+            // Mueve el objeto hacia la posición de "direccion"
+            itemTransform.position = Vector3.MoveTowards(
+                itemTransform.position,          // posición actual
+                direccion.position,              // posición objetivo
+                speed * Time.deltaTime           // velocidad de movimiento
+            );
         }
     }
 }

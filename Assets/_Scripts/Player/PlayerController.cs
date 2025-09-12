@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private int PlayerID;
     [SerializeField] private CharacterController controller;
     [SerializeField] private float walkingSpeed;
     [SerializeField] private float runningSpeed;

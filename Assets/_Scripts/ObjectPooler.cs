@@ -1,34 +1,41 @@
-﻿using System.Collections.Generic;
+﻿using Photon.Pun;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPooler : MonoBehaviour
+public class ObjectPooler : Singleton<ObjectPooler>
 {
     [Header("Pool Settings")]
     public GameObject[] prefabs;
-    public int poolSizePerPrefab = 20;
-
+    public int poolSizePerPrefab = 3;
+    public PhotonView view;
     private Dictionary<string, List<GameObject>> pools;
 
-    void Awake()
+    public override void Awake()
     {
-        pools = new Dictionary<string, List<GameObject>>();
+ 
+        
+            //Debug.Log("i am master");
+            pools = new Dictionary<string, List<GameObject>>();
 
-        foreach (var prefab in prefabs)
-        {
-            List<GameObject> prefabPool = new List<GameObject>();
-            for (int i = 0; i < poolSizePerPrefab; i++)
+            foreach (var prefab in prefabs)
             {
-                GameObject obj = Instantiate(prefab);
-                obj.SetActive(false);
-                prefabPool.Add(obj);
+                List<GameObject> prefabPool = new List<GameObject>();
+                for (int i = 0; i < poolSizePerPrefab; i++)
+                {
+                    GameObject obj = PhotonNetwork.Instantiate(prefab.name, transform.position, Quaternion.identity);
+                    obj.SetActive(false);
+                    prefabPool.Add(obj);
+                }
+
+                pools.Add(prefab.name, prefabPool);
+
+                Item item = prefab.GetComponent<Item>();
+                if (item != null)
+                    item.SetPool(this);
+            
             }
-
-            pools.Add(prefab.name, prefabPool);
-
-            Item item = prefab.GetComponent<Item>();
-            if (item != null)
-                item.SetPool(this);
-        }
+        
+        
     }
 
     public GameObject GetRandomPooledObject()

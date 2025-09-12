@@ -1,20 +1,14 @@
 using Photon.Pun;
 using UnityEngine;
-public enum ItemType
-{
-    none, down, middle, top
-}
-public interface Ipickuppeable
-{
-    Item PickUp();
-    void Drop();
-}
 public class Item : MonoBehaviourPun, Ipickuppeable
 {
     public ItemStats stats;
+    public int ID;
     public ObjectPooler pooler;
+    public bool isHeld;
     public virtual void Drop()
     {
+        isHeld = false;
         transform.SetParent(null);
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.isKinematic = false;
@@ -22,6 +16,7 @@ public class Item : MonoBehaviourPun, Ipickuppeable
 
     public virtual Item PickUp()
     {
+        isHeld = true;
         return this;
     }
 

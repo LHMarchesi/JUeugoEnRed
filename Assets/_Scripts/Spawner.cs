@@ -1,14 +1,22 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class Spawner : MonoBehaviour
+public class Spawner : MonoBehaviourPunCallbacks
 {
+    private int iDCount;
     public ObjectPooler objectPooler;
     public Transform spawnPoint;
     public bool canSpawn;
     public float spawnInterval;
+    public GameObject[] prefabs;
 
     void Start()
     {
+        iDCount = 0;
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
         if (canSpawn)
         {
             StartSpawning();
@@ -27,12 +35,7 @@ public class Spawner : MonoBehaviour
 
     public void SpawnObject()
     {
-        GameObject obj = objectPooler.GetRandomPooledObject();
-        if (obj != null)
-        {
-            obj.transform.position = spawnPoint.position;
-            obj.transform.rotation = spawnPoint.rotation;
-            obj.SetActive(true);
-        }
-    }        
+        GameObject obj = PhotonNetwork.Instantiate(prefabs[Random.Range(0, prefabs.Length)].name, spawnPoint.position, spawnPoint.rotation);
+        ItemHandler.Instance.AddToDictionary(iDCount, obj);
+    }
 }
