@@ -4,11 +4,11 @@
 - Active scene:
   - Name: Game
   - Tags:
-    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, PickUp, Bullet
+    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, PickUp
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Ground, Water, UI, Platform
 - Active game object:
-  - Name: Weapon
+  - Name: Plane
   - Tag: Untagged
-  - Layer: Default
+  - Layer: Ground
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

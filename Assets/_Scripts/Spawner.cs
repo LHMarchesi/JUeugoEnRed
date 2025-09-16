@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviourPunCallbacks
 {
-    public ObjectPooler objectPooler;
     public Transform spawnPoint;
     public bool canSpawn;
     public float spawnInterval;
@@ -33,6 +32,7 @@ public class Spawner : MonoBehaviourPunCallbacks
 
     public void SpawnObject()
     {
+        Debug.Log("Spawning object...");
         GameObject obj = PhotonNetwork.Instantiate(prefabs[Random.Range(0, prefabs.Length)].name, spawnPoint.position, spawnPoint.rotation);
     }
 }
