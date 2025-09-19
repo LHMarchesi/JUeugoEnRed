@@ -2,7 +2,6 @@ using Photon.Pun;
 using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
@@ -27,7 +26,7 @@ public class MainMenuManager : MonoBehaviour
     {
         onConnectButtonClicked?.Invoke();
         ConnectionManager.Instance.SetNickName(playerName.text);
-        ConnectionManager.Instance.JoinOrCreateRoom(GoToGameScene);
+        GoToLobbyScene();
     }
 
     private void UnShowLoadingPanel()
@@ -36,9 +35,9 @@ public class MainMenuManager : MonoBehaviour
         connectButton.interactable = true;
     }
 
-    public void GoToGameScene()
+    public void GoToLobbyScene()
     {
-        Debug.Log("Loading Game Scene...");
-        ConnectionManager.Instance.LoadScene(2);
+        Debug.Log("Loading Lobby Scene...");
+        ConnectionManager.Instance.LoadScene(1);
     }
 }

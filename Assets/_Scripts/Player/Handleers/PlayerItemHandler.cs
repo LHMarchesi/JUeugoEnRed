@@ -76,7 +76,6 @@ public class PlayerItemHandler : MonoBehaviour
             {
                 Item itemPicked = ipickuppeable.PickUp();
                 int viewId = itemPicked.gameObject.GetComponent<PhotonView>().ViewID;
-                Debug.Log(viewId);
                 photonView.RPC("SetParent", RpcTarget.All, viewId);
                 currentItem = itemPicked;
 

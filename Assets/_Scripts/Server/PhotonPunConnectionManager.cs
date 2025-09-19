@@ -9,6 +9,7 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
     public Action OnConnectedToServer;
     public Action OnJoinedRoomEvent;
     public Action<List<RoomInfo>> OnNewRoomCreated;
+    public List<RoomInfo> activeRooms = new List<RoomInfo>();
 
     public Action OnPlayerEnteredRoomEvent;
     public Action OnPlayerLeftRoomEvent;
@@ -19,6 +20,12 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
         OnNewRoomCreated = onRoomCreated;
         OnPlayerEnteredRoomEvent = onPlayerEnterCallback;
         OnPlayerLeftRoomEvent = onPlayerLeftCallback;
+    }
+
+    public void AddToRoomList(RoomInfo roomInfo)
+    {
+        activeRooms.Add(roomInfo);
+        OnNewRoomCreated?.Invoke(activeRooms);
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -35,6 +42,7 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
 
     public Room GetCurrenRoom()
     {
+        Debug.Log("name:" + PhotonNetwork.CurrentRoom);
         return PhotonNetwork.CurrentRoom;
     }
 
@@ -59,24 +67,21 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(roomName, roomOptions);
     }
 
+    public override void OnCreatedRoom()
+    {
+        Debug.Log("RoomCreated");
+        AddToRoomList(PhotonNetwork.CurrentRoom);
+    }
+
+    public void JoinRoom (Room room)
+    {
+        PhotonNetwork.JoinRoom(room.Name);
+    }
+
     public void ConnectToServer(Action OnConnect = null)
     {
         PhotonNetwork.ConnectUsingSettings();
         OnConnectedToServer += OnConnect;
-    }
-
-    public void JoinOrCreateRoom(Action OnJoin = null)
-    {
-        RoomOptions options = new RoomOptions
-        {
-            MaxPlayers = 2,
-            IsOpen = true,
-            IsVisible = true
-        };
-
-        // Intenta unirse a una sala aleatoria, si no existe la crea
-        OnJoinedRoomEvent = OnJoin;
-        PhotonNetwork.JoinRandomOrCreateRoom(null, 0, MatchmakingMode.FillRoom, null, null, null, options);
     }
 
     public override void OnJoinedRoom()
@@ -100,6 +105,19 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
     public void InstantiatePlayer(Transform transform)
     {
         PhotonNetwork.Instantiate("PlayerPrefab", transform.position, Quaternion.identity);
+    }
+
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        OnNewRoomCreated?.Invoke(roomList);
+        activeRooms.Clear(); 
+        foreach (var room in roomList)
+        {
+            if (room.IsOpen) 
+            {
+                AddToRoomList(room);
+            }
+        }
     }
 }
 

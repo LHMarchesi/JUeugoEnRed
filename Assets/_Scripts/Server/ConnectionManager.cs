@@ -2,23 +2,23 @@ using Photon.Pun;
 using Photon.Realtime;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
 
 public class ConnectionManager : Singleton<ConnectionManager>
 {
     public PhotonPunConnectionManager photonPunManager;
     public Action OnConnectedToServer;
     public Action OnJoinedRoomEvent;
-    private List<RoomInfo> roomList = new List<RoomInfo>();
+    public List<RoomInfo> roomList = new List<RoomInfo>();
+    public Action<List<RoomInfo>> OnNewRoomCreated;
 
     public Action OnPlayerEnteredRoomEvent;
     public Action OnPlayerLeftRoomEvent;
 
     public void Init()
     {
-        photonPunManager.init(OnJoinedRoomEvent, OnPlayerLeftRoomEvent, OnPlayerEnteredRoomEvent);
+        photonPunManager.init(OnJoinedRoomEvent, OnPlayerLeftRoomEvent, OnPlayerEnteredRoomEvent, OnNewRoomCreated);
     }
     public void SetNickName(string name)
     {
@@ -31,18 +31,10 @@ public class ConnectionManager : Singleton<ConnectionManager>
         OnConnectedToServer += CallBack;
     }
 
-    public string GetCurrentRoomName()
+    public Room GetCurrentRoom()
     {
         Room currentRoom = photonPunManager.GetCurrenRoom();
-        return currentRoom != null ? currentRoom.Name : "No Room";
-    }
-
-    public void JoinOrCreateRoom(Action OnJoinRoom = null)
-    {
-        if (OnJoinRoom != null)
-            OnJoinedRoomEvent += OnJoinRoom;
-
-        photonPunManager.JoinOrCreateRoom(OnJoinRoom);
+        return currentRoom;
     }
 
     public void LoadScene(int scene)
@@ -54,18 +46,9 @@ public class ConnectionManager : Singleton<ConnectionManager>
     {
         photonPunManager.InstantiatePlayer(spawnPos);
     }
-
     public void CreateRoom(string roomName)
     {
-        if (PhotonNetwork.IsConnectedAndReady)
-        {
-            photonPunManager.CreateRoom(roomName);
-        }
-        else
-        {
-            //   Debug.WriteLine("Not connected yet. Will create room after connecting...");
-            OnConnectedToServer += () => photonPunManager.CreateRoom(roomName);
-        }
+        photonPunManager.CreateRoom(roomName);
     }
 
     public void JoinLobby()

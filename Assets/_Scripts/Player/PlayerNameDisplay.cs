@@ -2,12 +2,14 @@ using Photon.Pun;
 using TMPro;
 using UnityEngine;
 
-public class PlayerNameDisplay : MonoBehaviourPun
+public class PlayerNameDisplay : MonoBehaviour
 {
     [SerializeField] private TMP_Text nameText;
+    [SerializeField] private PhotonView photonView;
 
     private void Start()
     {
+        photonView = gameObject.GetComponent<PhotonView>();
         if (photonView.IsMine)
         {
             // Este es mi jugador ? uso mi NickName
