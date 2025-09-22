@@ -19,6 +19,7 @@ public class Platform : MonoBehaviour
         if (item != null)
         {
             // Chequear el holder segun el tipo
+            item.Drop(); // Soltar el item si estaba en mano
             Transform targetHolder = null;
             switch (item.stats.type)
             {
@@ -32,11 +33,11 @@ public class Platform : MonoBehaviour
                 Rigidbody rb = item.GetComponent<Rigidbody>();
                 if (rb != null) rb.isKinematic = true;
 
-                Vector3 originalScale = item.transform.localScale;
+                //Vector3 originalScale = item.transform.localScale;
 
                 item.transform.SetParent(targetHolder, true);
                 item.transform.localPosition = Vector3.zero;
-                item.transform.localScale = originalScale;
+                //item.transform.localScale = originalScale;
 
                 placedItems[item.stats.type] = item;
             }
