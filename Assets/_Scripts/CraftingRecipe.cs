@@ -9,4 +9,5 @@ public class CraftingRecipe : ScriptableObject
 
     [Header("Piezas requeridas")]
     public List<ItemStats> requiredItems;
+
 }
