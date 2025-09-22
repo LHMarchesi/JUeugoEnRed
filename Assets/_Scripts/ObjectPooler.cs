@@ -25,9 +25,9 @@ public class ObjectPooler : Singleton<ObjectPooler>
                     prefabPool.Add(obj);
                 }
                 pools.Add(prefab.name, prefabPool);
-                Item item = prefab.GetComponent<Item>();
-                if (item != null)
-                    item.SetPool(this);
+                ItemBase item = prefab.GetComponent<ItemBase>();
+                //if (item != null)
+                  //  item.SetPool(this);
             }
     }
 

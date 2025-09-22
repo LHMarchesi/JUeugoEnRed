@@ -9,7 +9,7 @@ public class PlayerItemHandler : MonoBehaviour
     [SerializeField] private LayerMask interactableMask;
     [SerializeField] private Camera cam;
 
-    private Item currentItem;
+    private ItemBase currentItem;
     private Weapon currentWeapon;
     private PlayerContext playerContext;
     private PhotonView photonView;
@@ -46,7 +46,7 @@ public class PlayerItemHandler : MonoBehaviour
         PhotonView view = PhotonView.Find(viewId);
         if (view != null)
         {
-            Item item = view.GetComponent<Item>();
+            ItemBase item = view.GetComponent<ItemBase>();
             item.transform.SetParent(null);
             item.GetComponent<Rigidbody>().isKinematic = false;
             item.transform.position = dropPos;
@@ -74,7 +74,7 @@ public class PlayerItemHandler : MonoBehaviour
 
             if (ipickuppeable != null)
             {
-                Item itemPicked = ipickuppeable.PickUp();
+                ItemBase itemPicked = ipickuppeable.PickUp();
                 int viewId = itemPicked.gameObject.GetComponent<PhotonView>().ViewID;
                 Debug.Log(viewId);
                 photonView.RPC("SetParent", RpcTarget.All, viewId);
@@ -90,7 +90,7 @@ public class PlayerItemHandler : MonoBehaviour
         PhotonView view = PhotonView.Find(viewId);
         if (view != null)
         {
-            Item item = view.GetComponent<Item>();
+            ItemBase item = view.GetComponent<ItemBase>();
             item.transform.SetParent(itemHolder);
             item.GetComponent<Rigidbody>().isKinematic = true;
             item.transform.localPosition = Vector3.zero;

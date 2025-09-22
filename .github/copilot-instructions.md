@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Ground, Water, UI, Platform
 - Active game object:
-  - Name: Text (TMP)
+  - Name: Recipe
   - Tag: Untagged
   - Layer: UI
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

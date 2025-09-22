@@ -11,11 +11,11 @@ public class Platform : MonoBehaviour
     [Header("Receta actual")]
     public CraftingRecipe currentRecipe;
 
-    private Dictionary<ItemType, Item> placedItems = new Dictionary<ItemType, Item>();
+    private Dictionary<ItemType, ItemBase> placedItems = new Dictionary<ItemType, ItemBase>();
 
     private void OnTriggerEnter(Collider other)
     {
-        Item item = other.GetComponent<Item>();
+        ItemBase item = other.GetComponent<ItemBase>();
         if (item != null)
         {
             // Chequear el holder segun el tipo
@@ -76,7 +76,7 @@ public class Platform : MonoBehaviour
         }
         else
         {
-            Debug.Log("❌ Piezas incorrectas, se destruye todo.");
+            Debug.Log(" Piezas incorrectas, se destruye todo.");
             ClearPlatform();
         }
     }
@@ -85,7 +85,8 @@ public class Platform : MonoBehaviour
     {
         foreach (var kvp in placedItems)
         {
-            if (kvp.Value != null)
+            Destroy(kvp.Value.gameObject);
+            /*if (kvp.Value != null)
             {
                 ObjectPooler pool = kvp.Value.GetPool();
                 if (pool != null)
@@ -93,6 +94,7 @@ public class Platform : MonoBehaviour
                     pool.ReleaseObject(kvp.Value.gameObject);
                 }
             }
+            */
         }
         placedItems.Clear();
     }

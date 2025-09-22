@@ -8,7 +8,7 @@ public class ConveyorBelt : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        Item item = other.GetComponent<Item>();
+        ItemBase item = other.GetComponent<ItemBase>();
         if (item != null && !item.isHeld)
         {
             Transform itemTransform = other.transform;

@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class RecipeManager : MonoBehaviour
@@ -10,6 +11,7 @@ public class RecipeManager : MonoBehaviour
     [Header("Referencias")]
     public Platform craftingPlatform;
     public TextMeshProUGUI uiText;
+    public RawImage recipeImage;
 
     private CraftingRecipe currentRecipe;
 

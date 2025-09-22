@@ -1,16 +1,16 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class OrderData: Item
+public class OrderData: ItemBase
 {
     CraftingRecipe recipe;
-    GameObject player;
     public override void Drop()
     {
         base.Drop();
     }
-    public override Item PickUp()
+    public override ItemBase PickUp()
     {
+        
         return base.PickUp();
     }
 }

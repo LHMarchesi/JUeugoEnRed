@@ -5,7 +5,7 @@ public interface Iweapon
     void Attack();
 }
 
-public class Weapon : Item, Iweapon
+public class Weapon : ItemBase, Iweapon
 {
     [Header("Weapon Stats")]
     public float attackRange = 3f;
@@ -14,7 +14,7 @@ public class Weapon : Item, Iweapon
     public bool canAttack;
     public Camera playerCamera;
 
-    public override Item PickUp()
+    public override ItemBase PickUp()
     {
         canAttack = true;
         return this;

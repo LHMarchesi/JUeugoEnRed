@@ -1,5 +1,5 @@
 public interface Ipickuppeable
 {
-    Item PickUp();
+    ItemBase PickUp();
     void Drop();
 }

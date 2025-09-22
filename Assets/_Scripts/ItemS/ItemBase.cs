@@ -1,22 +1,21 @@
-using Photon.Pun;
 using UnityEngine;
-public class Item : MonoBehaviourPun, Ipickuppeable
+public class ItemBase : MonoBehaviour, Ipickuppeable
 {
     public ItemStats stats;
-    public ObjectPooler pooler;
     public bool isHeld;
+  //  public ObjectPooler pooler;
     public virtual void Drop()
     {
         isHeld = false;
     }
 
-    public virtual Item PickUp()
+    public virtual ItemBase PickUp()
     {
         isHeld = true;
         return this;
     }
 
-    public void SetPool(ObjectPooler pooler)
+ /* public void SetPool(ObjectPooler pooler)
     {
         this.pooler = pooler;
     }
@@ -25,5 +24,5 @@ public class Item : MonoBehaviourPun, Ipickuppeable
     {
         return pooler;
     }
-
+ */
 }
