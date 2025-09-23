@@ -1,13 +1,16 @@
+using Photon.Pun;
+using Photon.Pun.Demo.Cockpit;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class UIManager : Singleton<UIManager>
 {
     [Header("Referencias UI")]
     [SerializeField] private GameObject recipePanel;
     [SerializeField] private Image recipeImageUI;
     [SerializeField] private TextMeshProUGUI recipeTextUI;
+    [SerializeField] private PhotonView view;
 
     private void Start()
     {
@@ -17,25 +20,31 @@ public class UIManager : MonoBehaviour
 
     public void ShowRecipe(CraftingRecipe recipe)
     {
-        if (recipe == null) return;
-
-        recipePanel.SetActive(true);
-
-        // Texto
-        string ingredientesTexto = "";
-        foreach (var item in recipe.requiredItems)
+        if (view != null && view.IsMine)
         {
-            ingredientesTexto += $"\n• {item.itemName}";
+            if (recipe == null) return;
+
+            recipePanel.SetActive(true);
+
+            // Texto
+            string ingredientesTexto = "";
+            foreach (var item in recipe.requiredItems)
+            {
+                ingredientesTexto += $"\n• {item.itemName}";
+            }
+
+            recipeTextUI.text = $"Receta: {recipe.recipeName}\nIngredientes:{ingredientesTexto}";
+
+            // Imagen
+            recipeImageUI.sprite = recipe.recipeIcon;
         }
-
-        recipeTextUI.text = $"Receta: {recipe.recipeName}\nIngredientes:{ingredientesTexto}";
-
-        // Imagen
-        recipeImageUI.sprite = recipe.recipeIcon;
     }
 
     public void HideRecipe()
     {
-        recipePanel.SetActive(false);
+        if (view != null && view.IsMine)
+        {
+            recipePanel.SetActive(false);
+        }
     }
 }

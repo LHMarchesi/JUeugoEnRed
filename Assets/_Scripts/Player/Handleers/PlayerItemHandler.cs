@@ -47,6 +47,7 @@ public class PlayerItemHandler : MonoBehaviour
         if (view != null)
         {
             ItemBase item = view.GetComponent<ItemBase>();
+            item.Drop();
             item.transform.SetParent(null);
             item.GetComponent<Rigidbody>().isKinematic = false;
             item.transform.position = dropPos;

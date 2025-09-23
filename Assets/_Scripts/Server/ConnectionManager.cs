@@ -16,6 +16,11 @@ public class ConnectionManager : Singleton<ConnectionManager>
     public Action OnPlayerEnteredRoomEvent;
     public Action OnPlayerLeftRoomEvent;
 
+    public override void Awake()
+    {
+        base.Awake();
+        DontDestroyOnLoad(gameObject);
+    }
     public void Init()
     {
         photonPunManager.init(OnJoinedRoomEvent, OnPlayerLeftRoomEvent, OnPlayerEnteredRoomEvent);
