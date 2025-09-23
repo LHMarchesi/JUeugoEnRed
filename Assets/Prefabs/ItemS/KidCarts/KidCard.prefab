@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 4147864585453536362}
   - component: {fileID: 4147864585453536272}
   - component: {fileID: 4147864585453536367}
-  - component: {fileID: 4147864585453536273}
   - component: {fileID: 4147864585453536274}
   m_Layer: 0
   m_Name: KidCard
@@ -143,20 +142,6 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!114 &4147864585453536273
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4147864585453536361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ce52454f6e2ae94888846c9810a6844, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stats: {fileID: 11400000, guid: cbdbb4d9175de2d499686757c8797dfb, type: 2}
-  isHeld: 0
 --- !u!65 &4147864585453536274
 BoxCollider:
   m_ObjectHideFlags: 0

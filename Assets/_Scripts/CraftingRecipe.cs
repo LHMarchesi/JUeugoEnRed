@@ -7,7 +7,7 @@ public class CraftingRecipe : ScriptableObject
 {
     [Header("Configuracion de reseta")]
     public string recipeName;
-    public RawImage recipeImage;
+    public Sprite recipeIcon;
     public GameObject finalItemPrefab;
 
     [Header("Piezas requeridas")]

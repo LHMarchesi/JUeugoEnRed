@@ -33,6 +33,6 @@ public class Spawner : MonoBehaviourPunCallbacks
     public void SpawnObject()
     {
         Debug.Log("Spawning object...");
-        GameObject obj = PhotonNetwork.Instantiate(prefabs[Random.Range(0, prefabs.Length)].name, spawnPoint.position, spawnPoint.rotation);
+        GameObject obj = Instantiate(prefabs[Random.Range(0, prefabs.Length)], spawnPoint.position, spawnPoint.rotation);
     }
 }
