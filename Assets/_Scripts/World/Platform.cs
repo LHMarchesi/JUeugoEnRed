@@ -13,6 +13,7 @@ public class Platform : MonoBehaviour
 
     private Dictionary<ItemType, ItemBase> placedItems = new Dictionary<ItemType, ItemBase>();
 
+    
     private void OnTriggerEnter(Collider other)
     {
         ItemBase item = other.GetComponent<ItemBase>();
