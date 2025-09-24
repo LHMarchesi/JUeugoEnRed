@@ -10,7 +10,6 @@ public class PlayerItemHandler : MonoBehaviour
     [SerializeField] private Camera cam;
 
     private ItemBase currentItem;
-    private Weapon currentWeapon;
     private PlayerContext playerContext;
     private PhotonView photonView;
 
@@ -43,13 +42,12 @@ public class PlayerItemHandler : MonoBehaviour
     [PunRPC]
     private void DropItem(int viewId, Vector3 dropPos)
     {
-        PhotonView view = PhotonView.Find(viewId);
+        PhotonView view = PhotonView.Find(viewId);  // Encuentra el PhotonView usando el ID
         if (view != null)
         {
-            ItemBase item = view.GetComponent<ItemBase>();
-            item.Drop();
-            item.transform.SetParent(null);
+            var item = view.gameObject;
             item.GetComponent<Rigidbody>().isKinematic = false;
+            item.transform.SetParent(null);
             item.transform.position = dropPos;
         }
     }
@@ -57,16 +55,17 @@ public class PlayerItemHandler : MonoBehaviour
     {
         if (currentItem != null)
         {
-            int viewId = currentItem.GetComponent<PhotonView>().ViewID;
+            int viewId = currentItem.GetComponent<PhotonView>().ViewID; // Obtén el ID del PhotonView del objeto que deseas soltar
             Vector3 dropPos = transform.position + transform.forward;
-            photonView.RPC("DropItem", RpcTarget.All, viewId, dropPos);
+            currentItem.Drop();
+            photonView.RPC("DropItem", RpcTarget.All, viewId, dropPos); // Llama al método RPC para soltar el objeto en todos los clientes
             currentItem = null;
         }
     }
 
     void TryPickup()
     {
-        if (currentItem != null || currentWeapon != null) return;
+        if (currentItem != null) return;
 
         Vector3 rayOrigin = cam.transform.position + cam.transform.forward * 0.5f;
         if (Physics.Raycast(rayOrigin, cam.transform.forward, out RaycastHit hit, interactDistance, interactableMask))
@@ -75,23 +74,24 @@ public class PlayerItemHandler : MonoBehaviour
 
             if (ipickuppeable != null)
             {
-                ItemBase itemPicked = ipickuppeable.PickUp();
-                int viewId = itemPicked.gameObject.GetComponent<PhotonView>().ViewID;
-                Debug.Log(viewId);
-                photonView.RPC("SetParent", RpcTarget.All, viewId);
-                currentItem = itemPicked;
+                var pickedUp = ipickuppeable.PickUp();
+                int viewId = pickedUp.gameObject.GetComponent<PhotonView>().ViewID; // Obtén el ID del PhotonView del objeto que deseas recoger
+
+                photonView.RPC("SetParent", RpcTarget.All, viewId); // Llama al método RPC para establecer el padre del objeto en todos los clientes
+                currentItem = pickedUp;
 
             }
         }
     }
 
     [PunRPC]
-    private void SetParent(int viewId)
+    private void SetParent(int viewId)  // RPC para establecer el padre del objeto en todos los clientes
     {
         PhotonView view = PhotonView.Find(viewId);
         if (view != null)
         {
-            ItemBase item = view.GetComponent<ItemBase>();
+            Debug.Log("Setting parent for " + viewId);
+            var item = view.gameObject;
             item.transform.SetParent(itemHolder);
             item.GetComponent<Rigidbody>().isKinematic = true;
             item.transform.localPosition = Vector3.zero;

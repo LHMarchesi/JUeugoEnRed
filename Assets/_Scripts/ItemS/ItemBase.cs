@@ -2,7 +2,7 @@ using UnityEngine;
 public class ItemBase : MonoBehaviour, Ipickuppeable
 {
     public ItemStats stats;
-    public bool isHeld;
+    public bool isHeld = false;
   //  public ObjectPooler pooler;
     public virtual void Drop()
     {

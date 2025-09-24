@@ -1,5 +1,5 @@
 using Photon.Pun;
-using Photon.Realtime;
+using Photon.Realtime; //Using Photon Pun & Realtime namespace
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,16 +21,24 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
         OnPlayerLeftRoomEvent = onPlayerLeftCallback;
     }
 
-    public override void OnPlayerEnteredRoom(Player newPlayer)
+    public void ConnectToServer(Action OnConnect = null)
     {
-        UnityEngine.Debug.Log("Player Entered Room: " + newPlayer.NickName);
-        OnPlayerEnteredRoomEvent?.Invoke();
+        PhotonNetwork.ConnectUsingSettings();
+        OnConnectedToServer += OnConnect;
     }
 
-    public override void OnPlayerLeftRoom(Player otherPlayer)
+    public void LoadSceneForAll(int sceneName)
     {
-        UnityEngine.Debug.Log("Player Left Room: " + otherPlayer.NickName);
-        OnPlayerLeftRoomEvent?.Invoke();
+        PhotonNetwork.LoadLevel(sceneName);
+    }
+
+    public void InstantiatePlayer(Transform transform)
+    {
+        PhotonNetwork.Instantiate("PlayerPrefab", transform.position, Quaternion.identity);
+    }
+    public void SetNickname(string nickname)
+    {
+        PhotonNetwork.NickName = nickname;
     }
 
     public Room GetCurrenRoom()
@@ -38,10 +46,6 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
         return PhotonNetwork.CurrentRoom;
     }
 
-    public void SetNickname(string nickname)
-    {
-        PhotonNetwork.NickName = nickname;
-    }
     public void JoinLobby()
     {
         UnityEngine.Debug.Log("JoinedLobby");
@@ -58,13 +62,7 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.CreateRoom(roomName, roomOptions);
     }
-
-    public void ConnectToServer(Action OnConnect = null)
-    {
-        PhotonNetwork.ConnectUsingSettings();
-        OnConnectedToServer += OnConnect;
-    }
-
+   
     public void JoinOrCreateRoom(Action OnJoin = null)
     {
         RoomOptions options = new RoomOptions
@@ -92,14 +90,18 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
         OnConnectedToServer?.Invoke();
     }
 
-    public void LoadSceneForAll(int sceneName)
+    public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        PhotonNetwork.LoadLevel(sceneName);
+        UnityEngine.Debug.Log("Player Entered Room: " + newPlayer.NickName);
+        OnPlayerEnteredRoomEvent?.Invoke();
     }
 
-    public void InstantiatePlayer(Transform transform)
+    public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        PhotonNetwork.Instantiate("PlayerPrefab", transform.position, Quaternion.identity);
+        UnityEngine.Debug.Log("Player Left Room: " + otherPlayer.NickName);
+        OnPlayerLeftRoomEvent?.Invoke();
     }
+
+   
 }
 

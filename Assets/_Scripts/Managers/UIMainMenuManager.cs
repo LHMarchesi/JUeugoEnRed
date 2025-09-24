@@ -1,18 +1,16 @@
-using Photon.Pun;
 using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainMenuManager : MonoBehaviour
+public class UIMainMenuManager : MonoBehaviour
 {
     [SerializeField] TMP_InputField playerName;
     [SerializeField] Button connectButton;
     [SerializeField] Action onConnectButtonClicked;
     [SerializeField] GameObject loadingPanel;
 
-    private void Awake()
+    private void Start()
     {
         connectButton.onClick.AddListener(HandleConnectClick);
 

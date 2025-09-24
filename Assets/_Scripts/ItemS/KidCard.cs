@@ -1,4 +1,3 @@
-using Photon.Pun;
 using UnityEngine;
 
 public class KidCard : ItemBase
@@ -22,13 +21,13 @@ public class KidCard : ItemBase
     {
         var pickedUp = base.PickUp();
 
-        UIManager.Instance.ShowRecipe(currentRecipe);
+        UIPlayerManager.Instance.ShowRecipe(currentRecipe);
 
         return pickedUp;
     }
 
     public override void Drop()
     {
-        UIManager.Instance.HideRecipe();
+        UIPlayerManager.Instance.HideRecipe();
     }
 }

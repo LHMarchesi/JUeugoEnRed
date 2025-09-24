@@ -1,10 +1,9 @@
 using Photon.Pun;
-using Photon.Pun.Demo.Cockpit;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : Singleton<UIManager>
+public class UIPlayerManager : Singleton<UIPlayerManager>
 {
     [Header("Referencias UI")]
     [SerializeField] private GameObject recipePanel;

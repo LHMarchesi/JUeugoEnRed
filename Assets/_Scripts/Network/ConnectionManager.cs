@@ -1,17 +1,11 @@
-using Photon.Pun;
-using Photon.Realtime;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ConnectionManager : Singleton<ConnectionManager>
 {
     public PhotonPunConnectionManager photonPunManager;
     public Action OnConnectedToServer;
     public Action OnJoinedRoomEvent;
-    private List<RoomInfo> roomList = new List<RoomInfo>();
 
     public Action OnPlayerEnteredRoomEvent;
     public Action OnPlayerLeftRoomEvent;
@@ -21,10 +15,12 @@ public class ConnectionManager : Singleton<ConnectionManager>
         base.Awake();
         DontDestroyOnLoad(gameObject);
     }
+
     public void Init()
     {
         photonPunManager.init(OnJoinedRoomEvent, OnPlayerLeftRoomEvent, OnPlayerEnteredRoomEvent);
     }
+
     public void SetNickName(string name)
     {
         photonPunManager.SetNickname(name);
@@ -38,8 +34,8 @@ public class ConnectionManager : Singleton<ConnectionManager>
 
     public string GetCurrentRoomName()
     {
-        Room currentRoom = photonPunManager.GetCurrenRoom();
-        return currentRoom != null ? currentRoom.Name : "No Room";
+        string currentRoomName = photonPunManager.GetCurrenRoom().Name;
+        return currentRoomName != null ? currentRoomName : "No Room";
     }
 
     public void JoinOrCreateRoom(Action OnJoinRoom = null)
@@ -62,6 +58,7 @@ public class ConnectionManager : Singleton<ConnectionManager>
 
     public void CreateRoom(string roomName)
     {
+        /*
         if (PhotonNetwork.IsConnectedAndReady)
         {
             photonPunManager.CreateRoom(roomName);
@@ -70,14 +67,13 @@ public class ConnectionManager : Singleton<ConnectionManager>
         {
             //   Debug.WriteLine("Not connected yet. Will create room after connecting...");
             OnConnectedToServer += () => photonPunManager.CreateRoom(roomName);
-        }
+        }*/
     }
 
     public void JoinLobby()
     {
         photonPunManager.JoinLobby();
     }
-
     public void HandleConnectionToServer()
     {
         OnConnectedToServer?.Invoke();

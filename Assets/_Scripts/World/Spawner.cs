@@ -1,5 +1,4 @@
 ﻿using Photon.Pun;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviourPunCallbacks
@@ -33,6 +32,6 @@ public class Spawner : MonoBehaviourPunCallbacks
     public void SpawnObject()
     {
         Debug.Log("Spawning object...");
-        GameObject obj = Instantiate(prefabs[Random.Range(0, prefabs.Length)], spawnPoint.position, spawnPoint.rotation);
+        PhotonNetwork.Instantiate(prefabs[Random.Range(0,prefabs.Length)].name, spawnPoint.position, spawnPoint.rotation);
     }
 }
