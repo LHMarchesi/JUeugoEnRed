@@ -11,11 +11,6 @@ public class UIPlayerManager : Singleton<UIPlayerManager>
     [SerializeField] private TextMeshProUGUI recipeTextUI;
     [SerializeField] private PhotonView view;
 
-    private void Start()
-    {
-        //panel oculto al inicio
-      //  HideRecipe();
-    }
 
     public void ShowRecipe(CraftingRecipe recipe)
     {

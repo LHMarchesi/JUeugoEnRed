@@ -9,8 +9,8 @@ public class DestroyItem : MonoBehaviour
         Ipickuppeable ipickuppeable = other.GetComponent<Ipickuppeable>();
         if (ipickuppeable != null)
         {
-                PhotonNetwork.Destroy(other.gameObject);
-                PhotonNetwork.Instantiate("Coal", coalSpawnPosition.position, Quaternion.identity);
+            PhotonNetwork.Destroy(other.gameObject);
+            PhotonNetwork.Instantiate("Coal", coalSpawnPosition.position, Quaternion.identity);
         }
     }
 }
