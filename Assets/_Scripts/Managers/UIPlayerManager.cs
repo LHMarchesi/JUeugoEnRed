@@ -13,8 +13,8 @@ public class UIPlayerManager : Singleton<UIPlayerManager>
 
     private void Start()
     {
-        // Asegúrate que el panel esté oculto al inicio
-        recipePanel.SetActive(false);
+        //panel oculto al inicio
+      //  HideRecipe();
     }
 
     public void ShowRecipe(CraftingRecipe recipe)
