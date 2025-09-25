@@ -58,7 +58,7 @@ public class PlayerItemHandler : MonoBehaviour
             int viewId = currentItem.GetComponent<PhotonView>().ViewID; // Obtén el ID del PhotonView del objeto que deseas soltar
             Vector3 dropPos = transform.position + transform.forward;
             currentItem.Drop();
-            photonView.RPC("DropItem", RpcTarget.All, viewId, dropPos); // Llama al método RPC para soltar el objeto en todos los clientes
+            photonView.RPC("DropItem", RpcTarget.AllBuffered, viewId, dropPos); // Llama al método RPC para soltar el objeto en todos los clientes
             currentItem = null;
         }
     }
@@ -76,7 +76,7 @@ public class PlayerItemHandler : MonoBehaviour
                 var pickedUp = ipickuppeable.PickUp();
                 int viewId = pickedUp.gameObject.GetComponent<PhotonView>().ViewID; // Obtén el ID del PhotonView del objeto que deseas recoger
 
-                photonView.RPC("SetParent", RpcTarget.All, viewId); // Llama al método RPC para establecer el padre del objeto en todos los clientes
+                photonView.RPC("SetParent", RpcTarget.AllBuffered, viewId); // Llama al método RPC para establecer el padre del objeto en todos los clientes
                 currentItem = pickedUp;
 
                 Weapon weapon = pickedUp.GetComponent<Weapon>();

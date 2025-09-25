@@ -12,7 +12,7 @@ public class Platform : MonoBehaviour
     [Header("Receta actual")]
     public CraftingRecipe currentRecipe = null;
 
-    private Dictionary<ItemType, ItemBase> placedItems = new Dictionary<ItemType, ItemBase>();
+   // private Dictionary<ItemType, ItemBase> placedItems = new Dictionary<ItemType, ItemBase>();
     private List<ItemType> totalItems = new List<ItemType>();
     private List<ItemBase> items = new List<ItemBase>();
 
