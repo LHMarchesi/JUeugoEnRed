@@ -160,6 +160,7 @@ MonoBehaviour:
   allRecipes:
   - {fileID: 11400000, guid: faa872922cb68d04bbef042d0387c85f, type: 2}
   - {fileID: 11400000, guid: 815d9559fe2a69d4e926ce00b843e9bd, type: 2}
+  view: {fileID: 4147864585453536272}
 --- !u!65 &4147864585453536274
 BoxCollider:
   m_ObjectHideFlags: 0

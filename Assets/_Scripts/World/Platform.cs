@@ -19,37 +19,40 @@ public class Platform : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (currentRecipe == null) return;
-
-        ItemBase item = other.GetComponent<ItemBase>();
-        if (item != null)
+        if (PhotonNetwork.IsMasterClient)
         {
-            // Chequear el holder segun el tipo
-            item.Drop(); // Soltar el item si estaba en mano
-            Transform targetHolder = null;
-            switch (item.stats.type)
+            if (currentRecipe == null) return;
+
+            ItemBase item = other.GetComponent<ItemBase>();
+            if (item != null)
             {
-                case ItemType.down: targetHolder = downHolder; break;
-                case ItemType.middle: targetHolder = middleHolder; break;
-                case ItemType.top: targetHolder = topHolder; break;
+                // Chequear el holder segun el tipo
+                item.Drop(); // Soltar el item si estaba en mano
+                Transform targetHolder = null;
+                switch (item.stats.type)
+                {
+                    case ItemType.down: targetHolder = downHolder; break;
+                    case ItemType.middle: targetHolder = middleHolder; break;
+                    case ItemType.top: targetHolder = topHolder; break;
+                }
+
+                if (targetHolder != null)
+                {
+                    Rigidbody rb = item.GetComponent<Rigidbody>();
+                    if (rb != null) rb.isKinematic = true;
+
+                    //Vector3 originalScale = item.transform.localScale;
+
+                    item.transform.SetParent(targetHolder, true);
+                    item.transform.localPosition = Vector3.zero;
+                    //item.transform.localScale = originalScale;
+
+                    totalItems.Add(item.stats.type);
+                    items.Add(item);
+
+                }
+                Debug.Log(items.Count + " items gameobject " + totalItems.Count + " items enums");
             }
-
-            if (targetHolder != null)
-            {
-                Rigidbody rb = item.GetComponent<Rigidbody>();
-                if (rb != null) rb.isKinematic = true;
-
-                //Vector3 originalScale = item.transform.localScale;
-
-                item.transform.SetParent(targetHolder, true);
-                item.transform.localPosition = Vector3.zero;
-                //item.transform.localScale = originalScale;
-
-                totalItems.Add(item.stats.type);
-                items.Add(item);
-
-            }
-            Debug.Log(items.Count + " items gameobject " + totalItems.Count + " items enums");
         }
     }
 
@@ -68,44 +71,47 @@ public class Platform : MonoBehaviour
             if (!totalItems.Contains(required.type)) return false;
 
             //if (placedItems[required.type].stats != required)
-                //return false; // mismo tipo pero distinto item
+            //return false; // mismo tipo pero distinto item
         }
         return true;
     }
 
     public void TryCraft()
     {
-        if (HasAllPieces())
+        if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.Instantiate(currentRecipe.finalItemPrefab.name,
-                        craftedItemSpawn.position + Vector3.up * 2,
-                        Quaternion.identity);
+            if (HasAllPieces())
+            {
+                PhotonNetwork.Instantiate(currentRecipe.finalItemPrefab.name,
+                            craftedItemSpawn.position + Vector3.up * 2,
+                            Quaternion.identity);
 
-            ClearPlatform();
-        }
-        else
-        {
-            Debug.Log(" Piezas incorrectas, se destruye todo.");
-            ClearPlatform();
+                ClearPlatform();
+            }
+            else
+            {
+                Debug.Log(" Piezas incorrectas, se destruye todo.");
+                ClearPlatform();
+            }
         }
     }
 
     private void ClearPlatform()
     {
 
-        for (int i = 0; i < totalItems.Count; i++) 
+        for (int i = 0; i < totalItems.Count; i++)
         {
             Destroy(items[i].gameObject);
         }
-            /*if (kvp.Value != null)
+        /*if (kvp.Value != null)
+        {
+            ObjectPooler pool = kvp.Value.GetPool();
+            if (pool != null)
             {
-                ObjectPooler pool = kvp.Value.GetPool();
-                if (pool != null)
-                {
-                    pool.ReleaseObject(kvp.Value.gameObject);
-                }
+                pool.ReleaseObject(kvp.Value.gameObject);
             }
-            */
+        }
+        */
         items.Clear();
         totalItems.Clear();
         //placedItems.Clear();

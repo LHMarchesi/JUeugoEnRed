@@ -1,10 +1,11 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class KidCard : ItemBase
 {
     public CraftingRecipe[] allRecipes;
     CraftingRecipe currentRecipe;
-
+    public PhotonView view;
     private void Start()
     {
         if (allRecipes.Length == 0)
@@ -13,8 +14,8 @@ public class KidCard : ItemBase
             return;
         }
 
-        int index = Random.Range(0, allRecipes.Length);
-        currentRecipe = allRecipes[index];
+        view.RPC("SetRecipe", RpcTarget.AllBuffered);
+        
     }
 
     public override ItemBase PickUp()
@@ -34,5 +35,11 @@ public class KidCard : ItemBase
     public CraftingRecipe GetCurrentRecipe()
     {
         return currentRecipe;
+    }
+    [PunRPC]
+    private void SetRecipe()
+    {
+        int index = Random.Range(0, allRecipes.Length);
+        currentRecipe = allRecipes[index];
     }
 }
