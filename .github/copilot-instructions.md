@@ -4,11 +4,11 @@
 - Active scene:
   - Name: Game
   - Tags:
-    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, PickUp
+    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, PickUp, Bullet
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Ground, Water, UI, Platform
 - Active game object:
-  - Name: giftbox
+  - Name: Trigger
   - Tag: Untagged
-  - Layer: Default
+  - Layer: Platform
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

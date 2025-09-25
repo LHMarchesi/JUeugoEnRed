@@ -13,6 +13,8 @@ public class Platform : MonoBehaviour
     public CraftingRecipe currentRecipe = null;
 
     private Dictionary<ItemType, ItemBase> placedItems = new Dictionary<ItemType, ItemBase>();
+    private List<ItemType> totalItems = new List<ItemType>();
+    private List<ItemBase> items = new List<ItemBase>();
 
 
     private void OnTriggerEnter(Collider other)
@@ -43,8 +45,11 @@ public class Platform : MonoBehaviour
                 item.transform.localPosition = Vector3.zero;
                 //item.transform.localScale = originalScale;
 
-                placedItems[item.stats.type] = item;
+                totalItems.Add(item.stats.type);
+                items.Add(item);
+
             }
+            Debug.Log(items.Count + " items gameobject " + totalItems.Count + " items enums");
         }
     }
 
@@ -60,10 +65,10 @@ public class Platform : MonoBehaviour
         // Comprobar que todos los items de la receta están presentes
         foreach (var required in currentRecipe.requiredItems)
         {
-            if (!placedItems.ContainsKey(required.type)) return false;
+            if (!totalItems.Contains(required.type)) return false;
 
-            if (placedItems[required.type].stats != required)
-                return false; // mismo tipo pero distinto item
+            //if (placedItems[required.type].stats != required)
+                //return false; // mismo tipo pero distinto item
         }
         return true;
     }
@@ -87,9 +92,11 @@ public class Platform : MonoBehaviour
 
     private void ClearPlatform()
     {
-        foreach (var kvp in placedItems)
+
+        for (int i = 0; i < totalItems.Count; i++) 
         {
-            Destroy(kvp.Value.gameObject);
+            Destroy(items[i].gameObject);
+        }
             /*if (kvp.Value != null)
             {
                 ObjectPooler pool = kvp.Value.GetPool();
@@ -99,8 +106,10 @@ public class Platform : MonoBehaviour
                 }
             }
             */
-        }
-        placedItems.Clear();
+        items.Clear();
+        totalItems.Clear();
+        //placedItems.Clear();
+        Debug.Log(items.Count + " items gameobject " + totalItems.Count + " items enums");
     }
 
     public void SetRecipe(CraftingRecipe recipe)

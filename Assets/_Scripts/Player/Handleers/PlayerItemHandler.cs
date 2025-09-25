@@ -94,7 +94,6 @@ public class PlayerItemHandler : MonoBehaviour
         PhotonView view = PhotonView.Find(viewId);
         if (view != null)
         {
-            Debug.Log("Setting parent for " + viewId);
             var item = view.gameObject;
             item.transform.SetParent(itemHolder);
             item.GetComponent<Rigidbody>().isKinematic = true;
