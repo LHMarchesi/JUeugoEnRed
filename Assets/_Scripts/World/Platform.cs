@@ -9,13 +9,15 @@ public class Platform : MonoBehaviour
     public Transform craftedItemSpawn;
 
     [Header("Receta actual")]
-    public CraftingRecipe currentRecipe;
+    public CraftingRecipe currentRecipe = null;
 
     private Dictionary<ItemType, ItemBase> placedItems = new Dictionary<ItemType, ItemBase>();
 
 
     private void OnTriggerEnter(Collider other)
     {
+        if (currentRecipe == null) return;
+
         ItemBase item = other.GetComponent<ItemBase>();
         if (item != null)
         {
@@ -103,17 +105,5 @@ public class Platform : MonoBehaviour
     public void SetRecipe(CraftingRecipe recipe)
     {
         currentRecipe = recipe;
-        ClearPlatform();
-    }
-}
-
-public class RecipeTrigger : MonoBehaviour
-{
-    public Platform platform;
-  
-    private void OnTriggerEnter(Collider other)
-    {
-        KidCard kidCard = other.GetComponent<KidCard>();
-        platform.SetRecipe(kidCard.GetCurrentRecipe());
     }
 }
