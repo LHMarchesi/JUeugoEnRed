@@ -4,11 +4,11 @@
 - Active scene:
   - Name: Game
   - Tags:
-    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, PickUp, Bullet
+    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, PickUp
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Ground, Water, UI, Platform
 - Active game object:
-  - Name: Plataforma de Crafteo (2)
+  - Name: giftbox
   - Tag: Untagged
-  - Layer: Platform
+  - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
