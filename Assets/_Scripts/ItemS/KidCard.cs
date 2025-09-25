@@ -30,4 +30,9 @@ public class KidCard : ItemBase
     {
         UIPlayerManager.Instance.HideRecipe();
     }
+
+    public CraftingRecipe GetCurrentRecipe()
+    {
+        return currentRecipe;
+    }
 }

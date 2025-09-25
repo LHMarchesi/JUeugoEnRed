@@ -13,7 +13,7 @@ public class Platform : MonoBehaviour
 
     private Dictionary<ItemType, ItemBase> placedItems = new Dictionary<ItemType, ItemBase>();
 
-    
+
     private void OnTriggerEnter(Collider other)
     {
         ItemBase item = other.GetComponent<ItemBase>();
@@ -98,5 +98,22 @@ public class Platform : MonoBehaviour
             */
         }
         placedItems.Clear();
+    }
+
+    public void SetRecipe(CraftingRecipe recipe)
+    {
+        currentRecipe = recipe;
+        ClearPlatform();
+    }
+}
+
+public class RecipeTrigger : MonoBehaviour
+{
+    public Platform platform;
+  
+    private void OnTriggerEnter(Collider other)
+    {
+        KidCard kidCard = other.GetComponent<KidCard>();
+        platform.SetRecipe(kidCard.GetCurrentRecipe());
     }
 }

@@ -2,12 +2,13 @@
 - Project name: JUeugoEnRed
 - Unity version: Unity 2021.3.16f1
 - Active scene:
+  - Name: Game
   - Tags:
-    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, PickUp
+    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, PickUp, Bullet
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Ground, Water, UI, Platform
 - Active game object:
-  - Name: Plataforma de Crafteo
+  - Name: Plataforma de Crafteo (2)
   - Tag: Untagged
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
