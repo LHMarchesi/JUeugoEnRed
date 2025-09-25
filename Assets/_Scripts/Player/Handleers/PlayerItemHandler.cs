@@ -71,8 +71,7 @@ public class PlayerItemHandler : MonoBehaviour
         if (Physics.Raycast(rayOrigin, cam.transform.forward, out RaycastHit hit, interactDistance, interactableMask))
         {
             Ipickuppeable ipickuppeable = hit.collider.GetComponent<Ipickuppeable>();
-
-            if (ipickuppeable != null)
+             if (ipickuppeable != null)
             {
                 var pickedUp = ipickuppeable.PickUp();
                 int viewId = pickedUp.gameObject.GetComponent<PhotonView>().ViewID; // Obtén el ID del PhotonView del objeto que deseas recoger
@@ -80,6 +79,11 @@ public class PlayerItemHandler : MonoBehaviour
                 photonView.RPC("SetParent", RpcTarget.All, viewId); // Llama al método RPC para establecer el padre del objeto en todos los clientes
                 currentItem = pickedUp;
 
+                Weapon weapon = pickedUp.GetComponent<Weapon>();
+                if (weapon != null)
+                {
+                    EquipWeapon(weapon);
+                }
             }
         }
     }
@@ -101,7 +105,7 @@ public class PlayerItemHandler : MonoBehaviour
 
     public void EquipWeapon(Weapon weapon)
     {
+        weapon.PickUp();
         weapon.playerCamera = cam; // referencia de la cámara del jugador
-        weapon.canAttack = true;
     }
 }

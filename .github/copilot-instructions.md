@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Ground, Water, UI, Platform
 - Active game object:
-  - Name: Trigger
+  - Name: Plataforma de Crafteo (2)
   - Tag: Untagged
-  - Layer: Default
+  - Layer: Platform
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

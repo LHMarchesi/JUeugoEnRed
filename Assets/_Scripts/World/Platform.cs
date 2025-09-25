@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Photon.Pun;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Platform : MonoBehaviour
@@ -71,7 +72,7 @@ public class Platform : MonoBehaviour
     {
         if (HasAllPieces())
         {
-            Instantiate(currentRecipe.finalItemPrefab,
+            PhotonNetwork.Instantiate(currentRecipe.finalItemPrefab.name,
                         craftedItemSpawn.position + Vector3.up * 2,
                         Quaternion.identity);
 
