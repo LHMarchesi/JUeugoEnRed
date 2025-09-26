@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using UnityEngine;
 
 public class KidCard : ItemBase
@@ -13,9 +14,13 @@ public class KidCard : ItemBase
             Debug.LogError("No hay recetas cargadas");
             return;
         }
+        if (PhotonNetwork.IsMasterClient)
+        {
+            int index = UnityEngine.Random.Range(0, allRecipes.Length);
+            Debug.Log($"[Master] Enviando receta índice: {index}");
+            view.RPC("SetRecipe", RpcTarget.AllBuffered, index);
+        }
 
-        view.RPC("SetRecipe", RpcTarget.AllBuffered);
-        
     }
 
     public override ItemBase PickUp()
@@ -37,9 +42,8 @@ public class KidCard : ItemBase
         return currentRecipe;
     }
     [PunRPC]
-    private void SetRecipe()
+    private void SetRecipe(int index)
     {
-        int index = Random.Range(0, allRecipes.Length);
         currentRecipe = allRecipes[index];
     }
 }
