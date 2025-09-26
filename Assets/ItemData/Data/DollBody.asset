@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: DollBody
   m_EditorClassIdentifier: 
   type: 2
+  itemID: 2
   itemName: Doll Body
   description: 

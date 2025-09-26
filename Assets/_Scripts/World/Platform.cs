@@ -11,8 +11,8 @@ public class Platform : MonoBehaviour
 
     [Header("Receta actual")]
     public CraftingRecipe currentRecipe = null;
+    public RecipeTrigger recipeTrigger;
 
-   // private Dictionary<ItemType, ItemBase> placedItems = new Dictionary<ItemType, ItemBase>();
     private List<ItemType> totalItems = new List<ItemType>();
     private List<ItemBase> items = new List<ItemBase>();
 
@@ -21,7 +21,9 @@ public class Platform : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            if (currentRecipe == null) return;
+            if (recipeTrigger.craftingRecipeOnTrigger == null) return;
+
+            currentRecipe = recipeTrigger.craftingRecipeOnTrigger;
 
             ItemBase item = other.GetComponent<ItemBase>();
             if (item != null)
@@ -41,11 +43,9 @@ public class Platform : MonoBehaviour
                     Rigidbody rb = item.GetComponent<Rigidbody>();
                     if (rb != null) rb.isKinematic = true;
 
-                    //Vector3 originalScale = item.transform.localScale;
-
                     item.transform.SetParent(targetHolder, true);
                     item.transform.localPosition = Vector3.zero;
-                    //item.transform.localScale = originalScale;
+                    item.transform.localRotation = targetHolder.rotation;
 
                     totalItems.Add(item.stats.type);
                     items.Add(item);

@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Doll
   m_EditorClassIdentifier: 
   type: 0
+  itemID: 4
   itemName: Doll
   description: 

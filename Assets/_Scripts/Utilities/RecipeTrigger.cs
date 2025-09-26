@@ -2,15 +2,38 @@
 
 public class RecipeTrigger : MonoBehaviour
 {
-    [SerializeField]private Platform platform;
-   
+    public CraftingRecipe craftingRecipeOnTrigger;
+    public GameObject cardHolded;
+
     private void OnTriggerEnter(Collider other)
     {
         KidCard kidCard = other.GetComponent<KidCard>();
-        platform.SetRecipe(kidCard.GetCurrentRecipe());
+        if (kidCard != null)
+        {
+            cardHolded = kidCard.gameObject;
+            craftingRecipeOnTrigger = kidCard.GetCurrentRecipe();
+        }
+
     }
     private void OnTriggerExit(Collider other)
     {
-        platform.SetRecipe(null);
+        craftingRecipeOnTrigger = null;
+        cardHolded = null;
+    }
+
+    public int GetFinalItemID()
+    {
+        KidCard kidCard = cardHolded.GetComponent<KidCard>();
+        GameObject finalItemPrefab = kidCard.GetCurrentRecipe().finalItemPrefab;
+
+        return finalItemPrefab.GetComponent<ItemBase>().stats.itemID;
+    }
+
+    public void DestroyCard()
+    {
+        if (cardHolded != null)
+        {
+            Destroy(cardHolded);
+        }
     }
 }

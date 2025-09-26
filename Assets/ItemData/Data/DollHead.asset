@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: DollHead
   m_EditorClassIdentifier: 
   type: 3
+  itemID: 3
   itemName: Doll Head
   description: 
