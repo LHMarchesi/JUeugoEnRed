@@ -6,6 +6,7 @@ public class HandleInputs : MonoBehaviour
     private Vector2 move, look;
     private float isAttacking, isRunning, isJumping, isInteracting;
     private float isDroping;
+    [SerializeField] private PlayerInput playerInput;
 
     public void OnMove(InputAction.CallbackContext context) // Catch player input
     {
@@ -53,4 +54,12 @@ public class HandleInputs : MonoBehaviour
     public bool IsRunning() { return isRunning == 1f; }
 
     public bool IsJumping() { return isJumping == 1f; }
+
+    public void SetPaused(bool paused)
+    {
+        if (paused)
+            playerInput.DeactivateInput();
+        else
+            playerInput.ActivateInput();
+    }
 }

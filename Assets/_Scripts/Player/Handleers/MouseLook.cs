@@ -8,12 +8,14 @@ public class MouseLook : MonoBehaviour
     private float xRotation = 0f;
 
     private PhotonView photonView;
+    private PlayerContext context;
     private Camera cam;
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         photonView = GetComponentInParent<PhotonView>();
+        context = GetComponentInParent<PlayerContext>();
        
         cam = GetComponent<Camera>();
         if(!photonView.IsMine)
@@ -26,8 +28,8 @@ public class MouseLook : MonoBehaviour
     {
         if (photonView.IsMine)
         {
-            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+            float mouseX = context.HandleInputs.GetLookVector2().x * mouseSensitivity * Time.deltaTime;
+            float mouseY = context.HandleInputs.GetLookVector2().y * mouseSensitivity * Time.deltaTime;
 
             xRotation -= mouseY;
             xRotation = Mathf.Clamp(xRotation, -90f, 90f);

@@ -446,7 +446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7cd4a47f018ace4c9a976f2bb4e3b11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 400
+  mouseSensitivity: 100
   playerBody: {fileID: 5965534513173771891}
 --- !u!1 &5965534511344816566
 GameObject:
@@ -658,7 +658,7 @@ GameObject:
   - component: {fileID: 7153734321146413182}
   m_Layer: 0
   m_Name: PlayerPrefab
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -958,6 +958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ed2563454209041a17e7443f9585d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInput: {fileID: 149342847}
 --- !u!114 &1443384244293282979
 MonoBehaviour:
   m_ObjectHideFlags: 0
