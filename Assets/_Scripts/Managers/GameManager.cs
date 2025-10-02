@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public enum GameStates
@@ -19,6 +20,9 @@ public class GameStateMachine
 
     public void ChangeState(IGameState state)
     {
+        if (currentState?.GetType() == state.GetType())
+            return;
+
         currentState?.Exit();
         currentState = state;
         UnityEngine.Debug.Log(state);
@@ -40,9 +44,9 @@ public class GameManager : Singleton<GameManager>
         base.Awake();
         DontDestroyOnLoad(gameObject);
 
-        gameStateMachine = new GameStateMachine();
         int currentBuildIndex = SceneManager.GetActiveScene().buildIndex;
 
+        gameStateMachine = new GameStateMachine();
         switch (currentBuildIndex)
         {
             case 0:
@@ -86,8 +90,7 @@ public class GameState : IGameState
 {
     public void Enter()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Debug.Log("Entered GameState");
     }
 
     public void Exit()
@@ -105,11 +108,12 @@ public class GameState : IGameState
 
 public class PauseState : IGameState
 {
-    PlayerContext playerContext;
     public void Enter()
     {
-        playerContext = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerContext>();
+        Debug.Log("Entered PauseState");
+        var playerContext = PlayerContext.LocalPlayer;
         playerContext.HandleInputs.SetPaused(true);
+        playerContext.PlayerUI.TogglePauseScreen(true);
 
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
@@ -117,6 +121,8 @@ public class PauseState : IGameState
 
     public void Exit()
     {
+        var playerContext = PlayerContext.LocalPlayer;
+        playerContext.PlayerUI.TogglePauseScreen(false);
         playerContext.HandleInputs.SetPaused(false);
         Cursor.visible = false;
     }

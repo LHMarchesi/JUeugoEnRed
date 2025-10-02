@@ -7,15 +7,12 @@ public class UIPlayerManager : Singleton<UIPlayerManager>
 {
     [Header("Referencias UI")]
     [SerializeField] private GameObject recipePanel;
+    [SerializeField] private GameObject pausePanel;
     [SerializeField] private Image recipeImageUI;
     [SerializeField] private TextMeshProUGUI recipeTextUI;
-    [SerializeField] private PhotonView view;
-
 
     public void ShowRecipe(CraftingRecipe recipe)
     {
-        if (view != null && view.IsMine)
-        {
             if (recipe == null) return;
 
             recipePanel.SetActive(true);
@@ -31,14 +28,27 @@ public class UIPlayerManager : Singleton<UIPlayerManager>
 
             // Imagen
             recipeImageUI.sprite = recipe.recipeIcon;
-        }
     }
 
     public void HideRecipe()
     {
-        if (view != null && view.IsMine)
-        {
             recipePanel.SetActive(false);
-        }
+    }
+
+    public void TogglePauseScreen(bool value)
+    {
+            pausePanel.gameObject.SetActive(value);
+            if (value)
+            {
+                // Mostrar y desbloquear el cursor
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            else
+            {
+                // Ocultar y bloquear el cursor
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
     }
 }
