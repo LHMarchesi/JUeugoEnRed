@@ -45,6 +45,10 @@ public class PlayerItemHandler : MonoBehaviour
         PhotonView view = PhotonView.Find(viewId);  // Encuentra el PhotonView usando el ID
         if (view != null)
         {
+            if (currentItem is KidCard)
+            {
+                UIPlayerManager.Instance.HideRecipe();
+            }
             var item = view.gameObject;
             item.GetComponent<Rigidbody>().isKinematic = false;
             item.transform.SetParent(null);
@@ -75,7 +79,7 @@ public class PlayerItemHandler : MonoBehaviour
             {
                 var pickedUp = ipickuppeable.PickUp();
                 int viewId = pickedUp.gameObject.GetComponent<PhotonView>().ViewID; // Obtén el ID del PhotonView del objeto que deseas recoger
-
+               
                 photonView.RPC("SetParent", RpcTarget.AllBuffered, viewId); // Llama al método RPC para establecer el padre del objeto en todos los clientes
                 currentItem = pickedUp;
 
@@ -92,8 +96,15 @@ public class PlayerItemHandler : MonoBehaviour
     private void SetParent(int viewId)  // RPC para establecer el padre del objeto en todos los clientes
     {
         PhotonView view = PhotonView.Find(viewId);
+        Transform parent = view.transform.parent;
         if (view != null)
         {
+            if(parent != null)
+            {
+                Vector3 dropPos = transform.position + transform.forward;
+                currentItem.Drop();
+                photonView.RPC("DropItem", RpcTarget.AllBuffered, viewId, dropPos);
+            }
             var item = view.gameObject;
             item.transform.SetParent(itemHolder);
             item.GetComponent<Rigidbody>().isKinematic = true;

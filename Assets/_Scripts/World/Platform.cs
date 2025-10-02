@@ -12,15 +12,20 @@ public class Platform : MonoBehaviour
     [Header("Receta actual")]
     public CraftingRecipe currentRecipe = null;
     public RecipeTrigger recipeTrigger;
+    public PhotonView view;
 
     private List<ItemType> totalItems = new List<ItemType>();
     private List<ItemBase> items = new List<ItemBase>();
 
+    private void Awake()
+    {
+        view = GetComponent<PhotonView>();
+        Debug.LogAssertion(view != null);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
+        
             if (recipeTrigger.craftingRecipeOnTrigger == null) return;
 
             currentRecipe = recipeTrigger.craftingRecipeOnTrigger;
@@ -28,32 +33,12 @@ public class Platform : MonoBehaviour
             ItemBase item = other.GetComponent<ItemBase>();
             if (item != null)
             {
-                // Chequear el holder segun el tipo
-                item.Drop(); // Soltar el item si estaba en mano
-                Transform targetHolder = null;
-                switch (item.stats.type)
-                {
-                    case ItemType.down: targetHolder = downHolder; break;
-                    case ItemType.middle: targetHolder = middleHolder; break;
-                    case ItemType.top: targetHolder = topHolder; break;
-                }
-
-                if (targetHolder != null)
-                {
-                    Rigidbody rb = item.GetComponent<Rigidbody>();
-                    if (rb != null) rb.isKinematic = true;
-
-                    item.transform.SetParent(targetHolder, true);
-                    item.transform.localPosition = Vector3.zero;
-                    item.transform.localRotation = targetHolder.rotation;
-
-                    totalItems.Add(item.stats.type);
-                    items.Add(item);
-
-                }
-                Debug.Log(items.Count + " items gameobject " + totalItems.Count + " items enums");
+                int viewID = item.gameObject.GetComponent<PhotonView>().ViewID;
+            // Chequear el holder segun el tipo
+            //item.Drop(); // Soltar el item si estaba en mano
+                view.RPC("PutPiece", RpcTarget.AllBuffered, viewID);
             }
-        }
+        
     }
 
     private void Update()
@@ -62,7 +47,7 @@ public class Platform : MonoBehaviour
         topHolder.transform.Rotate(Vector3.up * Time.deltaTime * 20);
         middleHolder.transform.Rotate(Vector3.up * Time.deltaTime * 20);
     }
-
+  
     public bool HasAllPieces()
     {
         // Comprobar que todos los items de la receta están presentes
@@ -78,25 +63,25 @@ public class Platform : MonoBehaviour
 
     public void TryCraft()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
+        
             if (HasAllPieces())
             {
                 PhotonNetwork.Instantiate(currentRecipe.finalItemPrefab.name,
                             craftedItemSpawn.position + Vector3.up * 2,
                             Quaternion.identity);
 
-                ClearPlatform();
+                view.RPC("ClearPlatform", RpcTarget.AllBuffered);
             }
             else
             {
                 Debug.Log(" Piezas incorrectas, se destruye todo.");
-                ClearPlatform();
+                view.RPC("ClearPlatform", RpcTarget.AllBuffered);
             }
-        }
+        
     }
 
-    private void ClearPlatform()
+    [PunRPC]
+    public void ClearPlatform()
     {
 
         for (int i = 0; i < totalItems.Count; i++)
@@ -116,6 +101,36 @@ public class Platform : MonoBehaviour
         totalItems.Clear();
         //placedItems.Clear();
         Debug.Log(items.Count + " items gameobject " + totalItems.Count + " items enums");
+    }
+
+    [PunRPC]
+    public void PutPiece(int ID)
+    {
+        PhotonView view = PhotonView.Find(ID);
+        ItemBase item = view.GetComponent<ItemBase>();
+        Transform targetHolder = null;
+        switch (item.stats.type)
+        {
+            case ItemType.down: targetHolder = downHolder; break;
+            case ItemType.middle: targetHolder = middleHolder; break;
+            case ItemType.top: targetHolder = topHolder; break;
+        }
+
+        if (targetHolder != null)
+        {
+            Rigidbody rb = item.GetComponent<Rigidbody>();
+            if (rb != null) rb.isKinematic = true;
+
+            item.transform.SetParent(targetHolder, true);
+            item.transform.localPosition = Vector3.zero;
+            item.transform.localRotation = targetHolder.rotation;
+
+            totalItems.Add(item.stats.type);
+            items.Add(item);
+
+        }
+        Debug.Log(items.Count + " items gameobject " + totalItems.Count + " items enums");
+
     }
 
     public void SetRecipe(CraftingRecipe recipe)

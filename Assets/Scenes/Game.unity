@@ -840,6 +840,10 @@ PrefabInstance:
       propertyPath: recipeTrigger
       value: 
       objectReference: {fileID: 1573234161}
+    - target: {fileID: 5006982149375592405, guid: 2fbcae447eb12614b95d9424a680649f, type: 3}
+      propertyPath: sceneViewId
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 7208224317480199052, guid: 2fbcae447eb12614b95d9424a680649f, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -1062,6 +1066,10 @@ PrefabInstance:
     - target: {fileID: 4392435827622010794, guid: 2fbcae447eb12614b95d9424a680649f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006982149375592405, guid: 2fbcae447eb12614b95d9424a680649f, type: 3}
+      propertyPath: sceneViewId
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7208224317480199052, guid: 2fbcae447eb12614b95d9424a680649f, type: 3}
       propertyPath: m_Layer
