@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public static class CustomPhysics 
@@ -13,10 +12,10 @@ public static class CustomPhysics
 
     public static bool RectangleCollision(Collider collider1, Collider collider2)
     {
-        if (collider1.bounds.min.x < collider2.bounds.max.x &&
-            collider2.bounds.min.x < collider1.bounds.max.x &&
-            collider1.bounds.min.x < collider2.bounds.max.x &&
-            collider2.bounds.min.x < collider1.bounds.max.x)
+        if (collider1.bounds.min.y < collider2.bounds.max.y &&
+            collider2.bounds.min.y < collider1.bounds.max.y &&
+            collider1.bounds.min.y < collider2.bounds.max.y &&
+            collider2.bounds.min.y < collider1.bounds.max.y)
             return true;
 
         return false;

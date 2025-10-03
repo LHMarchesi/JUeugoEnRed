@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Ground, Water, UI, Platform
 - Active game object:
-  - Name: Main Camera
-  - Tag: MainCamera
+  - Name: Ball
+  - Tag: Untagged
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
