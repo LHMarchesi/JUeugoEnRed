@@ -96,15 +96,8 @@ public class PlayerItemHandler : MonoBehaviour
     private void SetParent(int viewId)  // RPC para establecer el padre del objeto en todos los clientes
     {
         PhotonView view = PhotonView.Find(viewId);
-        Transform parent = view.transform.parent;
         if (view != null)
         {
-            if(parent != null)
-            {
-                Vector3 dropPos = transform.position + transform.forward;
-                currentItem.Drop();
-                photonView.RPC("DropItem", RpcTarget.AllBuffered, viewId, dropPos);
-            }
             var item = view.gameObject;
             item.transform.SetParent(itemHolder);
             item.GetComponent<Rigidbody>().isKinematic = true;

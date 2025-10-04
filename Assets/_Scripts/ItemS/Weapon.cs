@@ -48,7 +48,7 @@ public class Weapon : ItemBase, Iweapon
 
         if (Physics.Raycast(ray, out hit, attackRange, hitMask))
         {
-            Platform platform = hit.collider.GetComponent<Platform>();
+            Platform platform = hit.collider.GetComponentInParent<Platform>();
             if (platform != null)
             {
                 platform.TryCraft();
