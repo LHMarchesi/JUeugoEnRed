@@ -32,7 +32,7 @@ public class LobbyManager : MonoBehaviour
         ConnectionManager.Instance.JoinLobby();
 
         ConnectionManager.Instance.OnJoinedRoomEvent += HandleJoinedRoom;
-        ConnectionManager.Instance.OnNewRoomCreated += UpdateRoomListUI;
+       // ConnectionManager.Instance.OnNewRoomCreated += UpdateRoomListUI;
     }
 
     private void HandleJoinedRoom()
@@ -42,10 +42,10 @@ public class LobbyManager : MonoBehaviour
         Instantiate(playerUiPrefab, playerLaoyout.transform);
         roomNameText.text = "Room Name: " + roomInputField.text;
 
-        if (ConnectionManager.Instance.GetCurrentRoom().PlayerCount == 2)
-        {
-            playButton.interactable = true;
-        }
+     //   if (ConnectionManager.Instance.GetCurrentRoom().PlayerCount == 2)
+       // {
+         //   playButton.interactable = true;
+        //}
     }
 
     private void HandleCreateRoom()
