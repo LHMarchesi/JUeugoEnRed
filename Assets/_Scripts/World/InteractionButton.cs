@@ -1,11 +1,12 @@
-using UnityEngine;
 using Photon.Pun;
 using System.Collections;
+using UnityEngine;
 
-public class LeverScript : MonoBehaviourPun, IInteractive
+public class InteractionButton : MonoBehaviourPun, IInteractive
 {
     private bool isOn = false;
     private bool isBusy = false;
+    public Material greenMaterial;
 
     public bool IsOn { get => isOn; private set { } }
 
@@ -15,25 +16,24 @@ public class LeverScript : MonoBehaviourPun, IInteractive
         if (!photonView.IsMine) return;
 
         isBusy = true;
-        photonView.RPC("ToggleLever", RpcTarget.AllBuffered, true);
-        StartCoroutine(LeverSequence());
-        Debug.Log("Interaction");
+        photonView.RPC("ToggleInteraction", RpcTarget.AllBuffered, true);
+        StartCoroutine(InteractionSequence());
     }
 
-    private IEnumerator LeverSequence()
+    private IEnumerator InteractionSequence()
     {
         // Mantiene la caja abierta 2 segundos
         yield return new WaitForSecondsRealtime(2f);
 
-        photonView.RPC("ToggleLever", RpcTarget.AllBuffered, false);
+        photonView.RPC("ToggleInteraction", RpcTarget.AllBuffered, false);
         isBusy = false;
     }
 
     [PunRPC]
-    private void ToggleLever(bool value)
+    private void ToggleInteraction(bool value)
     {
         isOn = value;
-
+        gameObject.GetComponent<Renderer>().material = greenMaterial;
         // animator.SetBool("isOn", isOn);
     }
 }

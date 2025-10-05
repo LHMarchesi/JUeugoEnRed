@@ -4,7 +4,7 @@ using Photon.Pun;
 public class GiftboxScript : MonoBehaviour
 {
     public RecipeTrigger recipeTrigger;
-    public LeverScript lever;
+    public InteractionButton lever;
     private bool isOpen;
     [SerializeField] private GameObject receiverFeedback;
     [SerializeField] private Material greenMaterial;

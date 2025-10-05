@@ -1564,6 +1564,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameText: {fileID: 1390448197562134838}
+  photonView: {fileID: 0}
 --- !u!1 &6564840008186155164
 GameObject:
   m_ObjectHideFlags: 0
