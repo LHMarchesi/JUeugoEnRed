@@ -42,6 +42,10 @@ MonoBehaviour:
   - SetPareent
   - SetParent
   - DropItem
+  - SetRecipe
+  - ClearPlatform
+  - PutPiece
+  - ToggleLever
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

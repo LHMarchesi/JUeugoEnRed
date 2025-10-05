@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public interface Iweapon
@@ -5,16 +6,16 @@ public interface Iweapon
     void Attack();
 }
 
-public class Weapon : Item, Iweapon
+public class Weapon : ItemBase, Iweapon
 {
     [Header("Weapon Stats")]
     public float attackRange = 3f;
     public LayerMask hitMask;
-
     public bool canAttack;
     public Camera playerCamera;
+    private PhotonView view;
 
-    public override Item PickUp()
+    public override ItemBase PickUp()
     {
         canAttack = true;
         return this;
@@ -25,11 +26,15 @@ public class Weapon : Item, Iweapon
         base.Drop();
         canAttack = false;
     }
+    private void Start()
+    {
+        view = GetComponent<PhotonView>();
+    }
 
     private void Update()
     {
         // Detectar click izquierdo
-        if (Input.GetMouseButtonDown(0) && canAttack)
+        if (Input.GetMouseButtonDown(0) && canAttack )
         {
             Attack();
         }
@@ -37,12 +42,13 @@ public class Weapon : Item, Iweapon
 
     public void Attack()
     {
+
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, attackRange, hitMask))
         {
-            Platform platform = hit.collider.GetComponent<Platform>();
+            Platform platform = hit.collider.GetComponentInParent<Platform>();
             if (platform != null)
             {
                 platform.TryCraft();

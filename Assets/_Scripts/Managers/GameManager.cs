@@ -1,0 +1,166 @@
+using Photon.Pun;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+public enum GameStates
+{
+    MainMenu, Pause, Game, Win, Lose
+}
+public interface IGameState
+{
+    public void Enter();
+    public void Update();
+    public void Exit();
+}
+
+public class GameStateMachine
+{
+    public IGameState CurrentState { get => currentState; private set { } }
+
+    private IGameState currentState;
+
+    public void ChangeState(IGameState state)
+    {
+        if (currentState?.GetType() == state.GetType())
+            return;
+
+        currentState?.Exit();
+        currentState = state;
+        UnityEngine.Debug.Log(state);
+        currentState?.Enter();
+    }
+
+    public void Update()
+    {
+        currentState?.Update();
+    }
+}
+
+public class GameManager : Singleton<GameManager>
+{
+    GameStateMachine gameStateMachine;
+
+    public override void Awake()
+    {
+        base.Awake();
+        DontDestroyOnLoad(gameObject);
+
+        int currentBuildIndex = SceneManager.GetActiveScene().buildIndex;
+
+        gameStateMachine = new GameStateMachine();
+        switch (currentBuildIndex)
+        {
+            case 0:
+                gameStateMachine.ChangeState(new MainMenuState());
+                break;
+            case 1:
+                gameStateMachine.ChangeState(new GameState());
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void Update()
+    {
+        gameStateMachine.Update();
+    }
+
+    public void ChangeGameState(IGameState state)
+    {
+        gameStateMachine.ChangeState(state);
+    }
+}
+
+public class MainMenuState : IGameState
+{
+    public void Enter()
+    {
+    }
+
+    public void Exit()
+    {
+    }
+
+    public void Update()
+    {
+    }
+}
+
+public class GameState : IGameState
+{
+    public void Enter()
+    {
+        Debug.Log("Entered GameState");
+    }
+
+    public void Exit()
+    {
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.Instance.ChangeGameState(new PauseState());
+        }
+    }
+}
+
+public class PauseState : IGameState
+{
+    public void Enter()
+    {
+        Debug.Log("Entered PauseState");
+        var playerContext = PlayerContext.LocalPlayer;
+        playerContext.HandleInputs.SetPaused(true);
+        playerContext.PlayerUI.TogglePauseScreen(true);
+
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+    }
+
+    public void Exit()
+    {
+        var playerContext = PlayerContext.LocalPlayer;
+        playerContext.PlayerUI.TogglePauseScreen(false);
+        playerContext.HandleInputs.SetPaused(false);
+        Cursor.visible = false;
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.Instance.ChangeGameState(new GameState());
+        }
+    }
+}
+public class LoseState : IGameState
+{
+    public void Enter()
+    {
+    }
+
+    public void Exit()
+    {
+    }
+
+    public void Update()
+    {
+    }
+}
+
+public class WinState : IGameState
+{
+    public void Enter()
+    {
+    }
+
+    public void Exit()
+    {
+    }
+
+    public void Update()
+    {
+    }
+}

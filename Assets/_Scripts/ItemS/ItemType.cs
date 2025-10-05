@@ -1,4 +1,4 @@
 public enum ItemType
 {
-    none, down, middle, top
+    none, down, middle, top, KidCard
 }
