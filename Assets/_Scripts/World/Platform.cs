@@ -20,7 +20,6 @@ public class Platform : MonoBehaviour
     private void Awake()
     {
         view = GetComponent<PhotonView>();
-        Debug.LogAssertion(view != null);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -129,8 +128,6 @@ public class Platform : MonoBehaviour
             items.Add(item);
 
         }
-        Debug.Log(items.Count + " items gameobject " + totalItems.Count + " items enums");
-
     }
 
     public void SetRecipe(CraftingRecipe recipe)
