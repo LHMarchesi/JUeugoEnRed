@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using UnityEngine;
 
 public class PlayerItemHandler : MonoBehaviour
@@ -29,7 +30,7 @@ public class PlayerItemHandler : MonoBehaviour
         {
             if (playerContext.HandleInputs.IsInteracting())
             {
-                TryPickup();
+                TryInteract();
             }
 
             if (playerContext.HandleInputs.DropInput())
@@ -67,19 +68,28 @@ public class PlayerItemHandler : MonoBehaviour
         }
     }
 
-    void TryPickup()
+    void TryInteract()
     {
         if (currentItem != null) return;
 
         Vector3 rayOrigin = cam.transform.position + cam.transform.forward * 0.5f;
         if (Physics.Raycast(rayOrigin, cam.transform.forward, out RaycastHit hit, interactDistance, interactableMask))
         {
+
+            IInteractive interactable = hit.collider.GetComponent<IInteractive>();
+            if (interactable != null)
+            {
+                interactable.Interact(playerContext);
+                return;
+            }
+
+
             Ipickuppeable ipickuppeable = hit.collider.GetComponent<Ipickuppeable>();
-             if (ipickuppeable != null)
+            if (ipickuppeable != null)
             {
                 var pickedUp = ipickuppeable.PickUp();
                 int viewId = pickedUp.gameObject.GetComponent<PhotonView>().ViewID; // Obtén el ID del PhotonView del objeto que deseas recoger
-               
+
                 photonView.RPC("SetParent", RpcTarget.AllBuffered, viewId); // Llama al método RPC para establecer el padre del objeto en todos los clientes
                 currentItem = pickedUp;
 

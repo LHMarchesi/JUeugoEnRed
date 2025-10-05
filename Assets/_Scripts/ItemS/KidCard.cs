@@ -9,15 +9,9 @@ public class KidCard : ItemBase
     public PhotonView view;
     private void Start()
     {
-        if (allRecipes.Length == 0)
-        {
-            Debug.LogError("No hay recetas cargadas");
-            return;
-        }
         if (PhotonNetwork.IsMasterClient)
         {
             int index = UnityEngine.Random.Range(0, allRecipes.Length);
-            Debug.Log($"[Master] Enviando receta índice: {index}");
             view.RPC("SetRecipe", RpcTarget.AllBuffered, index);
         }
 
