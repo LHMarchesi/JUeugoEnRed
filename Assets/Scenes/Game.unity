@@ -3796,6 +3796,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1907378719}
     m_Modifications:
+    - target: {fileID: 1588045178341277958, guid: 8a50481abcfceab40ae9dfac2e8913ec, type: 3}
+      propertyPath: lever
+      value: 
+      objectReference: {fileID: 1588045178416180168}
     - target: {fileID: 1588045178416180172, guid: 8a50481abcfceab40ae9dfac2e8913ec, type: 3}
       propertyPath: sceneViewId
       value: 15
@@ -3855,6 +3859,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1588045178642089905, guid: 8a50481abcfceab40ae9dfac2e8913ec, type: 3}
   m_PrefabInstance: {fileID: 1588045178416180166}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1588045178416180168 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1588045178416180170, guid: 8a50481abcfceab40ae9dfac2e8913ec, type: 3}
+  m_PrefabInstance: {fileID: 1588045178416180166}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d041cf6e4867b714f9ce5f50ca5bceab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2107502107285020965
 PrefabInstance:
   m_ObjectHideFlags: 0

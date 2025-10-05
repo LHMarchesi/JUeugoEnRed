@@ -4,7 +4,8 @@ using Photon.Pun;
 public class GiftboxScript : MonoBehaviour
 {
     public RecipeTrigger recipeTrigger;
-    private bool checkBoxOpen = false;
+    public LeverScript lever;
+    private bool isOpen;
     [SerializeField] private GameObject receiverFeedback;
     [SerializeField] private Material greenMaterial;
     [SerializeField] private Material redMaterial;
@@ -16,42 +17,59 @@ public class GiftboxScript : MonoBehaviour
         defaultMaterial = receiverFeedback.GetComponent<Renderer>().material;
     }
 
-
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
-        Debug.Log("entró al Giftbox: " + other.name);
-        if (!checkBoxOpen) return;
-
-        Ipickuppeable ipickuppeable = other.GetComponent<Ipickuppeable>();
-        if (ipickuppeable != null)
+        if (lever.IsOn & !isOpen)
         {
-            ItemBase item = other.GetComponent<ItemBase>();
-            if (item.stats.itemID == recipeTrigger.GetFinalItemID())  // Se coloca el Item correcto, destrulle la carta y el item, Suma puntos
-            {
-                UnityEngine.Debug.Log("Item Correcto");
-                PhotonNetwork.Destroy(item.gameObject);
-                receiverFeedback.GetComponent<Renderer>().material = greenMaterial;
-                recipeTrigger.DestroyCard();
-            }
-            else 
-            {
-                UnityEngine.Debug.Log("Item incorrecto");
-                PhotonNetwork.Destroy(item.gameObject);
-                receiverFeedback.GetComponent<Renderer>().material = redMaterial;
-            }
-            Invoke("CloseBox", 2f);
+            OpenBox();
         }
-    }
-
-    public void CloseBox()
-    {
-        receiverFeedback.GetComponent<Renderer>().material = defaultMaterial;
-        checkBoxOpen = false;
     }
 
     public void OpenBox()
     {
+        isOpen = true;
         receiverFeedback.GetComponent<Renderer>().material = blueMaterial;
-        checkBoxOpen = true;
+
+        if (recipeTrigger.cardHolded == null)
+        {
+            Debug.Log("Falta Chrismas Card");
+            receiverFeedback.GetComponent<Renderer>().material = redMaterial;
+            Invoke("CloseBox", 2f);
+            return;
+        }
+
+        // Detectar ítems dentro del área
+        Collider[] items = Physics.OverlapBox(transform.position, transform.localScale / 2, Quaternion.identity);
+
+        foreach (Collider itemCollider in items)
+        {
+            Ipickuppeable ipickuppeable = itemCollider.GetComponent<Ipickuppeable>();
+            if (ipickuppeable != null)
+            {
+                ItemBase item = itemCollider.GetComponent<ItemBase>();
+
+                if (item.stats.itemID == recipeTrigger.GetFinalItemID())
+                {
+                    Debug.Log("Item Correcto");
+                    PhotonNetwork.Destroy(item.gameObject);
+                    receiverFeedback.GetComponent<Renderer>().material = greenMaterial;
+                    recipeTrigger.DestroyCard();
+                }
+                else
+                {
+                    Debug.Log("Item Incorrecto");
+                    PhotonNetwork.Destroy(item.gameObject);
+                    receiverFeedback.GetComponent<Renderer>().material = redMaterial;
+                }
+            }
+        }
+
+        Invoke("CloseBox", 2f);
     }
+    public void CloseBox()
+    {
+        receiverFeedback.GetComponent<Renderer>().material = defaultMaterial;
+        isOpen = false;
+    }
+
 }

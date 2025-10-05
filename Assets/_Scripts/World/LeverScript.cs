@@ -4,9 +4,10 @@ using System.Collections;
 
 public class LeverScript : MonoBehaviourPun, IInteractive
 {
-    [SerializeField] private GiftboxScript linkedGiftBox;
     private bool isOn = false;
     private bool isBusy = false;
+
+    public bool IsOn { get => isOn; private set { } }
 
     public void Interact(PlayerContext player)
     {
@@ -33,16 +34,6 @@ public class LeverScript : MonoBehaviourPun, IInteractive
     {
         isOn = value;
 
-        if (isOn)
-        {
-            linkedGiftBox.OpenBox();
-        }
-        else
-        {
-            linkedGiftBox.CloseBox();
-        }
-
-        // Si tienes animador:
         // animator.SetBool("isOn", isOn);
     }
 }
