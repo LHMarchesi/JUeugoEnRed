@@ -10,14 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e5a74d394f0d0940bcd0671c6431f45, type: 3}
-  m_Name: RobbotRecipe
+  m_Name: RobotRecipe 1
   m_EditorClassIdentifier: 
   recipeName: Robot
   recipeIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  finalItemPrefab: {fileID: 4728191493843396538, guid: 4c5fdafdb78895d4d8a2e6f886b429e6, type: 3}
+  finalItemPrefab: {fileID: 4728191493843396538, guid: 5b215f3fa14d9b944b9f516abec94864, type: 3}
   requiredItems:
-  - {fileID: 11400000, guid: bd6b87811b5c3af4c81a90d9dbcd937a, type: 2}
-  - {fileID: 11400000, guid: cbdbb4d9175de2d499686757c8797dfb, type: 2}
-  - {fileID: 11400000, guid: bf1996f005c5a6f4eac110ccc0eabc2a, type: 2}
-  - {fileID: 11400000, guid: bf1996f005c5a6f4eac110ccc0eabc2a, type: 2}
-  - {fileID: 11400000, guid: bf1996f005c5a6f4eac110ccc0eabc2a, type: 2}
+  - {fileID: 11400000, guid: 9920c66d58258044984113660c5dc0e4, type: 2}
+  - {fileID: 11400000, guid: 7fa50c578d68c684fbf2bd82108f9dd4, type: 2}
+  - {fileID: 11400000, guid: c012fbf8f14c17e4894bb7404cd691c3, type: 2}

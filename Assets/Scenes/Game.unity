@@ -2048,6 +2048,22 @@ PrefabInstance:
       propertyPath: spawnInterval
       value: 14.2
       objectReference: {fileID: 0}
+    - target: {fileID: 641380640891877864, guid: 60706aba2ec4670469c428018dd1a450, type: 3}
+      propertyPath: prefabs.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 641380640891877864, guid: 60706aba2ec4670469c428018dd1a450, type: 3}
+      propertyPath: prefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 675878460419760456, guid: 217c49da4e6186d428ab453e5c8ae456, type: 3}
+    - target: {fileID: 641380640891877864, guid: 60706aba2ec4670469c428018dd1a450, type: 3}
+      propertyPath: prefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 4854863304163769549, guid: 525dcfb611f61744cb576c78fcbbb36b, type: 3}
+    - target: {fileID: 641380640891877864, guid: 60706aba2ec4670469c428018dd1a450, type: 3}
+      propertyPath: prefabs.Array.data[5]
+      value: 
+      objectReference: {fileID: 6849313183483449730, guid: a67954c8e717f364984fd4aacf22f4f3, type: 3}
     - target: {fileID: 641380640891877865, guid: 60706aba2ec4670469c428018dd1a450, type: 3}
       propertyPath: sceneViewId
       value: 2
@@ -2255,14 +2271,6 @@ PrefabInstance:
     - target: {fileID: 4147864585453536366, guid: 451581ab5be49a1499f48ea76e9327b7, type: 3}
       propertyPath: m_RootOrder
       value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 4147864585453536366, guid: 451581ab5be49a1499f48ea76e9327b7, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.5448105
-      objectReference: {fileID: 0}
-    - target: {fileID: 4147864585453536366, guid: 451581ab5be49a1499f48ea76e9327b7, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.7220192
       objectReference: {fileID: 0}
     - target: {fileID: 4147864585453536366, guid: 451581ab5be49a1499f48ea76e9327b7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3679,6 +3687,22 @@ PrefabInstance:
       propertyPath: spawnInterval
       value: 13.75
       objectReference: {fileID: 0}
+    - target: {fileID: 641380640891877864, guid: 60706aba2ec4670469c428018dd1a450, type: 3}
+      propertyPath: prefabs.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 641380640891877864, guid: 60706aba2ec4670469c428018dd1a450, type: 3}
+      propertyPath: prefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 675878460419760456, guid: 217c49da4e6186d428ab453e5c8ae456, type: 3}
+    - target: {fileID: 641380640891877864, guid: 60706aba2ec4670469c428018dd1a450, type: 3}
+      propertyPath: prefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 4854863304163769549, guid: 525dcfb611f61744cb576c78fcbbb36b, type: 3}
+    - target: {fileID: 641380640891877864, guid: 60706aba2ec4670469c428018dd1a450, type: 3}
+      propertyPath: prefabs.Array.data[5]
+      value: 
+      objectReference: {fileID: 6849313183483449730, guid: a67954c8e717f364984fd4aacf22f4f3, type: 3}
     - target: {fileID: 641380640891877865, guid: 60706aba2ec4670469c428018dd1a450, type: 3}
       propertyPath: sceneViewId
       value: 1
