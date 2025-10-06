@@ -1,7 +1,8 @@
 using UnityEngine;
 using Photon.Pun;
+using System.Collections;
 
-public class GiftboxScript : MonoBehaviour
+public class GiftboxScript : MonoBehaviourPun
 {
     public RecipeTrigger recipeTrigger;
     public InteractionButton lever;
@@ -10,6 +11,7 @@ public class GiftboxScript : MonoBehaviour
     [SerializeField] private Material greenMaterial;
     [SerializeField] private Material redMaterial;
     [SerializeField] private Material blueMaterial;
+    [SerializeField] private LevelManager lvlManager;
     private Material defaultMaterial;
 
 
@@ -22,10 +24,12 @@ public class GiftboxScript : MonoBehaviour
     {
         if (lever.IsOn & !isOpen)
         {
-            OpenBox();
+            photonView.RPC("OpenBox", RpcTarget.AllBuffered);
         }
     }
 
+
+    [PunRPC]
     public void OpenBox()
     {
         isOpen = true;
@@ -35,7 +39,7 @@ public class GiftboxScript : MonoBehaviour
         {
             Debug.Log("Falta Chrismas Card");
             receiverFeedback.GetComponent<Renderer>().material = redMaterial;
-            Invoke("CloseBox", 2f);
+            StartCoroutine(CloseBoxAfterDelay());
             return;
         }
 
@@ -55,25 +59,33 @@ public class GiftboxScript : MonoBehaviour
                     PhotonNetwork.Destroy(item.gameObject);
                     receiverFeedback.GetComponent<Renderer>().material = greenMaterial;
                     recipeTrigger.DestroyCard();
-                    lever.LastInteractedPlayer.ownSocres += recipeTrigger.craftingRecipeOnTrigger.points;
+                    lvlManager.AddPoints(lever.LastInteractedPlayer, recipeTrigger.craftingRecipeOnTrigger.points);
                 }
                 else
                 {
                     Debug.Log("Item Incorrecto");
                     PhotonNetwork.Destroy(item.gameObject);
                     receiverFeedback.GetComponent<Renderer>().material = redMaterial;
-                    
+
                 }
             }
         }
-        Debug.Log(lever.LastInteractedPlayer.ownSocres+ " points");
-        lever.SetlastInteractedPlayerNull();        
-        Invoke("CloseBox", 2f);
+        lever.SetlastInteractedPlayerNull();
+        StartCoroutine(CloseBoxAfterDelay());
     }
+
+
+    [PunRPC]
     public void CloseBox()
     {
         receiverFeedback.GetComponent<Renderer>().material = defaultMaterial;
         isOpen = false;
+    }
+
+    IEnumerator CloseBoxAfterDelay()
+    {
+        yield return new WaitForSecondsRealtime(2f);
+        photonView.RPC("CloseBox", RpcTarget.AllBuffered);
     }
 
 }

@@ -47,6 +47,9 @@ MonoBehaviour:
   - PutPiece
   - ToggleLever
   - ToggleInteraction
+  - UpdateScoreUI
+  - CloseBox
+  - OpenBox
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

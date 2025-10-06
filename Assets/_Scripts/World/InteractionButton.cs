@@ -7,13 +7,19 @@ public class InteractionButton : MonoBehaviourPun, IInteractive
     private bool isOn = false;
     private bool isBusy = false;
     public Material greenMaterial;
+    private Material defaultMaterial;
     PlayerContext lastInteractedPlayer;
     public bool IsOn { get => isOn; private set { } }
+
+    private void Awake()
+    {
+        defaultMaterial = gameObject.GetComponent<Renderer>().material;
+    }
 
     public void Interact(PlayerContext player)
     {
         if (isBusy) return; // evita spam de interacción
-        if (!photonView.IsMine) return;
+
         lastInteractedPlayer = player;
         isBusy = true;
         photonView.RPC("ToggleInteraction", RpcTarget.AllBuffered, true);
@@ -38,7 +44,8 @@ public class InteractionButton : MonoBehaviourPun, IInteractive
     private void ToggleInteraction(bool value)
     {
         isOn = value;
-        gameObject.GetComponent<Renderer>().material = greenMaterial;
+        gameObject.GetComponent<Renderer>().material = isOn ? greenMaterial : defaultMaterial;
+
         // animator.SetBool("isOn", isOn);
     }
 

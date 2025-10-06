@@ -51,9 +51,9 @@ public class ConnectionManager : Singleton<ConnectionManager>
         photonPunManager.LoadSceneForAll(scene);
     }
 
-    public void CreatePlayer(Transform spawnPos)
+    public GameObject CreatePlayer(Transform spawnPos)
     {
-        photonPunManager.InstantiatePlayer(spawnPos);
+        return photonPunManager.InstantiatePlayer(spawnPos);
     }
 
     public void CreateRoom(string roomName)

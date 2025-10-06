@@ -32,9 +32,9 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel(sceneName);
     }
 
-    public void InstantiatePlayer(Transform transform)
+    public GameObject InstantiatePlayer(Transform transform)
     {
-        PhotonNetwork.Instantiate("PlayerPrefab", transform.position, Quaternion.identity);
+        return PhotonNetwork.Instantiate("PlayerPrefab", transform.position, Quaternion.identity);
     }
     public void SetNickname(string nickname)
     {
