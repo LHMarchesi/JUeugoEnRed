@@ -12,6 +12,7 @@ public class GiftboxScript : MonoBehaviour
     [SerializeField] private Material blueMaterial;
     private Material defaultMaterial;
 
+
     private void Start()
     {
         defaultMaterial = receiverFeedback.GetComponent<Renderer>().material;
@@ -54,16 +55,19 @@ public class GiftboxScript : MonoBehaviour
                     PhotonNetwork.Destroy(item.gameObject);
                     receiverFeedback.GetComponent<Renderer>().material = greenMaterial;
                     recipeTrigger.DestroyCard();
+                    lever.LastInteractedPlayer.ownSocres += recipeTrigger.craftingRecipeOnTrigger.points;
                 }
                 else
                 {
                     Debug.Log("Item Incorrecto");
                     PhotonNetwork.Destroy(item.gameObject);
                     receiverFeedback.GetComponent<Renderer>().material = redMaterial;
+                    
                 }
             }
         }
-
+        Debug.Log(lever.LastInteractedPlayer.ownSocres+ " points");
+        lever.SetlastInteractedPlayerNull();        
         Invoke("CloseBox", 2f);
     }
     public void CloseBox()

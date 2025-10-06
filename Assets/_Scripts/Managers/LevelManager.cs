@@ -45,6 +45,6 @@ public class LevelManager : MonoBehaviour
             timerText.text = " Work session ends in " + string.Format("{0:00}:{1:00}", minutes, seconds);
 
         }
-        timerText.text = "Time's up! Game Over.";
+        timerText.text = "Time's up!";
     }
 }

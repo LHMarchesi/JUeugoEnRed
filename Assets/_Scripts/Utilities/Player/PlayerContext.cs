@@ -9,7 +9,7 @@ public class PlayerContext : MonoBehaviour // Save valuable data from the player
     private PlayerController playerController;
     private UIPlayerManager playerUI;
     private PhotonView photonView;
-
+    public int ownSocres;
     public HandleAnimations HandleAnimations { get => handleAnimations; set => handleAnimations = value; }
     public HandleInputs HandleInputs { get => handleInputs; set => handleInputs = value; }
     public PlayerController PlayerController { get => playerController; set => playerController = value; }
