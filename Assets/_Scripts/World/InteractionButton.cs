@@ -22,7 +22,8 @@ public class InteractionButton : MonoBehaviourPun, IInteractive
 
         lastInteractedPlayer = player;
         isBusy = true;
-        photonView.RPC("ToggleInteraction", RpcTarget.AllBuffered, true);
+
+        photonView.RPC("ToggleInteraction", RpcTarget.AllBuffered, true, player.PhotonView.Owner.ActorNumber);
         StartCoroutine(InteractionSequence());
     }
 
@@ -36,18 +37,35 @@ public class InteractionButton : MonoBehaviourPun, IInteractive
         // Mantiene la caja abierta 2 segundos
         yield return new WaitForSecondsRealtime(2f);
 
-        photonView.RPC("ToggleInteraction", RpcTarget.AllBuffered, false);
+        photonView.RPC("ToggleInteraction", RpcTarget.AllBuffered, false, -1);
         isBusy = false;
     }
 
     [PunRPC]
-    private void ToggleInteraction(bool value)
+    private void ToggleInteraction(bool value, int actorNumber)
     {
         isOn = value;
         gameObject.GetComponent<Renderer>().material = isOn ? greenMaterial : defaultMaterial;
 
         // animator.SetBool("isOn", isOn);
+
+        if (actorNumber != -1)
+        {
+            foreach (var playerObj in FindObjectsOfType<PlayerContext>())
+            {
+                if (playerObj.PhotonView.Owner.ActorNumber == actorNumber)
+                {
+                    lastInteractedPlayer = playerObj;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            lastInteractedPlayer = null;
+        }
     }
+
 
     public PlayerContext LastInteractedPlayer { get { return lastInteractedPlayer; } }
 }

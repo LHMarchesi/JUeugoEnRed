@@ -14,7 +14,7 @@ public class LevelManager : MonoBehaviourPun
     [SerializeField] TMP_Text player2PointsTxt;
     [SerializeField] Spawner[] toyMachines;
 
-    private Dictionary<PlayerContext, int> playerScores = new Dictionary<PlayerContext, int>();
+    private Dictionary<int, int> playerScores = new Dictionary<int, int>();
 
     private bool gameStarted = false;
     private Coroutine gameTimer;
@@ -29,7 +29,8 @@ public class LevelManager : MonoBehaviourPun
         TryAddPlayer(context);
 
         // Initialize UI
-        player1PointsTxt.text = $"Player 1 Score: {playerScores[context]}";
+        player1PointsTxt.text = "Player 1 Score: 0";
+        player2PointsTxt.text = "Player 2 Score: 0";
         timerText.text = "Press the button to start the work session";
     }
 
@@ -47,43 +48,66 @@ public class LevelManager : MonoBehaviourPun
 
     public void TryAddPlayer(PlayerContext context)
     {
-        if (context != null && !playerScores.ContainsKey(context))
+        int actorNumber = context.PhotonView.Owner.ActorNumber;
+        if (!playerScores.ContainsKey(actorNumber))
         {
-            playerScores.Add(context, 0);
-        }
-    }
-
-    public void UpdatePlayerScore(PlayerContext playerContext, int newScore)
-    {
-        if (playerContext != null && playerScores.ContainsKey(playerContext))
-        {
-            playerScores[playerContext] = newScore;
-            UpdateScoreUI();
-        }
-        else
-        {
-            Debug.LogWarning("[LevelManager] Tried to update a player that isn't registered.");
+            playerScores.Add(actorNumber, 0);
         }
     }
 
     public void AddPoints(PlayerContext playerContext, int points)
     {
-        if (playerContext != null && playerScores.ContainsKey(playerContext))
+        if (playerContext == null) return;
+
+        int actorNumber = playerContext.PhotonView.Owner.ActorNumber;
+
+        if (PhotonNetwork.IsMasterClient)
         {
-            playerScores[playerContext] += points;
-            UpdateScoreUI();
+            //  El MasterClient mantiene el estado de puntajes
+            if (!playerScores.ContainsKey(actorNumber))
+                playerScores.Add(actorNumber, 0);
+
+            playerScores[actorNumber] += points;
+
+            //  Notificamos a todos los clientes el nuevo puntaje
+            photonView.RPC("RPC_UpdateScores", RpcTarget.AllBuffered, actorNumber, playerScores[actorNumber]);
         }
+        else
+        {
+            //  Si no soy el Master, envío una solicitud para sumar puntos
+            photonView.RPC("RPC_RequestAddPoints", RpcTarget.MasterClient, actorNumber, points);
+        }
+    }
+
+    [PunRPC]
+    private void RPC_RequestAddPoints(int actorNumber, int points)
+    {
+        if (!playerScores.ContainsKey(actorNumber))
+            playerScores.Add(actorNumber, 0);
+
+        playerScores[actorNumber] += points;
+
+        photonView.RPC("RPC_UpdateScores", RpcTarget.AllBuffered, actorNumber, playerScores[actorNumber]);
+    }
+
+    // Actualiza el puntaje en todos los clientes
+    [PunRPC]
+    private void RPC_UpdateScores(int actorNumber, int newScore)
+    {
+        playerScores[actorNumber] = newScore;
+        UpdateScoreUI();
     }
 
     private void UpdateScoreUI()
     {
-        int i = 1;
-        foreach (var kvp in playerScores)
-        {
-            if (i == 1) player1PointsTxt.text = $"Player 1 Score: {kvp.Value}";
-            if (i == 2) player2PointsTxt.text = $"Player 2 Score: {kvp.Value}";
-            i++;
-        }
+        // Obtenemos los dos jugadores ordenados por ActorNumber
+        List<int> sortedKeys = new List<int>(playerScores.Keys);
+        sortedKeys.Sort();
+
+        if (sortedKeys.Count > 0)
+            player1PointsTxt.text = $"Player 1 Score: {playerScores[sortedKeys[0]]}";
+        if (sortedKeys.Count > 1)
+            player2PointsTxt.text = $"Player 2 Score: {playerScores[sortedKeys[1]]}";
     }
 
     IEnumerator GameTimer()

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
 public class RecipeTrigger : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class RecipeTrigger : MonoBehaviour
     {
         if (cardHolded != null)
         {
-            Destroy(cardHolded);
+            PhotonNetwork.Destroy(cardHolded);
         }
     }
 }

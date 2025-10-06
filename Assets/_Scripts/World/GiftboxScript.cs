@@ -13,7 +13,7 @@ public class GiftboxScript : MonoBehaviourPun
     [SerializeField] private Material blueMaterial;
     [SerializeField] private LevelManager lvlManager;
     private Material defaultMaterial;
-
+    private bool hasProcessedThisOpen;
 
     private void Start()
     {
@@ -22,8 +22,9 @@ public class GiftboxScript : MonoBehaviourPun
 
     private void Update()
     {
-        if (lever.IsOn & !isOpen)
+        if (lever.IsOn && !isOpen && !hasProcessedThisOpen)
         {
+            hasProcessedThisOpen = true;
             photonView.RPC("OpenBox", RpcTarget.AllBuffered);
         }
     }
@@ -80,6 +81,7 @@ public class GiftboxScript : MonoBehaviourPun
     {
         receiverFeedback.GetComponent<Renderer>().material = defaultMaterial;
         isOpen = false;
+        hasProcessedThisOpen = false;
     }
 
     IEnumerator CloseBoxAfterDelay()
