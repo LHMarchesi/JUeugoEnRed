@@ -1,9 +1,8 @@
-using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public enum GameStates
 {
-    MainMenu, Pause, Game, Win, Lose
+    MainMenu, Pause, Game, GameOver
 }
 public interface IGameState
 {
@@ -135,22 +134,8 @@ public class PauseState : IGameState
         }
     }
 }
-public class LoseState : IGameState
-{
-    public void Enter()
-    {
-    }
 
-    public void Exit()
-    {
-    }
-
-    public void Update()
-    {
-    }
-}
-
-public class WinState : IGameState
+public class GameOver : IGameState
 {
     public void Enter()
     {

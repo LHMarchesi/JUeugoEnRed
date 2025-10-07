@@ -128,7 +128,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1907378719}
     m_Modifications:
     - target: {fileID: 4728191493843396538, guid: 4c5fdafdb78895d4d8a2e6f886b429e6, type: 3}
       propertyPath: m_Name
@@ -140,19 +140,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4728191493843396546, guid: 4c5fdafdb78895d4d8a2e6f886b429e6, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 4728191493843396546, guid: 4c5fdafdb78895d4d8a2e6f886b429e6, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.26300684
       objectReference: {fileID: 0}
     - target: {fileID: 4728191493843396546, guid: 4c5fdafdb78895d4d8a2e6f886b429e6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -15.25
+      value: -16.808275
       objectReference: {fileID: 0}
     - target: {fileID: 4728191493843396546, guid: 4c5fdafdb78895d4d8a2e6f886b429e6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.7
+      value: 3.4250767
       objectReference: {fileID: 0}
     - target: {fileID: 4728191493843396546, guid: 4c5fdafdb78895d4d8a2e6f886b429e6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -32.92
+      value: -36.026512
       objectReference: {fileID: 0}
     - target: {fileID: 4728191493843396546, guid: 4c5fdafdb78895d4d8a2e6f886b429e6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -184,6 +188,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c5fdafdb78895d4d8a2e6f886b429e6, type: 3}
+--- !u!4 &152206654 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4728191493843396546, guid: 4c5fdafdb78895d4d8a2e6f886b429e6, type: 3}
+  m_PrefabInstance: {fileID: 152206653}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &177146798
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3777,6 +3786,7 @@ Transform:
   - {fileID: 441928278}
   - {fileID: 177146799}
   - {fileID: 1635304595}
+  - {fileID: 152206654}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4763,7 +4773,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2107502107331366486, guid: bae017a12d6071341aaa20c9033853d7, type: 3}
       propertyPath: gameTime
-      value: 300
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2107502107331366486, guid: bae017a12d6071341aaa20c9033853d7, type: 3}
       propertyPath: timerText

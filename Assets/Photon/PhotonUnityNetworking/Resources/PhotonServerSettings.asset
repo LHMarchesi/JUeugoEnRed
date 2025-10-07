@@ -52,6 +52,9 @@ MonoBehaviour:
   - OpenBox
   - RPC_RequestAddPoints
   - RPC_UpdateScores
+  - RPC_RefreshScores
+  - RPC_SyncScores
+  - RPC_ShowWinnerMessage
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
