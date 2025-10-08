@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Photon.Pun;
+using Photon.Realtime;
 
-public class LevelManager : MonoBehaviourPun
+public class LevelManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] Transform spawnPoint;
     [SerializeField] InteractionButton starSesionButton;
@@ -15,22 +16,19 @@ public class LevelManager : MonoBehaviourPun
     [SerializeField] Spawner[] toyMachines;
 
     private Dictionary<int, int> playerScores = new Dictionary<int, int>();
-
     private bool gameStarted = false;
     private Coroutine gameTimer;
 
     void Start()
     {
-        // Spawn player (local one, most likely)
+        // Spawn del jugador local
         GameObject newPlayer = ConnectionManager.Instance.CreatePlayer(spawnPoint);
         PlayerContext context = newPlayer.GetComponent<PlayerContext>();
 
-        // Register them in the dictionary
         TryAddPlayer(context);
 
-        // Initialize UI
-        player1PointsTxt.text = "Player 1 Score: 0";
-        player2PointsTxt.text = "Player 2 Score: 0";
+        player1PointsTxt.gameObject.SetActive(false);
+        player2PointsTxt.gameObject.SetActive(false);
         timerText.text = "Press the button to start the work session";
     }
 
@@ -43,71 +41,11 @@ public class LevelManager : MonoBehaviourPun
 
             foreach (var machine in toyMachines)
                 machine.StartSpawning();
+
+            player1PointsTxt.gameObject.SetActive(true);
+            player2PointsTxt.gameObject.SetActive(true);
+            SyncScoresToAll();
         }
-    }
-
-    public void TryAddPlayer(PlayerContext context)
-    {
-        int actorNumber = context.PhotonView.Owner.ActorNumber;
-        if (!playerScores.ContainsKey(actorNumber))
-        {
-            playerScores.Add(actorNumber, 0);
-        }
-    }
-
-    public void AddPoints(PlayerContext playerContext, int points)
-    {
-        if (playerContext == null) return;
-
-        int actorNumber = playerContext.PhotonView.Owner.ActorNumber;
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-            //  El MasterClient mantiene el estado de puntajes
-            if (!playerScores.ContainsKey(actorNumber))
-                playerScores.Add(actorNumber, 0);
-
-            playerScores[actorNumber] += points;
-
-            //  Notificamos a todos los clientes el nuevo puntaje
-            photonView.RPC("RPC_UpdateScores", RpcTarget.AllBuffered, actorNumber, playerScores[actorNumber]);
-        }
-        else
-        {
-            //  Si no soy el Master, envío una solicitud para sumar puntos
-            photonView.RPC("RPC_RequestAddPoints", RpcTarget.MasterClient, actorNumber, points);
-        }
-    }
-
-    [PunRPC]
-    private void RPC_RequestAddPoints(int actorNumber, int points)
-    {
-        if (!playerScores.ContainsKey(actorNumber))
-            playerScores.Add(actorNumber, 0);
-
-        playerScores[actorNumber] += points;
-
-        photonView.RPC("RPC_UpdateScores", RpcTarget.AllBuffered, actorNumber, playerScores[actorNumber]);
-    }
-
-    // Actualiza el puntaje en todos los clientes
-    [PunRPC]
-    private void RPC_UpdateScores(int actorNumber, int newScore)
-    {
-        playerScores[actorNumber] = newScore;
-        UpdateScoreUI();
-    }
-
-    private void UpdateScoreUI()
-    {
-        // Obtenemos los dos jugadores ordenados por ActorNumber
-        List<int> sortedKeys = new List<int>(playerScores.Keys);
-        sortedKeys.Sort();
-
-        if (sortedKeys.Count > 0)
-            player1PointsTxt.text = $"Player 1 Score: {playerScores[sortedKeys[0]]}";
-        if (sortedKeys.Count > 1)
-            player2PointsTxt.text = $"Player 2 Score: {playerScores[sortedKeys[1]]}";
     }
 
     IEnumerator GameTimer()
@@ -123,6 +61,118 @@ public class LevelManager : MonoBehaviourPun
             timerText.text = $"Work session ends in {minutes:00}:{seconds:00}";
         }
 
-        timerText.text = "Time's up!";
+        timerText.text = "Time's up!";
+
+        if (PhotonNetwork.IsMasterClient)
+            DetermineWinner();
     }
+
+    public void TryAddPlayer(PlayerContext context)
+    {
+        int actorNumber = context.PhotonView.Owner.ActorNumber;
+
+        if (!playerScores.ContainsKey(actorNumber))
+        {
+            playerScores.Add(actorNumber, 0);
+        }
+    }
+
+    public void AddPoints(PlayerContext playerContext, int points)
+    {
+        int actorNumber = playerContext.PhotonView.Owner.ActorNumber;
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (!playerScores.ContainsKey(actorNumber))
+                playerScores.Add(actorNumber, 0);
+
+            playerScores[actorNumber] += points;
+            SyncScoresToAll();
+        }
+        else
+        {
+            photonView.RPC("RPC_RequestAddPoints", RpcTarget.MasterClient, actorNumber, points);
+        }
+    }
+
+    [PunRPC]
+    private void RPC_RequestAddPoints(int actorNumber, int points)
+    {
+        if (!playerScores.ContainsKey(actorNumber))
+            playerScores.Add(actorNumber, 0);
+
+        playerScores[actorNumber] += points;
+        SyncScoresToAll();
+    }
+
+    //  Solo el Master llama a esto
+    private void SyncScoresToAll()
+    {
+        List<string> names = new List<string>();
+        List<int> scores = new List<int>();
+
+        foreach (var p in PhotonNetwork.PlayerList)
+        {
+            int actor = p.ActorNumber;
+            int score = playerScores.ContainsKey(actor) ? playerScores[actor] : 0;
+            names.Add(p.NickName);
+            scores.Add(score);
+        }
+
+        photonView.RPC("RPC_SyncScores", RpcTarget.All, names.ToArray(), scores.ToArray());
+    }
+
+    [PunRPC]
+    private void RPC_SyncScores(string[] playerNames, int[] scores)
+    {
+        // Se actualiza la UI con los datos exactos enviados por el Master
+        if (playerNames.Length > 0)
+            player1PointsTxt.text = $"{playerNames[0]}: {scores[0]}";
+
+        if (playerNames.Length > 1)
+            player2PointsTxt.text = $"{playerNames[1]}: {scores[1]}";
+    }
+
+    private void DetermineWinner()
+    {
+        if (playerScores.Count == 0)
+        {
+            Debug.Log("No players found.");
+            return;
+        }
+
+        List<KeyValuePair<int, int>> sortedScores = new List<KeyValuePair<int, int>>(playerScores);
+        sortedScores.Sort((a, b) => b.Value.CompareTo(a.Value));
+
+        int highestScore = sortedScores[0].Value;
+        List<int> winners = new List<int>();
+
+        foreach (var pair in sortedScores)
+        {
+            if (pair.Value == highestScore)
+                winners.Add(pair.Key);
+            else
+                break;
+        }
+
+
+        if (winners.Count > 1)
+        {
+            photonView.RPC("RPC_ShowWinnerMessage", RpcTarget.All, $"Empate entre {winners.Count} jugadores con {highestScore} puntos.");
+        }
+        else
+        {
+            string winnerName = PhotonNetwork.CurrentRoom.GetPlayer(winners[0]).NickName;
+            photonView.RPC("RPC_ShowWinnerMessage", RpcTarget.All, $"{winnerName} ganó con {highestScore} puntos.");
+        }
+    }
+
+    [PunRPC]
+    private void RPC_ShowWinnerMessage(string message)
+    {
+        Debug.Log(message);
+        timerText.text = message;
+    }
+
+   
 }
