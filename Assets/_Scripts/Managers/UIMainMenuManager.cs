@@ -6,9 +6,11 @@ using UnityEngine.UI;
 public class UIMainMenuManager : MonoBehaviour
 {
     [SerializeField] TMP_InputField playerName;
+    [SerializeField] TextMeshProUGUI playerNameTxt;
     [SerializeField] Button connectButton;
     [SerializeField] Action onConnectButtonClicked;
     [SerializeField] GameObject loadingPanel;
+    [SerializeField] GameObject SearchRoomPanel;
 
     private void Start()
     {
@@ -16,6 +18,8 @@ public class UIMainMenuManager : MonoBehaviour
 
         // Al inicio mostramos panel de loading hasta conectar
         loadingPanel.SetActive(true);
+        playerName.gameObject.SetActive(true);
+        playerNameTxt.gameObject.SetActive(false);
         connectButton.interactable = false;
 
         ConnectionManager.Instance.Init();
@@ -25,7 +29,12 @@ public class UIMainMenuManager : MonoBehaviour
     {
         onConnectButtonClicked?.Invoke();
         ConnectionManager.Instance.SetNickName(playerName.text);
-        ConnectionManager.Instance.JoinOrCreateRoom(GoToGameScene);
+
+        playerNameTxt.gameObject.SetActive(true);
+        playerNameTxt.text = playerName.text;
+
+
+        // ConnectionManager.Instance.JoinOrCreateRoom(GoToGameScene);
     }
 
     private void UnShowLoadingPanel()

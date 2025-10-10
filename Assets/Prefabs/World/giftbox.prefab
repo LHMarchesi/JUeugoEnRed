@@ -625,10 +625,10 @@ GameObject:
   - component: {fileID: 1475422937}
   - component: {fileID: 1475422936}
   - component: {fileID: 1475422935}
-  - component: {fileID: 1588045178416180170}
   - component: {fileID: 1588045178416180172}
+  - component: {fileID: 1588045178416180169}
   m_Layer: 0
-  m_Name: Handle
+  m_Name: InteractionButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -712,19 +712,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1588045178416180170
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1475422933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d041cf6e4867b714f9ce5f50ca5bceab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  linkedGiftBox: {fileID: 1588045178341277958}
 --- !u!114 &1588045178416180172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -747,6 +734,19 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1588045178416180169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475422933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4420008a657e0b947910e71b24cb53f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  greenMaterial: {fileID: 2100000, guid: dc065fcccb5d8254f9c6f1c82e86d7d7, type: 2}
 --- !u!1 &1859249589
 GameObject:
   m_ObjectHideFlags: 0
@@ -856,6 +856,7 @@ GameObject:
   - component: {fileID: 1588045178341278073}
   - component: {fileID: 1588045178341277959}
   - component: {fileID: 1588045178341277958}
+  - component: {fileID: 1588045178416180171}
   m_Layer: 0
   m_Name: GiftReceiver
   m_TagString: Untagged
@@ -904,10 +905,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   recipeTrigger: {fileID: 6924671486368298535}
+  lever: {fileID: 1588045178416180169}
   receiverFeedback: {fileID: 1588045178594406151}
   greenMaterial: {fileID: 2100000, guid: dc065fcccb5d8254f9c6f1c82e86d7d7, type: 2}
   redMaterial: {fileID: 2100000, guid: 28877b50c1a504b458a6157829d98e9a, type: 2}
   blueMaterial: {fileID: 2100000, guid: 7f87199b722c8d94eb71f4e42f6fa136, type: 2}
+  lvlManager: {fileID: 0}
+--- !u!114 &1588045178416180171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588045178341278072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1588045178421961850
 GameObject:
   m_ObjectHideFlags: 0
@@ -1594,8 +1619,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 0.40176314, z: 0.9999999}
+  m_Center: {x: -1.2603518e-10, y: -0.29911825, z: 2.0535884e-17}
 --- !u!114 &6924671486368298535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1671,7 +1696,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8207270464364716077}
   m_LocalRotation: {x: -0.009166084, y: 0.7070472, z: -0.009166084, w: 0.7070476}
-  m_LocalPosition: {x: 2.99, y: 0.593, z: 0.808}
+  m_LocalPosition: {x: 2.99, y: 0.448, z: 0.808}
   m_LocalScale: {x: 1.1679, y: 0.04377, z: 0.91209}
   m_ConstrainProportionsScale: 0
   m_Children:
