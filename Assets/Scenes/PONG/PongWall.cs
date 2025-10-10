@@ -4,7 +4,7 @@ public class PongWall : MonoBehaviour
 {
     public Collider self;
     public SphereCollider ballColl;
-    public Ball ballScript;
+    public ball ballScript;
     public float x;
     public float y;
 

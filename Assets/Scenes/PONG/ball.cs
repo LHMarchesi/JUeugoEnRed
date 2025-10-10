@@ -1,12 +1,13 @@
 using UnityEngine;
 
-public class Ball : MonoBehaviour
+public class ball : MonoBehaviour
 {
     public float speed;
     public Vector2 dir;
     public SphereCollider selfColl;
     public Collider[] players;
     public Transform spawnpoint;
+    public float maxangle = 0;
 
 
     private void Update()
@@ -15,7 +16,8 @@ public class Ball : MonoBehaviour
 
         for (int i = 0; i < players.Length; i++)
         {
-            CustomPhysics.CircleRectangleCollision(players[i], selfColl);
+            if(CustomPhysics.CircleRectangleCollision(players[i], selfColl))
+                PlayerChangeDir(players[i], maxangle);
         }
     }
 
@@ -32,6 +34,7 @@ public class Ball : MonoBehaviour
         Vector2 bounceDir = new Vector2(Mathf.Sin(angleRadiands), Mathf.Cos(angleRadiands));
 
         dir = bounceDir.normalized;
+        dir *= -1;
     }
 
     public void SimpleChangeDir(float x, float y)
