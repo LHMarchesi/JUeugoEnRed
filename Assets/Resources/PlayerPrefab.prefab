@@ -302,7 +302,7 @@ RectTransform:
   m_GameObject: {fileID: 833185531423975459}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.8308, y: 1.8308, z: 1.8308}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2289447283734987221}
@@ -547,7 +547,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Go to menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1823,6 +1823,7 @@ GameObject:
   - component: {fileID: 5289133331212208420}
   - component: {fileID: 8778615002835323543}
   - component: {fileID: 19836262581181948}
+  - component: {fileID: 6873777099506185091}
   m_Layer: 5
   m_Name: Button (1)
   m_TagString: Untagged
@@ -1839,7 +1840,7 @@ RectTransform:
   m_GameObject: {fileID: 6675625027066381497}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.8308, y: 1.8308, z: 1.8308}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3673282403941177404}
@@ -1933,6 +1934,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6873777099506185091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6675625027066381497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 837d2feffab56ad40917938f15064236, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionType: 0
+  parameter: 0
+  OnClickSfx: {fileID: 0}
 --- !u!1 &6789672063971724434
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ public class UIMainMenuManager : MonoBehaviour
     [SerializeField] TMP_InputField playerName;
     [SerializeField] TextMeshProUGUI playerNameTxt;
     [SerializeField] Button connectButton;
+    [SerializeField] Button joinRandomButton;
     [SerializeField] Action onConnectButtonClicked;
     [SerializeField] GameObject loadingPanel;
     [SerializeField] GameObject SearchRoomPanel;
@@ -15,8 +16,11 @@ public class UIMainMenuManager : MonoBehaviour
     private void Start()
     {
         connectButton.onClick.AddListener(HandleConnectClick);
+        joinRandomButton.onClick.AddListener(HandleJoinRandomClick);
 
         // Al inicio mostramos panel de loading hasta conectar
+
+        // Falta detectar si ya estamos conectados para cuando volvemos desde la partida al menu
         loadingPanel.SetActive(true);
         playerName.gameObject.SetActive(true);
         playerNameTxt.gameObject.SetActive(false);
@@ -33,8 +37,11 @@ public class UIMainMenuManager : MonoBehaviour
         playerNameTxt.gameObject.SetActive(true);
         playerNameTxt.text = playerName.text;
 
+    }
 
-        // ConnectionManager.Instance.JoinOrCreateRoom(GoToGameScene);
+    public void HandleJoinRandomClick()
+    {
+         ConnectionManager.Instance.JoinOrCreateRoom(GoToGameScene);
     }
 
     private void UnShowLoadingPanel()
