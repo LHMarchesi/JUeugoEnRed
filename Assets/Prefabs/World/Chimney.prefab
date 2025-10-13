@@ -614,6 +614,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coalSpawnPosition: {fileID: 4953770769894761893}
+  coalPrefab: {fileID: 8363552502617495647, guid: dd8fcefe56fb01a4187a3d8a2c6c49dd, type: 3}
 --- !u!1 &4953770769791919122
 GameObject:
   m_ObjectHideFlags: 0
