@@ -904,13 +904,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 620c646344f757c46bd0277699750e56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
-  dir: {x: -1, y: 0}
+  speed: 2
+  dir: {x: 1, y: 0}
   selfColl: {fileID: 707240887}
   players:
   - {fileID: 2073921016}
   - {fileID: 258397154}
   spawnpoint: {fileID: 173738798}
+  maxangle: 15
 --- !u!1 &811899200
 GameObject:
   m_ObjectHideFlags: 0

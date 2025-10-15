@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 166d2998d65159b4cb95d78535b85ec1, type: 3}
   m_Name: Plastic
   m_EditorClassIdentifier: 
-  type: 3
-  itemID: 12
+  type: 1
+  itemID: 16
   itemName: Plastic
   description: 
