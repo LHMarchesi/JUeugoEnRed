@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Photon.Realtime;
 
 public class ConnectionManager : Singleton<ConnectionManager>
 {
@@ -9,6 +11,9 @@ public class ConnectionManager : Singleton<ConnectionManager>
 
     public Action OnPlayerEnteredRoomEvent;
     public Action OnPlayerLeftRoomEvent;
+
+    private List<RoomInfo> rooms = new List<RoomInfo>();
+
 
     public override void Awake()
     {
@@ -36,6 +41,20 @@ public class ConnectionManager : Singleton<ConnectionManager>
     {
         string currentRoomName = photonPunManager.GetCurrenRoom().Name;
         return currentRoomName != null ? currentRoomName : "No Room";
+    }
+
+    public void JoinSelectedRoom(string roomName)
+    {
+        photonPunManager.JoinRoom(roomName);
+    }
+
+    public List<RoomInfo> GetAllRooms()
+    {
+        return rooms;
+    }
+    private void HandleRoomCreated(List<RoomInfo> rooms)
+    {
+        this.rooms = rooms;
     }
 
     public void JoinOrCreateRoom(Action OnJoinRoom = null)

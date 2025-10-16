@@ -59,10 +59,19 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
         roomOptions.IsOpen = true;
         roomOptions.IsVisible = true;
         roomOptions.EmptyRoomTtl = 100;
+        roomOptions.PlayerTtl = 100000;
+        roomOptions.BroadcastPropsChangeToAll = true;
+
+
 
         PhotonNetwork.CreateRoom(roomName, roomOptions);
     }
-   
+
+    public void JoinRoom(string roomName)
+    {
+        PhotonNetwork.JoinRoom(roomName);
+    }
+
     public void JoinOrCreateRoom(Action OnJoin = null)
     {
         RoomOptions options = new RoomOptions
@@ -75,6 +84,11 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
         // Intenta unirse a una sala aleatoria, si no existe la crea
         OnJoinedRoomEvent = OnJoin;
         PhotonNetwork.JoinRandomOrCreateRoom(null, 0, MatchmakingMode.FillRoom, null, null, null, options);
+    }
+
+    public override void OnJoinedLobby()
+    {
+        
     }
 
     public override void OnJoinedRoom()
