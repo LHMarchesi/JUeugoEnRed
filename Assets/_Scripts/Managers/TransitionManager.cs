@@ -76,7 +76,6 @@ public class TransitionManager : Singleton<TransitionManager>
         yield return null; 
 
         float fadeOutDuration = HandleAnimations.GetCurrentAnimationLength();
-        Debug.Log("Duración FadeOut: " + fadeOutDuration);
         yield return new WaitForSeconds(fadeOutDuration);
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneIndex);

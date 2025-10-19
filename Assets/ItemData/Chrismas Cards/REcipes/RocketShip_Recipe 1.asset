@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e5a74d394f0d0940bcd0671c6431f45, type: 3}
-  m_Name: CarRecipe
+  m_Name: RocketShip_Recipe 1
   m_EditorClassIdentifier: 
-  recipeName: Car
+  recipeName: RocketShip
   recipeIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  finalItemPrefab: {fileID: 121672, guid: 71e3000ee30414d368eeee6d87961b6d, type: 3}
+  finalItemPrefab: {fileID: 100000, guid: 401fae203bae0ee428e401e7f9af9be8, type: 3}
   requiredItems:
   - {fileID: 11400000, guid: 81996b9bb3ced394b9197b4fa7df6207, type: 2}
-  - {fileID: 11400000, guid: 3bf82781dad817b459f1c7a06a869266, type: 2}
-  - {fileID: 11400000, guid: 3bf82781dad817b459f1c7a06a869266, type: 2}
+  - {fileID: 11400000, guid: 81996b9bb3ced394b9197b4fa7df6207, type: 2}
+  - {fileID: 11400000, guid: 02bad393e86c599409276b81e488394b, type: 2}
   points: 5

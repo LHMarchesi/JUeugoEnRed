@@ -25,7 +25,6 @@ public class GameStateMachine
 
         currentState?.Exit();
         currentState = state;
-        UnityEngine.Debug.Log(state);
         currentState?.Enter();
     }
 
