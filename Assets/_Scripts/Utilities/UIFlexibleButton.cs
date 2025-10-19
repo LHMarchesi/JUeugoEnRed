@@ -56,18 +56,20 @@ public class UIFlexibleButton : MonoBehaviour
                 switch (parameter)
                 {
                     case GameStates.MainMenu:
-                        ConnectionManager.Instance.LoadScene(0);
+                        TransitionManager.Instance.PlayTransitionAndLoadScene(TransitionType.FadeOut, 0);
+                        ConnectionManager.Instance.LeaveRoom();
                         GameManager.Instance.ChangeGameState(new MainMenuState());
                         break;
 
                     case GameStates.Game:
-                        ConnectionManager.Instance.LoadScene(1);
+                        TransitionManager.Instance.PlayTransitionAndLoadScene(TransitionType.FadeOut, 1);
                         GameManager.Instance.ChangeGameState(new GameState());
                         break;
                 }
                 break;
 
             case ButtonAction.QuitGame:
+                ConnectionManager.Instance.LeaveRoom();
                 Application.Quit();
                 break;
 
@@ -76,7 +78,7 @@ public class UIFlexibleButton : MonoBehaviour
                 break;
 
             case ButtonAction.RestartGame:
-                ConnectionManager.Instance.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                TransitionManager.Instance.PlayTransitionAndLoadScene(TransitionType.FadeOut, SceneManager.GetActiveScene().buildIndex);
                 GameManager.Instance.ChangeGameState(new GameState());
                 break;
         }

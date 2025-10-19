@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ConnectionManager : Singleton<ConnectionManager>
 {
@@ -44,6 +45,16 @@ public class ConnectionManager : Singleton<ConnectionManager>
             OnJoinedRoomEvent += OnJoinRoom;
 
         photonPunManager.JoinOrCreateRoom(OnJoinRoom);
+    }
+
+    public void LeaveRoom()
+    {
+        photonPunManager.LeaveRoom();
+    }
+
+    public bool IsConnectedToServer()
+    {
+        return photonPunManager.IsConnectedToServer();
     }
 
     public void LoadScene(int scene)
