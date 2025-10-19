@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e5a74d394f0d0940bcd0671c6431f45, type: 3}
-  m_Name: DollRecipe
+  m_Name: Bear_Recipe 1
   m_EditorClassIdentifier: 
-  recipeName: Doll
-  recipeIcon: {fileID: 21300000, guid: 9587663c4d27e47b19a118aabaac4a08, type: 3}
-  finalItemPrefab: {fileID: 4728191493843396538, guid: 4c5fdafdb78895d4d8a2e6f886b429e6, type: 3}
+  recipeName: Bear
+  recipeIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  finalItemPrefab: {fileID: 100000, guid: 401fae203bae0ee428e401e7f9af9be8, type: 3}
   requiredItems:
   - {fileID: 11400000, guid: bd6b87811b5c3af4c81a90d9dbcd937a, type: 2}
-  - {fileID: 11400000, guid: bd6b87811b5c3af4c81a90d9dbcd937a, type: 2}
+  - {fileID: 11400000, guid: e2e2cc719292ac549acd92f8c9d7c88d, type: 2}
   - {fileID: 11400000, guid: cbdbb4d9175de2d499686757c8797dfb, type: 2}
   points: 5
