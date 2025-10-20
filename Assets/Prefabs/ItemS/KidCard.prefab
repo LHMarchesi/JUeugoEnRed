@@ -158,9 +158,12 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 6148a2779e84b0c47922f967b5b5ca35, type: 2}
   isHeld: 0
   allRecipes:
-  - {fileID: 11400000, guid: faa872922cb68d04bbef042d0387c85f, type: 2}
+  - {fileID: 11400000, guid: 67b615947562e1b49b768f9e129a670b, type: 2}
   - {fileID: 11400000, guid: 815d9559fe2a69d4e926ce00b843e9bd, type: 2}
+  - {fileID: 11400000, guid: faa872922cb68d04bbef042d0387c85f, type: 2}
+  - {fileID: 11400000, guid: c6456898e1a6e8f45ab331a8196af25f, type: 2}
   - {fileID: 11400000, guid: 2bb22e63a09439947866cfa8da45c510, type: 2}
+  - {fileID: 11400000, guid: 49595268a6807de43a8ab17edb282973, type: 2}
   view: {fileID: 4147864585453536272}
 --- !u!65 &4147864585453536274
 BoxCollider:

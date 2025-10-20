@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class HandleAnimations : MonoBehaviour
@@ -16,7 +17,15 @@ public class HandleAnimations : MonoBehaviour
         if (currentAnimation == newState) return;
 
         // PLAY THE ANIMATION //
+        animator.Play(newState);
         currentAnimation = newState;
-        animator.CrossFadeInFixedTime(currentAnimation, 0.2f);
     }
+
+    public float GetCurrentAnimationLength()
+    {
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        return stateInfo.length;
+    }
+
+    public Animator GetAnimator() => animator;
 }

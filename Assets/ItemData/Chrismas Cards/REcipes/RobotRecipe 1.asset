@@ -17,6 +17,6 @@ MonoBehaviour:
   finalItemPrefab: {fileID: 4122591433366384056, guid: a3c2bd1dd7d93e443af97f0bc98dd69c, type: 3}
   requiredItems:
   - {fileID: 11400000, guid: e2e2cc719292ac549acd92f8c9d7c88d, type: 2}
-  - {fileID: 11400000, guid: 7fa50c578d68c684fbf2bd82108f9dd4, type: 2}
-  - {fileID: 11400000, guid: 81996b9bb3ced394b9197b4fa7df6207, type: 2}
+  - {fileID: 11400000, guid: 02bad393e86c599409276b81e488394b, type: 2}
+  - {fileID: 11400000, guid: 02bad393e86c599409276b81e488394b, type: 2}
   points: 5

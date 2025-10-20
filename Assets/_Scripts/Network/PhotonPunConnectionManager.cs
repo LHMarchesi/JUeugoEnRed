@@ -51,6 +51,12 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
         UnityEngine.Debug.Log("JoinedLobby");
         PhotonNetwork.JoinLobby();
     }
+    public bool IsConnectedToServer() { return PhotonNetwork.IsConnected; }
+
+    public void LeaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
 
     public void CreateRoom(string roomName)
     {
@@ -62,7 +68,7 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.CreateRoom(roomName, roomOptions);
     }
-   
+
     public void JoinOrCreateRoom(Action OnJoin = null)
     {
         RoomOptions options = new RoomOptions
@@ -102,6 +108,6 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
         OnPlayerLeftRoomEvent?.Invoke();
     }
 
-   
+
 }
 

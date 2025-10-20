@@ -1,3 +1,4 @@
+using Photon.Pun.Demo.Cockpit;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public enum GameStates
@@ -24,7 +25,6 @@ public class GameStateMachine
 
         currentState?.Exit();
         currentState = state;
-        UnityEngine.Debug.Log(state);
         currentState?.Enter();
     }
 
@@ -74,6 +74,8 @@ public class MainMenuState : IGameState
 {
     public void Enter()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
     }
 
     public void Exit()
@@ -89,7 +91,8 @@ public class GameState : IGameState
 {
     public void Enter()
     {
-        Debug.Log("Entered GameState");
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
     }
 
     public void Exit()
