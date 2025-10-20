@@ -1,9 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviourPunCallbacks
 {
@@ -21,16 +22,17 @@ public class LevelManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        // Spawn del jugador local
+        PhotonNetwork.AutomaticallySyncScene = true;
+
         GameObject newPlayer = ConnectionManager.Instance.CreatePlayer(spawnPoint);
         PlayerContext context = newPlayer.GetComponent<PlayerContext>();
-
         TryAddPlayer(context);
 
         player1PointsTxt.gameObject.SetActive(false);
         player2PointsTxt.gameObject.SetActive(false);
         timerText.text = "Press the button to start the work session";
     }
+
 
     void Update()
     {
@@ -174,5 +176,5 @@ public class LevelManager : MonoBehaviourPunCallbacks
         timerText.text = message;
     }
 
-   
+
 }
