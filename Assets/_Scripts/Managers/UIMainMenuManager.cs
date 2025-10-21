@@ -1,8 +1,4 @@
-using Photon.Pun;
-using Photon.Realtime;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,42 +6,34 @@ using UnityEngine.UI;
 public class UIMainMenuManager : MonoBehaviour
 {
     [SerializeField] TMP_InputField playerName;
-    [SerializeField] TMP_InputField roomName;
     [SerializeField] TextMeshProUGUI playerNameTxt;
     [SerializeField] Button connectButton;
     [SerializeField] Button joinRandomButton;
-    [SerializeField] Button createRoomButton;
     [SerializeField] Action onConnectButtonClicked;
-    [SerializeField] GameObject loadingPanel;
-    [SerializeField] GameObject uiRoomObj;
-    [SerializeField] GameObject contentScrollView;
     [SerializeField] GameObject SearchRoomPanel;
 
-    int roomCount;
     private void Start()
     {
         connectButton.onClick.AddListener(HandleConnectClick);
         joinRandomButton.onClick.AddListener(HandleJoinRandomClick);
-        createRoomButton.onClick.AddListener(HandleCreateRoom);
 
         // Al inicio mostramos panel de loading hasta conectar
 
         // Falta detectar si ya estamos conectados para cuando volvemos desde la partida al menu
-        loadingPanel.SetActive(true);
         playerName.gameObject.SetActive(true);
         playerNameTxt.gameObject.SetActive(false);
         connectButton.interactable = false;
 
-        ConnectionManager.Instance.Init();
-        ConnectionManager.Instance.ConnectedToServer(UnShowLoadingPanel);
+
+        if (!ConnectionManager.Instance.IsConnectedToServer())
+        {
+            ConnectionManager.Instance.Init();
+            ConnectionManager.Instance.ConnectedToServer(UnShowLoadingPanel);
+        }
+        else
+            connectButton.interactable = true;
+
     }
-
-    private void HandleCreateRoom()
-    {
-        ConnectionManager.Instance.CreateRoom(roomName.text);
-    }
-
-
     public void HandleConnectClick()
     {
         onConnectButtonClicked?.Invoke();
@@ -58,20 +46,19 @@ public class UIMainMenuManager : MonoBehaviour
 
     public void HandleJoinRandomClick()
     {
-         ConnectionManager.Instance.JoinOrCreateRoom(GoToGameScene);
+        ConnectionManager.Instance.JoinOrCreateRoom(GoToGameScene);
     }
 
     private void UnShowLoadingPanel()
     {
-        loadingPanel.SetActive(false);
+        TransitionManager.Instance.PlayTransition(TransitionType.FadeIn);
         connectButton.interactable = true;
     }
-
 
     public void GoToGameScene()
     {
         Debug.Log("Loading Game Scene...");
-        ConnectionManager.Instance.LoadScene(2);
+        TransitionManager.Instance.PlayTransitionAndLoadScene(TransitionType.FadeOut, 2);
         GameManager.Instance.ChangeGameState(new GameState());
     }
 }

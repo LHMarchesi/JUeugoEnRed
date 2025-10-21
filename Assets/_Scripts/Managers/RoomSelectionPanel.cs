@@ -21,13 +21,13 @@ public class RoomSelectionPanel : MonoBehaviour
     {
         ClearRoomsList();
 
-        List<RoomInfo> allRooms = ConnectionManager.Instance.GetAllRooms();
-        foreach (RoomInfo room in allRooms)
-        {
-            RoomItemUI roomUI = Instantiate(roomUIPrefab, contentTransform);
-            roomUI.SetUp(room.Name, HandleJoinRoomRequest);
-            roomsUI.Add(roomUI);
-        }
+     //   List<RoomInfo> allRooms = ConnectionManager.Instance.GetAllRooms();
+      //  foreach (RoomInfo room in allRooms)
+      //  {
+      //      RoomItemUI roomUI = Instantiate(roomUIPrefab, contentTransform);
+       //     roomUI.SetUp(room.Name, HandleJoinRoomRequest);
+//roomsUI.Add(roomUI);
+      //  }
 
     }
 
@@ -43,6 +43,6 @@ public class RoomSelectionPanel : MonoBehaviour
 
     private void HandleJoinRoomRequest(string roomName)
     {
-        ConnectionManager.Instance.JoinSelectedRoom(roomName);
+       //  ConnectionManager.Instance.JoinSelectedRoom(roomName);
     }
 }
