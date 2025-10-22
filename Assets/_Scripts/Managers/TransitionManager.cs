@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -71,12 +72,15 @@ public class TransitionManager : Singleton<TransitionManager>
             yield break;
 
         isTransitioning = true;
+        PhotonNetwork.IsMessageQueueRunning = false;
 
         HandleAnimations.ChangeAnimationState(type.ToString());
-        yield return null; 
+        yield return null;
 
         float fadeOutDuration = HandleAnimations.GetCurrentAnimationLength();
         yield return new WaitForSeconds(fadeOutDuration);
+
+        //  Pausar recepción de eventos antes de cargar
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneIndex);
         asyncLoad.allowSceneActivation = false;
@@ -86,10 +90,13 @@ public class TransitionManager : Singleton<TransitionManager>
 
         asyncLoad.allowSceneActivation = true;
 
+        //  Reanudar eventos después de cargar
+
         HandleAnimations.ChangeAnimationState(TransitionType.FadeIn.ToString());
-        yield return null; 
         yield return new WaitForSeconds(HandleAnimations.GetCurrentAnimationLength());
 
+        yield return new WaitForSeconds(0.1f);
+        PhotonNetwork.IsMessageQueueRunning = true;
         isTransitioning = false;
     }
 }
