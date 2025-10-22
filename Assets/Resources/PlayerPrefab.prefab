@@ -961,7 +961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7cd4a47f018ace4c9a976f2bb4e3b11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 100
+  mouseSensitivity: 6.5
   playerBody: {fileID: 5965534513173771891}
 --- !u!1 &5965534511344816566
 GameObject:
@@ -1234,11 +1234,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 5965534513173771892}
-  walkingSpeed: 3
-  runningSpeed: 10
-  gravity: -16
+  walkingSpeed: 1.5
+  runningSpeed: 3.2
+  gravity: -9.15
   currentSpeed: 0
-  jumpHeight: 1.5
+  jumpHeight: 0.5
   groundCheck: {fileID: 5965534511767941890}
   groundDistance: 0.4
   groundMask:
@@ -1529,9 +1529,9 @@ MonoBehaviour:
   walkBobAmount: 0.15
   runBobSpeed: 15
   runBobAmount: 0.3
-  baseFOV: 90
-  runFOV: 110
-  fovTransitionSpeed: 10
+  baseFOV: 50
+  runFOV: 64
+  fovTransitionSpeed: 6
 --- !u!95 &1492211050287020913
 Animator:
   serializedVersion: 5

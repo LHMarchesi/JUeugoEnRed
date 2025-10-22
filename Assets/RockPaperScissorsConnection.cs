@@ -17,7 +17,7 @@ public class RockPaperScissorsConnection : MonoBehaviour
         loadingPanel.SetActive(true);
         playButtons.SetActive(false);
         connectButton.interactable = false;
-        ConnectionManager.Instance.Init();
+      //  ConnectionManager.Instance.Init();
         ConnectionManager.Instance.ConnectedToServer(UnShowLoadingPanel);
 
     }
