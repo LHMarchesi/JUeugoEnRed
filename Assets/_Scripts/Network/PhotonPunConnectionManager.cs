@@ -13,12 +13,14 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
     public Action OnPlayerEnteredRoomEvent;
     public Action OnPlayerLeftRoomEvent;
 
-    public void init(Action onJoinRoom, Action onPlayerEnterCallback, Action onPlayerLeftCallback, Action<List<RoomInfo>> onRoomCreated = null)
+    public void Init(Action onJoinRoom, Action<List<RoomInfo>> onRoomCreated,
+       Action onPlayerEnterRomCallback, Action onPlayerLeftCallback)
     {
-        OnJoinedRoomEvent = onJoinRoom;
-        OnNewRoomCreated = onRoomCreated;
-        OnPlayerEnteredRoomEvent = onPlayerEnterCallback;
-        OnPlayerLeftRoomEvent = onPlayerLeftCallback;
+        OnJoinedRoomEvent += onJoinRoom;
+        OnNewRoomCreated += onRoomCreated;
+
+        OnPlayerEnteredRoomEvent += onPlayerEnterRomCallback;
+        OnPlayerLeftRoomEvent += onPlayerLeftCallback;
     }
 
     public void ConnectToServer(Action OnConnect = null)
@@ -29,7 +31,13 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
 
     public void LoadSceneForAll(int sceneName)
     {
+        PhotonNetwork.IsMessageQueueRunning = false; //  Pausamos recepción de mensajes
         PhotonNetwork.LoadLevel(sceneName);
+    }
+
+    public void JoinRoom(string roomName)
+    {
+        PhotonNetwork.JoinRoom(roomName);
     }
 
     public GameObject InstantiatePlayer(Transform transform)
@@ -62,9 +70,11 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
     {
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = 2;
-        roomOptions.IsOpen = true;
         roomOptions.IsVisible = true;
+        roomOptions.IsOpen = true;
         roomOptions.EmptyRoomTtl = 100;
+        roomOptions.PlayerTtl = 100000;
+        roomOptions.BroadcastPropsChangeToAll = true;
 
         PhotonNetwork.CreateRoom(roomName, roomOptions);
     }
@@ -87,6 +97,22 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
     {
         UnityEngine.Debug.Log("Joined Room");
         OnJoinedRoomEvent?.Invoke();
+    }
+
+    public override void OnCreatedRoom()
+    {
+        UnityEngine.Debug.Log("Created Room: " + PhotonNetwork.CurrentRoom.Name);
+    }
+
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        UnityEngine.Debug.Log($"Received room list update. Total rooms: {roomList.Count}");
+        OnNewRoomCreated?.Invoke(roomList);
+    }
+
+    public Dictionary<int, Player> GetPlayersInRoom()
+    {
+        return PhotonNetwork.CurrentRoom.Players;
     }
 
     public override void OnConnectedToMaster()
