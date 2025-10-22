@@ -5,16 +5,19 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: 81bf98a69a3aa204cb84a15215caba8a
   - enabled: 0
     path: Assets/Scenes/Lobby.unity
     guid: 5a3fffe431df8e243bd491734290599d
-  - enabled: 0
-    path: Assets/Scenes/Game.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/RockPapaerScissors/RockPaperScissors.unity
+    path: Assets/Scenes/Lobby-Comedor.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 0
+    path: Assets/Scenes/Others/RockPapaerScissors/RockPaperScissors.unity
     guid: 610c56dd8106e32488d2cfbc6855c456
+  - enabled: 1
+    path: Assets/Scenes/Mapa1.unity
+    guid: d70bd8a0ebd80cb409ee2e89251a58ef
   m_configObjects: {}

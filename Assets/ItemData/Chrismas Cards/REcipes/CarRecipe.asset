@@ -18,5 +18,5 @@ MonoBehaviour:
   requiredItems:
   - {fileID: 11400000, guid: 81996b9bb3ced394b9197b4fa7df6207, type: 2}
   - {fileID: 11400000, guid: 3bf82781dad817b459f1c7a06a869266, type: 2}
-  - {fileID: 11400000, guid: 3bf82781dad817b459f1c7a06a869266, type: 2}
+  - {fileID: 11400000, guid: eebb379d72d735845aeab576acce7322, type: 2}
   points: 5

@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] Transform spawnPoint;
-    [SerializeField] InteractionButton starSesionButton;
+    [SerializeField] InteractionButton startSesionButton;
     [SerializeField] float gameTime = 90f;
     [SerializeField] TMP_Text timerText;
     [SerializeField] TMP_Text player1PointsTxt;
@@ -36,7 +36,7 @@ public class LevelManager : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (starSesionButton.IsOn && !gameStarted)
+        if (startSesionButton.IsOn && !gameStarted)
         {
             gameTimer = StartCoroutine(GameTimer());
             gameStarted = true;
