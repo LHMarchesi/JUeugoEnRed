@@ -56,6 +56,7 @@ MonoBehaviour:
   - RPC_SyncScores
   - RPC_ShowWinnerMessage
   - ReceiveSelectionRPC
+  - RemoveOriginalParent
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

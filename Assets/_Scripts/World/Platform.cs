@@ -108,13 +108,21 @@ public class Platform : MonoBehaviour
         PhotonView view = PhotonView.Find(ID);
         ItemBase item = view.GetComponent<ItemBase>();
         Transform targetHolder = null;
-        switch (item.stats.type)
+       
+        
+        /*switch (item.stats.type)
         {
             case ItemType.down: targetHolder = downHolder; break;
             case ItemType.middle: targetHolder = middleHolder; break;
             case ItemType.top: targetHolder = topHolder; break;
+        }*/
+        switch (items.Count)
+        {
+            case 0: targetHolder = downHolder; break;
+            case 1: targetHolder = middleHolder; break;
+            case 2: targetHolder = topHolder; break;
+            case 3: ClearPlatform(); break;
         }
-
         if (targetHolder != null)
         {
             Rigidbody rb = item.GetComponent<Rigidbody>();
@@ -126,8 +134,10 @@ public class Platform : MonoBehaviour
 
             totalItems.Add(item.stats.type);
             items.Add(item);
-
         }
+
+        
+        
     }
 
     public void SetRecipe(CraftingRecipe recipe)
