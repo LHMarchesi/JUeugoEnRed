@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recipeName: JumpingHorse
   recipeIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  finalItemPrefab: {fileID: 100000, guid: 401fae203bae0ee428e401e7f9af9be8, type: 3}
+  finalItemPrefab: {fileID: 5148221463454116586, guid: 6ed9ed3fd4b6cbb40a9af8fcb9377611, type: 3}
   requiredItems:
   - {fileID: 11400000, guid: 81996b9bb3ced394b9197b4fa7df6207, type: 2}
   - {fileID: 11400000, guid: 81996b9bb3ced394b9197b4fa7df6207, type: 2}

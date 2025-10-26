@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recipeName: Bear
   recipeIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  finalItemPrefab: {fileID: 100000, guid: 401fae203bae0ee428e401e7f9af9be8, type: 3}
+  finalItemPrefab: {fileID: 8974746864920517609, guid: 44de8d04bc0d4ed47bf1443f69d07a1c, type: 3}
   requiredItems:
   - {fileID: 11400000, guid: bd6b87811b5c3af4c81a90d9dbcd937a, type: 2}
   - {fileID: 11400000, guid: e2e2cc719292ac549acd92f8c9d7c88d, type: 2}

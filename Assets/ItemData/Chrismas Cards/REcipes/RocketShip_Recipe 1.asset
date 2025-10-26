@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recipeName: RocketShip
   recipeIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  finalItemPrefab: {fileID: 100000, guid: 401fae203bae0ee428e401e7f9af9be8, type: 3}
+  finalItemPrefab: {fileID: 5013380665928958692, guid: a62b369556cc6bb439e3d34b42386cd4, type: 3}
   requiredItems:
   - {fileID: 11400000, guid: 81996b9bb3ced394b9197b4fa7df6207, type: 2}
   - {fileID: 11400000, guid: 81996b9bb3ced394b9197b4fa7df6207, type: 2}
