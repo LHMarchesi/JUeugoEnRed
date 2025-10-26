@@ -145,3 +145,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 25fcb728d6643ee48b7a25cb22169660, type: 2}
   isHeld: 0
+  lastPlayerHolder: {fileID: 0}
