@@ -2,13 +2,13 @@
 - Project name: JUeugoEnRed
 - Unity version: Unity 2021.3.16f1
 - Active scene:
-  - Name: PlayerPrefab
+  - Name: Mapa1
   - Tags:
-    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, PickUp, Bullet
+    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, PickUp
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Ground, Water, UI, Platform, CraftLayer
 - Active game object:
-  - Name: PlayerPrefab
-  - Tag: Player
+  - Name: Plataforma de Crafteo
+  - Tag: Untagged
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

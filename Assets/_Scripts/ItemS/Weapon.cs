@@ -15,7 +15,7 @@ public class Weapon : ItemBase, Iweapon
     public Camera playerCamera;
     private PhotonView view;
 
-    public override ItemBase PickUp()
+    public override ItemBase PickUp(PlayerItemHandler playerHolder)
     {
         canAttack = true;
         return this;

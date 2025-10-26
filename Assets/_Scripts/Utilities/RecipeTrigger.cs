@@ -4,15 +4,19 @@ using UnityEngine;
 public class RecipeTrigger : MonoBehaviour
 {
     public CraftingRecipe craftingRecipeOnTrigger;
-    public GameObject cardHolded;
+    public KidCard cardHolded;
+    public Transform cardPosition;
 
     private void OnTriggerEnter(Collider other)
     {
         KidCard kidCard = other.GetComponent<KidCard>();
         if (kidCard != null)
         {
-            cardHolded = kidCard.gameObject;
+            cardHolded = kidCard;
             craftingRecipeOnTrigger = kidCard.GetCurrentRecipe();
+            cardHolded.transform.position = cardPosition.position;
+            cardHolded.transform.rotation = cardPosition.rotation;
+            kidCard.lastPlayerHolder.DropHeld();
         }
 
     }
@@ -34,7 +38,7 @@ public class RecipeTrigger : MonoBehaviour
     {
         if (cardHolded != null)
         {
-            PhotonNetwork.Destroy(cardHolded);
+            PhotonNetwork.Destroy(cardHolded.gameObject);
         }
     }
 }

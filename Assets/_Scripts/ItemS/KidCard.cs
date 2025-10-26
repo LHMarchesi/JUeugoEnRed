@@ -5,22 +5,26 @@ using UnityEngine;
 public class KidCard : ItemBase
 {
     public CraftingRecipe[] allRecipes;
-    CraftingRecipe currentRecipe;
+    private CraftingRecipe currentRecipe;
+
     public PhotonView view;
     private void Start()
     {
         if (PhotonNetwork.IsMasterClient)
         {
+            // Asignar receta aleatoria
             int index = UnityEngine.Random.Range(0, allRecipes.Length);
             view.RPC("SetRecipe", RpcTarget.AllBuffered, index);
         }
 
     }
 
-    public override ItemBase PickUp()
+    public override ItemBase PickUp(PlayerItemHandler playerHolder)
     {
-        var pickedUp = base.PickUp();
+        var pickedUp = base.PickUp(playerHolder);
+        PlayerItemHandler lastPlayerHolder = pickedUp.lastPlayerHolder;
 
+        Debug.Log("Last player holder: " + lastPlayerHolder);
         UIPlayerManager.Instance.ShowRecipe(currentRecipe);
 
         return pickedUp;
@@ -35,6 +39,8 @@ public class KidCard : ItemBase
     {
         return currentRecipe;
     }
+
+
     [PunRPC]
     private void SetRecipe(int index)
     {

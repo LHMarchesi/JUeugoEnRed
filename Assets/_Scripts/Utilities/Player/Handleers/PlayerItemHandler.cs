@@ -9,6 +9,7 @@ public class PlayerItemHandler : MonoBehaviour
     [SerializeField] private float interactDistance;
     [SerializeField] private LayerMask interactableMask;
     [SerializeField] private Camera cam;
+    private PlayerItemHandler playerItemHandler;
 
     private ItemBase currentItem;
     private PlayerContext playerContext;
@@ -22,6 +23,7 @@ public class PlayerItemHandler : MonoBehaviour
         {
             cam.enabled = false;
         }
+        Debug.Log("PlayerItemHandler: " + this);
     }
 
     void Update()
@@ -56,7 +58,7 @@ public class PlayerItemHandler : MonoBehaviour
             item.transform.position = dropPos;
         }
     }
-    private void DropHeld()
+    public void DropHeld()
     {
         if (currentItem != null)
         {
@@ -87,7 +89,8 @@ public class PlayerItemHandler : MonoBehaviour
             Ipickuppeable ipickuppeable = hit.collider.GetComponent<Ipickuppeable>();
             if (ipickuppeable != null)
             {
-                var pickedUp = ipickuppeable.PickUp();
+                var pickedUp = ipickuppeable.PickUp(this);
+               
                 int viewId = pickedUp.gameObject.GetComponent<PhotonView>().ViewID; // Obtén el ID del PhotonView del objeto que deseas recoger
                 photonView.RPC("RemoveOriginalParent", RpcTarget.AllBuffered, viewId);
                 photonView.RPC("SetParent", RpcTarget.AllBuffered, viewId); // Llama al método RPC para establecer el padre del objeto en todos los clientes
@@ -118,7 +121,7 @@ public class PlayerItemHandler : MonoBehaviour
 
     public void EquipWeapon(Weapon weapon)
     {
-        weapon.PickUp();
+        weapon.PickUp(this);
         weapon.playerCamera = cam; // referencia de la cámara del jugador
     }
     [PunRPC]
