@@ -25,11 +25,13 @@ public class UILobbyManager : MonoBehaviour
     private void HandleCreateRoomClicked()
     {
         ConnectionManager.Instance.CreateRoom(roomInputField.text);
+        
     }
 
     private void HandleJoinedRoom()
     {
         TransitionManager.Instance.PlayTransitionAndLoadScene(TransitionType.FadeOut, 2);
+        GameManager.Instance.ChangeGameState(new GameState());
     }
 }
 
