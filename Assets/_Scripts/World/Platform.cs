@@ -16,6 +16,7 @@ public class Platform : MonoBehaviour
 
     private List<ItemType> totalItems = new List<ItemType>();
     private List<ItemBase> items = new List<ItemBase>();
+    int index = 0;
 
     private void Awake()
     {
@@ -143,5 +144,12 @@ public class Platform : MonoBehaviour
     public void SetRecipe(CraftingRecipe recipe)
     {
         currentRecipe = recipe;
+    }
+
+    public void ItemOverflow(ItemBase newItem)
+    {
+        ItemBase oldItem = items[index];
+        items[index] = newItem;
+        newItem.transform.position = oldItem.transform.position;
     }
 }

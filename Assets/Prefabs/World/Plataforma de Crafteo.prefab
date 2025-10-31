@@ -195,14 +195,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 445000212}
-  m_LocalRotation: {x: -0.08684101, y: 0.002860295, z: 0.88149506, w: 0.46413037}
-  m_LocalPosition: {x: 0.009, y: 1.51, z: 0}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.009, y: -1.279, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6028242340223675082}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -4.914, y: -8.685, z: 124.837}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1440030383
 GameObject:
   m_ObjectHideFlags: 0
@@ -1150,8 +1150,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7208224317480199052}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.28, z: 0}
-  m_LocalScale: {x: 1.1503, y: 5.7082214, z: 1.1503}
+  m_LocalPosition: {x: -0, y: 18.37, z: 0}
+  m_LocalScale: {x: 1.9717177, y: 9.784406, z: 1.9717177}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 445000213}
@@ -1219,8 +1219,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.34299266, z: 1}
-  m_Center: {x: -2.0770136e-10, y: -0.328503, z: 4.181919e-11}
+  m_Size: {x: 0.17642279, y: 0.34299266, z: 0.25968486}
+  m_Center: {x: 0.02722427, y: -0.32852018, z: 0.023408419}
 --- !u!114 &938888819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1235,7 +1235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   craftingRecipeOnTrigger: {fileID: 0}
   cardHolded: {fileID: 0}
-  cardPosition: {fileID: 6028242340223675082}
+  cardPosition: {fileID: 445000213}
 --- !u!1 &7453335332552552640
 GameObject:
   m_ObjectHideFlags: 0
