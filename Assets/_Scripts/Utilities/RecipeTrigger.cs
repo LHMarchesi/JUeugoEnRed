@@ -5,7 +5,7 @@ public class RecipeTrigger : MonoBehaviour
 {
     public CraftingRecipe craftingRecipeOnTrigger;
     public KidCard cardHolded;
-    public Transform cardPosition;
+    
 
     private void OnTriggerEnter(Collider other)
     {
@@ -14,8 +14,7 @@ public class RecipeTrigger : MonoBehaviour
         {
             cardHolded = kidCard;
             craftingRecipeOnTrigger = kidCard.GetCurrentRecipe();
-            cardHolded.transform.position = cardPosition.position;
-            cardHolded.transform.rotation = cardPosition.rotation;
+           
             kidCard.lastPlayerHolder.DropHeld();
         }
 

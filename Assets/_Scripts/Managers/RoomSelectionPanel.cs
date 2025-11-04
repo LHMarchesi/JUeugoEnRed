@@ -15,6 +15,7 @@ public class RoomSelectionPanel : MonoBehaviour
     void Start()
     {
         refreshButton.onClick.AddListener(PopulateRoomsList);
+        PopulateRoomsList();
     }
 
     //Note: Consider doing this only after the player ask for it
