@@ -10,7 +10,7 @@ public class ConnectionManager : Singleton<ConnectionManager>
     public Action OnJoinedRoom;
 
     public Action OnPlayerEnteredRoom;
-    public Action OnPlayerLeftRoom;
+    public Action<Player> OnPlayerLeftRoom;
 
     private List<RoomInfo> rooms = new List<RoomInfo>();
 
@@ -49,9 +49,9 @@ public class ConnectionManager : Singleton<ConnectionManager>
         OnPlayerEnteredRoom?.Invoke();
     }
 
-    public void HandlePlayerLeftRoom()
+    public void HandlePlayerLeftRoom( Player otherplayer)
     {
-        OnPlayerLeftRoom?.Invoke();
+        OnPlayerLeftRoom?.Invoke(otherplayer);
     }
 
     public void SetNickName(string name)

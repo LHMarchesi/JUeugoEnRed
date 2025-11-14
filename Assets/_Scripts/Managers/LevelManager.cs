@@ -19,6 +19,7 @@ public class LevelManager : MonoBehaviourPunCallbacks
     private Dictionary<int, int> playerScores = new Dictionary<int, int>();
     private bool gameStarted = false;
     private Coroutine gameTimer;
+    private List<int> actornumbers = new List<int>();
 
     void Start()
     {
@@ -31,6 +32,8 @@ public class LevelManager : MonoBehaviourPunCallbacks
         player1PointsTxt.gameObject.SetActive(false);
         player2PointsTxt.gameObject.SetActive(false);
         timerText.text = "Press the button to start the work session";
+
+        ConnectionManager.Instance.OnPlayerLeftRoom += WinByDisconection;
     }
 
 
@@ -48,6 +51,7 @@ public class LevelManager : MonoBehaviourPunCallbacks
             player2PointsTxt.gameObject.SetActive(true);
             SyncScoresToAll();
         }
+
     }
 
     IEnumerator GameTimer()
@@ -76,6 +80,7 @@ public class LevelManager : MonoBehaviourPunCallbacks
         if (!playerScores.ContainsKey(actorNumber))
         {
             playerScores.Add(actorNumber, 0);
+            actornumbers.Add(actorNumber);
         }
     }
 
@@ -174,6 +179,24 @@ public class LevelManager : MonoBehaviourPunCallbacks
     {
         Debug.Log(message);
         timerText.text = message;
+    }
+
+    public void WinByDisconection(Player otherPlayer)
+    {
+        Debug.LogError(otherPlayer.NickName + " disconnecteeeed!!");
+        gameTime = 3;
+        int winner = -1;
+        string nickname = null;
+        foreach (var p in PhotonNetwork.PlayerList)
+        {
+            winner = p.ActorNumber;
+            nickname = p.NickName;
+            if (winner != otherPlayer.ActorNumber)
+                break;
+        }
+
+        UIPlayerManager.Instance.ShowWinScreen(true, nickname + " won by disconection");
+        Debug.Log(nickname + " player id " + winner + " won by disconection");
     }
 
 

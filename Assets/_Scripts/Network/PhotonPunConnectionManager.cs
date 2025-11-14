@@ -11,10 +11,10 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
     public Action<List<RoomInfo>> OnNewRoomCreated;
 
     public Action OnPlayerEnteredRoomEvent;
-    public Action OnPlayerLeftRoomEvent;
+    public Action <Player> OnPlayerLeftRoomEvent;
 
     public void Init(Action onJoinRoom, Action<List<RoomInfo>> onRoomCreated,
-       Action onPlayerEnterRomCallback, Action onPlayerLeftCallback)
+       Action onPlayerEnterRomCallback, Action<Player> onPlayerLeftCallback)
     {
         OnJoinedRoomEvent += onJoinRoom;
         OnNewRoomCreated += onRoomCreated;
@@ -73,7 +73,7 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
         roomOptions.IsVisible = true;
         roomOptions.IsOpen = true;
         roomOptions.EmptyRoomTtl = 100;
-        roomOptions.PlayerTtl = 100000;
+        roomOptions.PlayerTtl = 0;
         roomOptions.BroadcastPropsChangeToAll = true;
 
         PhotonNetwork.CreateRoom(roomName, roomOptions);
@@ -131,7 +131,7 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         UnityEngine.Debug.Log("Player Left Room: " + otherPlayer.NickName);
-        OnPlayerLeftRoomEvent?.Invoke();
+        OnPlayerLeftRoomEvent?.Invoke(otherPlayer);
     }
 
 
