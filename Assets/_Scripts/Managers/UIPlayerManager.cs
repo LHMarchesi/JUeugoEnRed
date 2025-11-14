@@ -12,10 +12,12 @@ public class UIPlayerManager : Singleton<UIPlayerManager>
     [SerializeField] private TextMeshProUGUI winnerNameText;
     [SerializeField] private Image recipeImageUI;
     [SerializeField] private TextMeshProUGUI recipeTextUI;
-    private void Awake()
+    
+    private void Start()
     {
         ShowWinScreen(false);
     }
+
     public void ShowRecipe(CraftingRecipe recipe)
     {
         if (recipe == null) return;
