@@ -20,6 +20,7 @@ public class LevelManager : MonoBehaviourPunCallbacks
     private bool gameStarted = false;
     private Coroutine gameTimer;
     private List<int> actornumbers = new List<int>();
+    private Coroutine gameLeave;
 
     void Start()
     {
@@ -196,8 +197,22 @@ public class LevelManager : MonoBehaviourPunCallbacks
         }
 
         UIPlayerManager.Instance.ShowWinScreen(true, nickname + " won by disconection");
+        gameLeave = StartCoroutine(WaitAndLeaveGame(5f));
         Debug.Log(nickname + " player id " + winner + " won by disconection");
     }
 
+    IEnumerator WaitAndLeaveGame(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        LeaveGame();
+    }
+
+    void LeaveGame()
+    {
+        gameLeave = null;
+        TransitionManager.Instance.PlayTransitionAndLoadScene(TransitionType.FadeOut, 0);
+        ConnectionManager.Instance.photonPunManager.LeaveRoom();
+        GameManager.Instance.ChangeGameState(new GameState());
+    }
 
 }
