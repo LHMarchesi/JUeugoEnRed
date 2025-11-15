@@ -634,6 +634,7 @@ MonoBehaviour:
   winnerNameText: {fileID: 1555931517343549568}
   recipeImageUI: {fileID: 2954239833572338365}
   recipeTextUI: {fileID: 814966710093160848}
+  playerContext: {fileID: 3792738749282506393}
 --- !u!1 &3339742914867117970
 GameObject:
   m_ObjectHideFlags: 0
@@ -1523,7 +1524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 5965534513173771892}
-  walkingSpeed: 1.5
+  walkingSpeed: 3
   runningSpeed: 3.2
   gravity: -9.15
   currentSpeed: 0

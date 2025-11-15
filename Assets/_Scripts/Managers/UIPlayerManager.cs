@@ -12,7 +12,9 @@ public class UIPlayerManager : Singleton<UIPlayerManager>
     [SerializeField] private TextMeshProUGUI winnerNameText;
     [SerializeField] private Image recipeImageUI;
     [SerializeField] private TextMeshProUGUI recipeTextUI;
-    
+    [SerializeField] PlayerContext playerContext;
+
+
     private void Start()
     {
         ShowWinScreen(false);
@@ -41,8 +43,7 @@ public class UIPlayerManager : Singleton<UIPlayerManager>
     {
         winPanel.SetActive(value);
         if (!value) { return; }
-        
-        PlayerContext playerContext = GetComponent<PlayerContext>();
+
         playerContext.HandleInputs.SetPaused(true);
         winnerNameText.text = winnerNickame;
     }

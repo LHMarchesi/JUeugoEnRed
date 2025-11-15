@@ -57,6 +57,15 @@ MonoBehaviour:
   - RPC_ShowWinnerMessage
   - ReceiveSelectionRPC
   - RemoveOriginalParent
+  - RPC_OnPlayerClick
+  - RPC_Kill
+  - RPC_OnClick
+  - CloseMiniGame
+  - OpenMiniGame
+  - RPC_CloseMiniGame
+  - RPC_CreateMiniGame
+  - DestroyUICuca
+  - RPC_KillSimultaneous
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
