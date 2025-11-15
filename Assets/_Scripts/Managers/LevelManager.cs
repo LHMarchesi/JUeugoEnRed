@@ -184,7 +184,7 @@ public class LevelManager : MonoBehaviourPunCallbacks
     public void WinByDisconection(Player otherPlayer)
     {
         Debug.LogError(otherPlayer.NickName + " disconnecteeeed!!");
-        gameTime = 3;
+        StopAllCoroutines();
         int winner = -1;
         string nickname = null;
         foreach (var p in PhotonNetwork.PlayerList)
