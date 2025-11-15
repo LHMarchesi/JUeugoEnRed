@@ -7,20 +7,52 @@ using UnityEngine.EventSystems;
 public class UIInteractionPanel : MonoBehaviourPun, IPointerClickHandler
 {
     public RectTransform canvasRect;
-   public UIMartilloAnimator martilloAnimator;
-    public List<UICucaracha> cucarachas = new List<UICucaracha>();
+    public UIMartilloAnimator martilloAnimator;
+    public RectTransform[] spawnPoints;
+    public List<UICucaracha> cucarachasList = new List<UICucaracha>();
 
     private List<(int actor, UICucaracha cuc)> hitBuffer = new();
     private float bufferWindow = 0.1f;
+    private int cucasToSpawn = 3;
+
+    private void Start()
+    {
+        if (PhotonNetwork.IsMasterClient)
+            SpawnCucas();
+    }
+
+    void SpawnCucas()
+    {
+        for (int i = 0; i < cucasToSpawn; i++)
+        {
+            int idx = Random.Range(0, spawnPoints.Length);
+
+            // 1. Siempre instanciar en 0
+            GameObject go = PhotonNetwork.Instantiate("UICucaracha", Vector3.zero, Quaternion.identity);
+
+            // 2. SetParent correcto
+            go.transform.SetParent(canvasRect, false);
+
+            // 3. El master asigna el spawn real
+            if (PhotonNetwork.IsMasterClient)
+            {
+                RectTransform r = go.GetComponent<RectTransform>();
+                r.anchoredPosition = spawnPoints[idx].anchoredPosition;
+            }
+
+            UICucaracha cuc = go.GetComponent<UICucaracha>();
+            cucarachasList.Add(cuc);
+        }
+    }
+
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvasRect, eventData.position, eventData.pressEventCamera, out var localPoint)) return;
+        Vector2 pos = eventData.position;
 
         // chequeo si tocó una cucaracha
         UICucaracha cucHit = null;
-        foreach (var cuc in cucarachas)
+        foreach (var cuc in cucarachasList)
         {
             if (!cuc.IsAlive) continue;
             if (RectTransformUtility.RectangleContainsScreenPoint(cuc.rect, eventData.position))
@@ -33,18 +65,32 @@ public class UIInteractionPanel : MonoBehaviourPun, IPointerClickHandler
 
         int actor = PhotonNetwork.LocalPlayer.ActorNumber;
 
-        photonView.RPC("RPC_OnClick", RpcTarget.All, actor, localPoint.x, localPoint.y, cucHit ? cucHit.ID : -1);
+        photonView.RPC("RPC_OnClick", RpcTarget.All, actor, pos.x, pos.y, cucHit ? cucHit.view.ViewID : -1);
     }
 
+
     [PunRPC]
-    void RPC_OnClick(int actor, float x, float y, int cucID)
+    IEnumerator RPC_OnClick(int actor, float x, float y, int cucViewID)
     {
-        UICucaracha cuc = cucID >= 0 ? cucarachas[cucID] : null;
+        while (!gameObject.activeInHierarchy)
+            yield return null;
+
+        Debug.Log("Click recibido en todos los jugadores");
+
+        UICucaracha cuc = null;
+
+        if (cucViewID >= 0)
+        {
+            PhotonView pv = PhotonView.Find(cucViewID);
+            if (pv != null)
+            {
+                cuc = pv.GetComponent<UICucaracha>();
+            }
+        }
 
         hitBuffer.Add((actor, cuc));
         StartCoroutine(ProcessBuffer(x, y));
     }
-
     private IEnumerator ProcessBuffer(float x, float y)
     {
         yield return new WaitForSeconds(bufferWindow);
