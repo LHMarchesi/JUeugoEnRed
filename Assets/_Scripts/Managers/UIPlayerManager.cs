@@ -9,13 +9,17 @@ public class UIPlayerManager : Singleton<UIPlayerManager>
     [SerializeField] private GameObject recipePanel;
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject winPanel;
+    [SerializeField] private GameObject miniGamePanel;
     [SerializeField] private TextMeshProUGUI winnerNameText;
     [SerializeField] private Image recipeImageUI;
     [SerializeField] private TextMeshProUGUI recipeTextUI;
-    
+    [SerializeField] PlayerContext playerContext;
+
+
     private void Start()
     {
         ShowWinScreen(false);
+        ShowMinigame(false);
     }
 
     public void ShowRecipe(CraftingRecipe recipe)
@@ -41,8 +45,7 @@ public class UIPlayerManager : Singleton<UIPlayerManager>
     {
         winPanel.SetActive(value);
         if (!value) { return; }
-        
-        PlayerContext playerContext = GetComponent<PlayerContext>();
+
         playerContext.HandleInputs.SetPaused(true);
         winnerNameText.text = winnerNickame;
     }
@@ -50,6 +53,14 @@ public class UIPlayerManager : Singleton<UIPlayerManager>
     public void HideRecipe()
     {
         recipePanel.SetActive(false);
+    }
+
+    public void ShowMinigame(bool value)
+    {
+        miniGamePanel.SetActive(value);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = value;
+        playerContext.HandleInputs.SetPaused(value);
     }
 
     public void TogglePauseScreen(bool value)
