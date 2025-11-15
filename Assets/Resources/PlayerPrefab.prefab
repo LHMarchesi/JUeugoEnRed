@@ -151,7 +151,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1188406373}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.555, y: 0, z: 0.62}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -629,6 +629,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recipePanel: {fileID: 109581767808753709}
   pausePanel: {fileID: 6909210893438713560}
+  winPanel: {fileID: 0}
+  winnerNameText: {fileID: 0}
   recipeImageUI: {fileID: 2954239833572338365}
   recipeTextUI: {fileID: 814966710093160848}
 --- !u!1 &3339742914867117970
@@ -1253,14 +1255,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5965534512567566609}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3, z: 1.5}
+  m_LocalRotation: {x: 0.06526306, y: -0.11303845, z: 0.70105743, w: 0.7010575}
+  m_LocalPosition: {x: -0.07, y: 0.15, z: 1.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5965534513173771891}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 14.477, y: -3.967, z: 89.496}
 --- !u!114 &625559362515869338
 MonoBehaviour:
   m_ObjectHideFlags: 0
