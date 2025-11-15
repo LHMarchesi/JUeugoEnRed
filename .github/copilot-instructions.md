@@ -6,9 +6,9 @@
   - Tags:
     - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, PickUp
   - Layers:
-    - Default, TransparentFX, Ignore Raycast, Ground, Water, UI, Platform, CraftLayer
+    - Default, TransparentFX, Ignore Raycast, Ground, Water, UI, Platform, CraftLayer, Cucaracha
 - Active game object:
-  - Name: UIManager
+  - Name: AimCanvas 
   - Tag: Untagged
   - Layer: UI
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
