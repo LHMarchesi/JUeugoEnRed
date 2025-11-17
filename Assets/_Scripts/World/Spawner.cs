@@ -3,34 +3,66 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviourPunCallbacks
 {
+    [Header("Spawn Settings")]
     public Transform spawnPoint;
-    public bool canSpawn;
-    public float spawnInterval;
+    public int maxObjects = 15;
+
+    [Header("Interval Settings")]
+    public float minInitialInterval;
+    public float maxInitialInterval;
+
+    public float minIntervalIncrease;
+    public float maxIntervalIncrease;
+
+    [Header("Prefabs")]
     public GameObject[] prefabs;
+
+    private int spawnedCount = 0;
+    private float currentInterval;
 
     void Start()
     {
         if (!PhotonNetwork.IsMasterClient)
             return;
 
-        if (canSpawn)
-        {
-            StartSpawning();
-        }
-    }
+        // Intervalo inicial aleatorio
+        currentInterval = Random.Range(minInitialInterval, maxInitialInterval);
+     }
 
     public void StartSpawning()
     {
-        InvokeRepeating(nameof(SpawnObject), 0f, spawnInterval);
-    }
-
-    public void StopSpawning()
-    {
-        CancelInvoke(nameof(SpawnObject));
+        Invoke(nameof(SpawnObject), currentInterval);
     }
 
     public void SpawnObject()
     {
-       PhotonNetwork.Instantiate(prefabs[Random.Range(0,prefabs.Length)].name, spawnPoint.position, spawnPoint.rotation);
+        if (spawnedCount >= maxObjects)
+        {
+            Debug.Log("Se alcanzó el máximo de objetos.");
+            return;
+        }
+
+        // Spawn aleatorio
+        PhotonNetwork.Instantiate(
+            prefabs[Random.Range(0, prefabs.Length)].name,
+            spawnPoint.position,
+            spawnPoint.rotation
+        );
+
+        spawnedCount++;
+
+        // Aumento aleatorio del intervalo
+        float randomIncrease = Random.Range(minIntervalIncrease, maxIntervalIncrease);
+        currentInterval += randomIncrease;
+
+        // Nuevo intervalo también aleatorio entre min y max (si querés una variación constante)
+        currentInterval = Mathf.Clamp(
+            Random.Range(minInitialInterval, maxInitialInterval) + randomIncrease,
+            minInitialInterval,
+            maxInitialInterval * 3f // por si el aumento lo hace crecer
+        );
+
+        // Invocar el siguiente spawn
+        Invoke(nameof(SpawnObject), currentInterval);
     }
 }

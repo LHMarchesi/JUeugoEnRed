@@ -63,7 +63,7 @@ public class LevelManager : MonoBehaviourPunCallbacks
 
             int minutes = Mathf.FloorToInt(timeLeft / 60);
             int seconds = Mathf.FloorToInt(timeLeft % 60);
-            UIPlayerManager.Instance.timerText.text = $"Work session ends in {minutes:00}:{seconds:00}";
+            UIPlayerManager.Instance.timerText.text = $"Work session ends in {minutes:00}:{seconds:00}. Send as many toys as you can";
         }
 
         UIPlayerManager.Instance.timerText.text = "Time's up!";
