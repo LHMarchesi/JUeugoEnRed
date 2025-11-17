@@ -14,6 +14,9 @@ public class UIPlayerManager : Singleton<UIPlayerManager>
     [SerializeField] private Image recipeImageUI;
     [SerializeField] private TextMeshProUGUI recipeTextUI;
     [SerializeField] PlayerContext playerContext;
+    public TMP_Text timerText;
+    public TMP_Text player1PointsTxt;
+    public TMP_Text player2PointsTxt;
 
 
     private void Start()
