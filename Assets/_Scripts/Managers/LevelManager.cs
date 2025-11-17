@@ -197,13 +197,15 @@ public class LevelManager : MonoBehaviourPunCallbacks
         }
 
         UIPlayerManager.Instance.ShowWinScreen(true, nickname + " won by disconection");
-        gameLeave = StartCoroutine(WaitAndLeaveGame(5f));
+        
         Debug.Log(nickname + " player id " + winner + " won by disconection");
+        gameLeave = StartCoroutine(WaitAndLeaveGame(5f));
     }
 
     IEnumerator WaitAndLeaveGame(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
+        Debug.Log("Leaving game after win by disconection");
         LeaveGame();
     }
 
