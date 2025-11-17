@@ -66,6 +66,8 @@ MonoBehaviour:
   - RPC_CreateMiniGame
   - DestroyUICuca
   - RPC_KillSimultaneous
+  - ItemSetParent
+  - WeaponSetParent
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

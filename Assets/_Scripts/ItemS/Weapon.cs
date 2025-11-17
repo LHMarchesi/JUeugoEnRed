@@ -4,9 +4,10 @@ using UnityEngine;
 public interface Iweapon
 {
     void Attack();
+    Weapon PickUp(PlayerItemHandler playerHolder);
 }
 
-public class Weapon : ItemBase, Iweapon
+public class Weapon: MonoBehaviour, Iweapon
 {
     [Header("Weapon Stats")]
     public float attackRange = 3f;
@@ -15,15 +16,14 @@ public class Weapon : ItemBase, Iweapon
     public Camera playerCamera;
     private PhotonView view;
 
-    public override ItemBase PickUp(PlayerItemHandler playerHolder)
+    public Weapon PickUp(PlayerItemHandler playerHolder) 
     {
         canAttack = true;
         return this;
     }
 
-    public override void Drop()
+    public void Drop()
     {
-        base.Drop();
         canAttack = false;
     }
     private void Start()
@@ -64,4 +64,6 @@ public class Weapon : ItemBase, Iweapon
             Gizmos.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * attackRange);
         }
     }
+
+    
 }
