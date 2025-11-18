@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Ground, Water, UI, Platform, CraftLayer, Cucaracha
 - Active game object:
-  - Name: PlayerPrefab
-  - Tag: Player
-  - Layer: Default
+  - Name: UIManager
+  - Tag: Untagged
+  - Layer: UI
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

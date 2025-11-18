@@ -9,14 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 81bf98a69a3aa204cb84a15215caba8a
   - enabled: 1
-    path: Assets/Scenes/Lobby-Comedor.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
-<<<<<<< Updated upstream
-    path: Assets/Scenes/leaderboard.unity
-    guid: 9512190820b813346bdf4214a1be43af
-=======
     path: Assets/Scenes/Mapa1.unity
     guid: d70bd8a0ebd80cb409ee2e89251a58ef
->>>>>>> Stashed changes
+  - enabled: 1
+    path: Assets/Scenes/Lobby-Comedor.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}
