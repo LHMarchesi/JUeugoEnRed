@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,19 +7,18 @@ using UnityEngine.EventSystems;
 
 public class UIInteractionPanel : MonoBehaviourPun, IPointerClickHandler
 {
-    public RectTransform canvasRect;
     public UIMartilloAnimator martilloAnimator;
+    public GameObject UIcuca;
     public RectTransform[] spawnPoints;
-    public List<UICucaracha> cucarachasList = new List<UICucaracha>();
-
+    //
     private List<(int actor, UICucaracha cuc)> hitBuffer = new();
     private float bufferWindow = 0.1f;
     private int cucasToSpawn = 3;
 
-    private void Start()
+    private void OnEnable()
     {
-        if (PhotonNetwork.IsMasterClient)
-            SpawnCucas();
+        Debug.Log("Minigame Cucas started");
+        SpawnCucas(); // solo el master instancia
     }
 
     void SpawnCucas()
@@ -27,69 +27,24 @@ public class UIInteractionPanel : MonoBehaviourPun, IPointerClickHandler
         {
             int idx = Random.Range(0, spawnPoints.Length);
 
-            // 1. Siempre instanciar en 0
-            GameObject go = PhotonNetwork.Instantiate("UICucaracha", Vector3.zero, Quaternion.identity);
-
-            // 2. SetParent correcto
-            go.transform.SetParent(canvasRect, false);
-
-            // 3. El master asigna el spawn real
-            if (PhotonNetwork.IsMasterClient)
-            {
-                RectTransform r = go.GetComponent<RectTransform>();
-                r.anchoredPosition = spawnPoints[idx].anchoredPosition;
-            }
-
-            UICucaracha cuc = go.GetComponent<UICucaracha>();
-            cucarachasList.Add(cuc);
+            GameObject go = PhotonNetwork.Instantiate(UIcuca.name, Vector3.zero, Quaternion.identity);
         }
     }
-
 
     public void OnPointerClick(PointerEventData eventData)
     {
         Vector2 pos = eventData.position;
-
-        // chequeo si tocó una cucaracha
-        UICucaracha cucHit = null;
-        foreach (var cuc in cucarachasList)
-        {
-            if (!cuc.IsAlive) continue;
-            if (RectTransformUtility.RectangleContainsScreenPoint(cuc.rect, eventData.position))
-            {
-                Debug.Log("Cucaracha hit: " + cuc.ID);
-                cucHit = cuc;
-                break;
-            }
-        }
-
-        int actor = PhotonNetwork.LocalPlayer.ActorNumber;
-
-        photonView.RPC("RPC_OnClick", RpcTarget.All, actor, pos.x, pos.y, cucHit ? cucHit.view.ViewID : -1);
+        int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
+        photonView.RPC("RPC_OnClick", RpcTarget.All, actorNumber, pos.x, pos.y);
     }
 
 
     [PunRPC]
-    IEnumerator RPC_OnClick(int actor, float x, float y, int cucViewID)
+    void RPC_OnClick(int actor, float x, float y)
     {
-        while (!gameObject.activeInHierarchy)
-            yield return null;
-
-        Debug.Log("Click recibido en todos los jugadores");
-
-        UICucaracha cuc = null;
-
-        if (cucViewID >= 0)
-        {
-            PhotonView pv = PhotonView.Find(cucViewID);
-            if (pv != null)
-            {
-                cuc = pv.GetComponent<UICucaracha>();
-            }
-        }
-
-        hitBuffer.Add((actor, cuc));
-        StartCoroutine(ProcessBuffer(x, y));
+        Debug.Log("Click on: " + x + ", " + y + " by actor " + actor);
+        //  hitBuffer.Add((actor));
+        //StartCoroutine(ProcessBuffer(x, y)); // inicio el buffer para procesar los hits juntos
     }
     private IEnumerator ProcessBuffer(float x, float y)
     {
@@ -112,10 +67,8 @@ public class UIInteractionPanel : MonoBehaviourPun, IPointerClickHandler
             if (cuc != null && AllHitSameCucaracha())
             {
                 // golpe simultáneo
-                martilloAnimator.HitSimultaneous(
-                    hitBuffer.ConvertAll(h => h.actor),
-                    cuc.rect.anchoredPosition);
-                cuc.KillSimultaneous();
+                martilloAnimator.HitSimultaneous(hitBuffer.ConvertAll(h => h.actor), cuc.rect.anchoredPosition);
+                //    cuc.KillSimultaneous();
             }
             else
             {
@@ -132,33 +85,23 @@ public class UIInteractionPanel : MonoBehaviourPun, IPointerClickHandler
 
         hitBuffer.Clear();
     }
-
-    private bool AllHitSameCucaracha()
-    {
-        int firstID = hitBuffer[0].cuc.ID;
-        foreach (var h in hitBuffer)
-        {
-            if (h.cuc == null || h.cuc.ID != firstID)
-                return false;
-        }
-        return true;
-    }
-
     private void HitSingle(int actor, UICucaracha cuc, Vector2 pos)
     {
         if (cuc.IsAlive)
         {
-            cuc.Kill(actor);
+            //    cuc.Kill(actor);
             martilloAnimator.HitCucaracha(actor, pos);
         }
     }
 
-    public void ShowPanel()
+    private bool AllHitSameCucaracha()
     {
-        gameObject.SetActive(true);
-    }
-    public void ClosePanel()
-    {
-        gameObject.SetActive(true);
+        //   int firstID = hitBuffer[0].cuc.ID;
+        foreach (var h in hitBuffer)
+        {
+            //      if (h.cuc == null || h.cuc.ID != firstID)
+            return false;
+        }
+        return true;
     }
 }

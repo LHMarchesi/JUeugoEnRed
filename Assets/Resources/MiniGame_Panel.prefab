@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: 8781667890359503724}
   - component: {fileID: 2789160408064175883}
   - component: {fileID: 117893457077018036}
-  - component: {fileID: 834555643292186289}
+  - component: {fileID: 4048497901451280276}
   m_Layer: 5
   m_Name: MiniGame_Panel
   m_TagString: Untagged
@@ -417,13 +417,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14899a1ba9718f44399767aed935c526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasRect: {fileID: 4614181813132779474}
+  canvasRect: {fileID: 1019052565408160937}
   martilloAnimator: {fileID: 982664856763010352}
+  UIcuca: {fileID: 8180774682006418131, guid: 0297453dd4822464081bb8977d8000d5, type: 3}
   spawnPoints:
   - {fileID: 8473168166331629792}
   - {fileID: 7443694167794927749}
-  cucarachasList: []
---- !u!114 &834555643292186289
+--- !u!114 &4048497901451280276
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

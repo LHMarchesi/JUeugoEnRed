@@ -10,6 +10,7 @@ public class UIPlayerManager : Singleton<UIPlayerManager>
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject winPanel;
     [SerializeField] private GameObject miniGamePanel;
+    public RectTransform spawnCanvasRect;
     [SerializeField] private TextMeshProUGUI winnerNameText;
     [SerializeField] private Image recipeImageUI;
     [SerializeField] private TextMeshProUGUI recipeTextUI;

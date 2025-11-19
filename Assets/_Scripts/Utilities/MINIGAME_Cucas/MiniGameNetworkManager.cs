@@ -3,16 +3,17 @@ using UnityEngine;
 
 public class MiniGameNetworkManager : MonoBehaviourPunCallbacks
 {
-
     public static MiniGameNetworkManager Instance;
     public InteractionButton startButton;
+    //  public InteractionButton closeButton;
 
     [Header("Prefab del panel del minijuego")]
     public GameObject miniGamePanelPrefab;
 
     private GameObject currentMiniGame;
     private bool alreadyStarted;
-    private bool hasProcessedThisInteraction;
+    private bool hasProcessedCloseInteraction;
+    private bool hasProcessedOpenInteraction;
 
     PlayerContext playerContext => PlayerContext.LocalPlayer;
 
@@ -28,52 +29,33 @@ public class MiniGameNetworkManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if (startButton.IsOn && !alreadyStarted && !hasProcessedThisInteraction)
+        if (startButton.IsOn && !alreadyStarted && !hasProcessedOpenInteraction)
         {
-            hasProcessedThisInteraction = true;
+            hasProcessedOpenInteraction = true;
             StartMiniGame();
         }
+
     }
 
     // Esto se llama desde un botón, SOLO el MasterClient inicia el minijuego
     public void StartMiniGame()
     {
-        photonView.RPC("RPC_CreateMiniGame", RpcTarget.All);
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        playerContext.HandleInputs.SetPaused(true);
+        photonView.RPC("RPC_CreateMiniGame", RpcTarget.AllBuffered);
     }
     public void CloseMiniGame()
     {
-        photonView.RPC("RPC_CloseMiniGame", RpcTarget.All);
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = false;
-        playerContext.HandleInputs.SetPaused(false);
+        photonView.RPC("RPC_CloseMiniGame", RpcTarget.AllBuffered);
     }
 
     [PunRPC]
     private void RPC_CreateMiniGame()
     {
-        // Evitar duplicados si se vuelve a crear
-        if (currentMiniGame != null)
-            Destroy(currentMiniGame);
-
-        currentMiniGame = PhotonNetwork.Instantiate(miniGamePanelPrefab.name, Vector3.zero, Quaternion.identity);
-        currentMiniGame.SetActive(true);
-
-        // Por seguridad, activar manualmente todos los hijos
-        foreach (Transform t in currentMiniGame.transform)
-            t.gameObject.SetActive(true);
+        UIPlayerManager.Instance.ShowMinigame(true);
     }
-
 
     [PunRPC]
     private void RPC_CloseMiniGame()
     {
-        if (currentMiniGame != null)
-        {
-            PhotonNetwork.Destroy(currentMiniGame);
-            currentMiniGame = null;
-        }
+        UIPlayerManager.Instance.ShowMinigame(false);
     }
 }
