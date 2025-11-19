@@ -8,4 +8,8 @@ public class LoadLeaderboardScene : MonoBehaviour
     {
        TransitionManager.Instance.PlayTransitionAndLoadScene(TransitionType.FadeOut, 3);
     }
+    public void loadMainMenu()
+    {
+       TransitionManager.Instance.PlayTransitionAndLoadScene(TransitionType.FadeOut, 0);
+    }
 }
