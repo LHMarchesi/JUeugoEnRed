@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: 7118e7ace40d5ee4fb1358e9ba93d796
+guid: cdf3716f1f3ef8f4a935292411c857df
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
   externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material
-    second: {fileID: 2100000, guid: 703f03a79dfa1974d82aa4b7e75f58ac, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -17,7 +12,12 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material.004
+      name: Material.029
+    second: {fileID: 2100000, guid: 703f03a79dfa1974d82aa4b7e75f58ac, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mes de cartas
     second: {fileID: 2100000, guid: cd86989365763134c8dc5caae781aaae, type: 2}
   materials:
     materialImportMode: 2
