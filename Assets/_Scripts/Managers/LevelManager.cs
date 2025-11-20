@@ -44,7 +44,11 @@ public class LevelManager : MonoBehaviourPunCallbacks
             gameStarted = true;
 
             foreach (var machine in toyMachines)
+            {
                 machine.StartSpawning();
+                machine.SpawnMinigame();
+            }
+                
 
             UIPlayerManager.Instance.player1PointsTxt.gameObject.SetActive(true);
             UIPlayerManager.Instance.player2PointsTxt.gameObject.SetActive(true);
