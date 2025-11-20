@@ -7,7 +7,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Ground, Water, UI, Platform, CraftLayer, Cucaracha
 - Active game object:
-  - Name: MiniGame_Panel
+  - Name: ItemSpawner
   - Tag: Untagged
-  - Layer: UI
+  - Layer: Ground
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

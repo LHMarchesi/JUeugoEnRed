@@ -10360,6 +10360,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1953221677}
     m_Modifications:
+    - target: {fileID: 4147864585453536272, guid: 451581ab5be49a1499f48ea76e9327b7, type: 3}
+      propertyPath: sceneViewId
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4147864585453536361, guid: 451581ab5be49a1499f48ea76e9327b7, type: 3}
       propertyPath: m_Name
       value: KidCard (2)

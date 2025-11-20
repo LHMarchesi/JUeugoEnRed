@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7109606909417794681}
   - component: {fileID: 7109606909417794682}
   - component: {fileID: 7109606909417794683}
-  - component: {fileID: 7109606909417794662}
+  - component: {fileID: 2472011860011720728}
   m_Layer: 0
   m_Name: MINIGAMEInteractionButton
   m_TagString: Untagged
@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   greenMaterial: {fileID: 2100000, guid: dc065fcccb5d8254f9c6f1c82e86d7d7, type: 2}
---- !u!114 &7109606909417794662
+--- !u!114 &2472011860011720728
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,12 +144,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7109606909417794685}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 545d8bbd643dce5448741669293a56bf, type: 3}
+  m_Script: {fileID: 11500000, guid: e38a5984f52bd9b4abb53006d7b034dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  martilloAnimator: {fileID: 0}
-  UIcuca: {fileID: 8180774682006418131, guid: 0297453dd4822464081bb8977d8000d5, type: 3}
-  spawnPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  lever: {fileID: 7109606909417794683}

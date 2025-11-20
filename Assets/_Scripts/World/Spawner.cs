@@ -33,8 +33,8 @@ public class Spawner : MonoBehaviourPunCallbacks
         currentInterval = Random.Range(minInitialInterval, maxInitialInterval);
         currentInterval = Mathf.Abs(currentInterval);
         // Calculo delay de minijuego
-        float delay = Random.Range(10, 21) + currentInterval * 2 + 1;
-        spawnDelay += delay;
+        //float delay = Random.Range(10, 21) + currentInterval * 2 + 1;
+        //spawnDelay += delay;
     }
 
     public void StartSpawning()

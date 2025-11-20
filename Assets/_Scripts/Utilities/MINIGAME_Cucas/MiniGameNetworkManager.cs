@@ -13,7 +13,7 @@ public class MiniGameNetworkManager : MonoBehaviourPunCallbacks
     //
     private List<(int actor, UICucaracha cuc)> hitBuffer = new();
     private float bufferWindow = 0.1f;
-    private int cucasToSpawn = 3;
+    private int cucasToSpawn = 7;
 
     private void Start()
     {

@@ -1,7 +1,7 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class UICucaracha : MonoBehaviour
+public class UICucaracha : MonoBehaviour, IPunObservable
 {
     public bool IsAlive = true;
     public RectTransform rect;

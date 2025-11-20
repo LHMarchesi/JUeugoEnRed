@@ -106,13 +106,4 @@ public class UIInteractionPanel : MonoBehaviourPun, IPointerClickHandler
             martilloAnimator.HitCucaracha(actor, pos);
         }
     }
-
-    public void ShowPanel()
-    {
-        gameObject.SetActive(true);
-    }
-    public void ClosePanel()
-    {
-        gameObject.SetActive(true);
-    }
 }
