@@ -1119,6 +1119,9 @@ MonoBehaviour:
   recipeImageUI: {fileID: 2954239833572338365}
   recipeTextUI: {fileID: 814966710093160848}
   playerContext: {fileID: 3792738749282506393}
+  player1PointsTxt: {fileID: 0}
+  player2PointsTxt: {fileID: 0}
+  timerText: {fileID: 0}
 --- !u!1 &3339742914867117970
 GameObject:
   m_ObjectHideFlags: 0
