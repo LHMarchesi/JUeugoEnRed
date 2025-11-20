@@ -1020,10 +1020,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14899a1ba9718f44399767aed935c526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasRect: {fileID: 89272664664868828}
   martilloAnimator: {fileID: 196592199511873093}
-  cucarachas:
-  - {fileID: 2802373921892309404}
+  UIcuca: {fileID: 0}
+  spawnPoints: []
 --- !u!114 &328094290509065668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1042,7 +1041,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 2802373921892309404}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1237,13 +1237,14 @@ MonoBehaviour:
   pausePanel: {fileID: 6909210893438713560}
   winPanel: {fileID: 8410544386433017150}
   miniGamePanel: {fileID: 2457172791052346043}
+  spawnCanvasRect: {fileID: 1152859334489198835}
   winnerNameText: {fileID: 1555931517343549568}
   recipeImageUI: {fileID: 2954239833572338365}
   recipeTextUI: {fileID: 814966710093160848}
   playerContext: {fileID: 3792738749282506393}
+  timerText: {fileID: 5314253681337972700}
   player1PointsTxt: {fileID: 5695097717770795969}
   player2PointsTxt: {fileID: 6250274435683547107}
-  timerText: {fileID: 5314253681337972700}
 --- !u!1 &3339742914867117970
 GameObject:
   m_ObjectHideFlags: 0
@@ -3676,9 +3677,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94cf1cd65c7f8e0498604a74fead340d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 0
   IsAlive: 1
   rect: {fileID: 8473113320169670356}
+  view: {fileID: 0}
+  speed: 0
 --- !u!1 &7362832681318460573
 GameObject:
   m_ObjectHideFlags: 0

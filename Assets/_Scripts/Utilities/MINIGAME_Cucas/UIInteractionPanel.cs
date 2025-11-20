@@ -69,7 +69,7 @@ public class UIInteractionPanel : MonoBehaviourPun, IPointerClickHandler
                 martilloAnimator.HitSimultaneous(
                     hitBuffer.ConvertAll(h => h.actor),
                     cuc.rect.anchoredPosition);
-                cuc.KillSimultaneous();
+           //     cuc.KillSimultaneous();
             }
             else
             {
@@ -102,7 +102,7 @@ public class UIInteractionPanel : MonoBehaviourPun, IPointerClickHandler
     {
         if (cuc.IsAlive)
         {
-            cuc.Kill(actor);
+           // cuc.Kill(actor);
             martilloAnimator.HitCucaracha(actor, pos);
         }
     }

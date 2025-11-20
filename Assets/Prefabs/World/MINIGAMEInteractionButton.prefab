@@ -147,5 +147,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 545d8bbd643dce5448741669293a56bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startButton: {fileID: 7109606909417794683}
-  miniGamePanelPrefab: {fileID: 3242853732285954510, guid: 2198f20e1e34e5d4c9a6c48ba94629d4, type: 3}
+  martilloAnimator: {fileID: 0}
+  UIcuca: {fileID: 8180774682006418131, guid: 0297453dd4822464081bb8977d8000d5, type: 3}
+  spawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

@@ -1,68 +1,107 @@
 using Photon.Pun;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MiniGameNetworkManager : MonoBehaviourPunCallbacks
 {
-    public static MiniGameNetworkManager Instance;
-    public InteractionButton startButton;
-    //  public InteractionButton closeButton;
 
-    [Header("Prefab del panel del minijuego")]
-    public GameObject miniGamePanelPrefab;
+    public UIMartilloAnimator martilloAnimator;
+    public GameObject UIcuca;
+    public RectTransform[] spawnPoints;
+    //
+    private List<(int actor, UICucaracha cuc)> hitBuffer = new();
+    private float bufferWindow = 0.1f;
+    private int cucasToSpawn = 3;
 
-    private GameObject currentMiniGame;
-    private bool alreadyStarted;
-    private bool hasProcessedCloseInteraction;
-    private bool hasProcessedOpenInteraction;
-
-    PlayerContext playerContext => PlayerContext.LocalPlayer;
-    Coroutine endMinigameDelay;
-    void Awake()
+    private void Start()
     {
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
-
-
+        Debug.Log("Minigame Cucas started");
+        SpawnCucas(); // solo el master instancia
     }
 
-    private void Update()
+    void SpawnCucas()
     {
-        if (startButton.IsOn && !alreadyStarted && !hasProcessedOpenInteraction)
+        for (int i = 0; i < cucasToSpawn; i++)
         {
-            hasProcessedOpenInteraction = true;
-            StartMiniGame();
-            endMinigameDelay = StartCoroutine(CloseAfterDelay(30f));
+            int idx = Random.Range(0, spawnPoints.Length);
+
+            GameObject go = PhotonNetwork.Instantiate(UIcuca.name, Vector3.zero, Quaternion.identity);
+        }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Vector2 pos = eventData.position;
+        int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
+        photonView.RPC("RPC_OnClick", RpcTarget.All, actorNumber, pos.x, pos.y);
+    }
+
+
+    [PunRPC]
+    void RPC_OnClick(int actor, float x, float y)
+    {
+        Debug.Log("Click on: " + x + ", " + y + " by actor " + actor);
+        //  hitBuffer.Add((actor));
+        //StartCoroutine(ProcessBuffer(x, y)); // inicio el buffer para procesar los hits juntos
+    }
+    private IEnumerator ProcessBuffer(float x, float y)
+    {
+        yield return new WaitForSeconds(bufferWindow);
+
+        if (hitBuffer.Count == 1)
+        {
+            var (actor, cuc) = hitBuffer[0];
+
+            // un solo jugador golpeó
+            if (cuc == null)
+                martilloAnimator.HitGround(actor, new Vector2(x, y));
+            else
+                HitSingle(actor, cuc, new Vector2(x, y));
+        }
+        else
+        {
+            // más de uno golpeo casi juntos
+            var cuc = hitBuffer[0].cuc;
+            if (cuc != null && AllHitSameCucaracha())
+            {
+                // golpe simultáneo
+                martilloAnimator.HitSimultaneous(hitBuffer.ConvertAll(h => h.actor), cuc.rect.anchoredPosition);
+                //    cuc.KillSimultaneous();
+            }
+            else
+            {
+                // golpes distintos ? procesarlos individualmente
+                foreach (var (actor, cucSingle) in hitBuffer)
+                {
+                    if (cucSingle == null)
+                        martilloAnimator.HitGround(actor, new Vector2(x, y));
+                    else
+                        HitSingle(actor, cucSingle, cucSingle.rect.anchoredPosition);
+                }
+            }
         }
 
+        hitBuffer.Clear();
+    }
+    private void HitSingle(int actor, UICucaracha cuc, Vector2 pos)
+    {
+        if (cuc.IsAlive)
+        {
+            //    cuc.Kill(actor);
+            martilloAnimator.HitCucaracha(actor, pos);
+        }
     }
 
-    // Esto se llama desde un botón, SOLO el MasterClient inicia el minijuego
-    public void StartMiniGame()
+    private bool AllHitSameCucaracha()
     {
-        photonView.RPC("RPC_CreateMiniGame", RpcTarget.AllBuffered);
-    }
-    public void CloseMiniGame()
-    {
-        photonView.RPC("RPC_CloseMiniGame", RpcTarget.AllBuffered);
-    }
-
-    [PunRPC]
-    private void RPC_CreateMiniGame()
-    {
-        UIPlayerManager.Instance.ShowMinigame(true);
-    }
-
-    [PunRPC]
-    private void RPC_CloseMiniGame()
-    {
-        UIPlayerManager.Instance.ShowMinigame(false);
-    }
-    IEnumerator CloseAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        CloseMiniGame();
+        //   int firstID = hitBuffer[0].cuc.ID;
+        foreach (var h in hitBuffer)
+        {
+            //      if (h.cuc == null || h.cuc.ID != firstID)
+            return false;
+        }
+        return true;
     }
 }
