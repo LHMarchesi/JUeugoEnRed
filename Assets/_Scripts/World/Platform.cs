@@ -46,6 +46,7 @@ public class Platform : MonoBehaviour
         downHolder.transform.Rotate(Vector3.up * Time.deltaTime * 20);
         topHolder.transform.Rotate(Vector3.up * Time.deltaTime * 20);
         middleHolder.transform.Rotate(Vector3.up * Time.deltaTime * 20);
+        
     }
   
     public bool HasAllPieces()

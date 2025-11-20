@@ -90,45 +90,54 @@ public class LevelManager : MonoBehaviourPunCallbacks
     public void AddPoints(PlayerContext playerContext, int points)
     {
         int actorNumber = playerContext.PhotonView.Owner.ActorNumber;
-
+        int ogpoints = 0;
         if (PhotonNetwork.IsMasterClient)
         {
             if (!playerScores.ContainsKey(actorNumber))
                 playerScores.Add(actorNumber, 0);
 
             playerScores[actorNumber] += points;
+            ogpoints += playerScores[actorNumber];
             SyncScoresToAll();
+            AddScore(ogpoints);
         }
         else
         {
             photonView.RPC("RPC_RequestAddPoints", RpcTarget.MasterClient, actorNumber, points);
         }
-        AddScore(points);
+        
+       
     }
     public void AddPoints(int actorNumber, int points)
     {
+        int ogpoints = 0;
         if (PhotonNetwork.IsMasterClient)
         {
             if (!playerScores.ContainsKey(actorNumber))
                 playerScores.Add(actorNumber, 0);
             playerScores[actorNumber] += points;
+            ogpoints += playerScores[actorNumber];
             SyncScoresToAll();
+            AddScore(ogpoints);
         }
         else
         {
             photonView.RPC("RPC_RequestAddPoints", RpcTarget.MasterClient, actorNumber, points);
         }
-        AddScore(points);
+
     }
 
     [PunRPC]
     private void RPC_RequestAddPoints(int actorNumber, int points)
     {
+        int ogpoints = 0;
         if (!playerScores.ContainsKey(actorNumber))
             playerScores.Add(actorNumber, 0);
 
         playerScores[actorNumber] += points;
+        ogpoints += playerScores[actorNumber];
         SyncScoresToAll();
+        AddScore(ogpoints);
     }
 
     //  Solo el Master llama a esto
