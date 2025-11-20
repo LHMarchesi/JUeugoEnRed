@@ -30,8 +30,8 @@ public class UIMainMenuManager : MonoBehaviour
         {
             ConnectionManager.Instance.ConnectedToServer(UnShowLoadingPanel);
         }
-        else
-            connectButton.interactable = true;
+        //else
+            //connectButton.interactable = true;
 
     }
     private void CheckNickname(string arg0)
@@ -44,6 +44,7 @@ public class UIMainMenuManager : MonoBehaviour
         else
         {
             connectButton.interactable = true;
+            LootLockerBootstrap.Instance.SetPlayerName(arg0);
         }
 
     }

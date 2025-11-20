@@ -122,7 +122,7 @@ public class Platform : MonoBehaviour
             case 0: targetHolder = downHolder; break;
             case 1: targetHolder = middleHolder; break;
             case 2: targetHolder = topHolder; break;
-            case 3: ClearPlatform(); break;
+            case 3: ItemOverflow(item); break;
         }
         if (targetHolder != null)
         {

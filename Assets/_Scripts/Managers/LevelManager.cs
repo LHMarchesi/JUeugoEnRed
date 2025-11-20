@@ -11,9 +11,7 @@ public class LevelManager : MonoBehaviourPunCallbacks
     [SerializeField] Transform spawnPoint;
     [SerializeField] InteractionButton startSesionButton;
     [SerializeField] float gameTime = 90f;
-    [SerializeField] TMP_Text timerText;
-    [SerializeField] TMP_Text player1PointsTxt;
-    [SerializeField] TMP_Text player2PointsTxt;
+   
     [SerializeField] Spawner[] toyMachines;
 
     private Dictionary<int, int> playerScores = new Dictionary<int, int>();
@@ -30,9 +28,9 @@ public class LevelManager : MonoBehaviourPunCallbacks
         PlayerContext context = newPlayer.GetComponent<PlayerContext>();
         TryAddPlayer(context);
 
-        player1PointsTxt.gameObject.SetActive(false);
-        player2PointsTxt.gameObject.SetActive(false);
-        timerText.text = "Press the button to start the work session";
+        UIPlayerManager.Instance.player1PointsTxt.gameObject.SetActive(false);
+        UIPlayerManager.Instance.player2PointsTxt.gameObject.SetActive(false);
+        UIPlayerManager.Instance.timerText.text = "Press the button to start the work session";
 
         ConnectionManager.Instance.OnPlayerLeftRoom += WinByDisconection;
     }
@@ -46,10 +44,14 @@ public class LevelManager : MonoBehaviourPunCallbacks
             gameStarted = true;
 
             foreach (var machine in toyMachines)
+            {
                 machine.StartSpawning();
+                machine.SpawnMinigame();
+            }
+                
 
-            player1PointsTxt.gameObject.SetActive(true);
-            player2PointsTxt.gameObject.SetActive(true);
+            UIPlayerManager.Instance.player1PointsTxt.gameObject.SetActive(true);
+            UIPlayerManager.Instance.player2PointsTxt.gameObject.SetActive(true);
             SyncScoresToAll();
         }
 
@@ -65,10 +67,10 @@ public class LevelManager : MonoBehaviourPunCallbacks
 
             int minutes = Mathf.FloorToInt(timeLeft / 60);
             int seconds = Mathf.FloorToInt(timeLeft % 60);
-            timerText.text = $"Work session ends in {minutes:00}:{seconds:00}";
+            UIPlayerManager.Instance.timerText.text = $"Work session ends in {minutes:00}:{seconds:00}. Send as many toys as you can";
         }
 
-        timerText.text = "Time's up!";
+        UIPlayerManager.Instance.timerText.text = "Time's up!";
 
         if (PhotonNetwork.IsMasterClient)
             DetermineWinner();
@@ -101,6 +103,22 @@ public class LevelManager : MonoBehaviourPunCallbacks
         {
             photonView.RPC("RPC_RequestAddPoints", RpcTarget.MasterClient, actorNumber, points);
         }
+        AddScore(points);
+    }
+    public void AddPoints(int actorNumber, int points)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (!playerScores.ContainsKey(actorNumber))
+                playerScores.Add(actorNumber, 0);
+            playerScores[actorNumber] += points;
+            SyncScoresToAll();
+        }
+        else
+        {
+            photonView.RPC("RPC_RequestAddPoints", RpcTarget.MasterClient, actorNumber, points);
+        }
+        AddScore(points);
     }
 
     [PunRPC]
@@ -125,6 +143,7 @@ public class LevelManager : MonoBehaviourPunCallbacks
             int score = playerScores.ContainsKey(actor) ? playerScores[actor] : 0;
             names.Add(p.NickName);
             scores.Add(score);
+           
         }
 
         photonView.RPC("RPC_SyncScores", RpcTarget.All, names.ToArray(), scores.ToArray());
@@ -135,10 +154,10 @@ public class LevelManager : MonoBehaviourPunCallbacks
     {
         // Se actualiza la UI con los datos exactos enviados por el Master
         if (playerNames.Length > 0)
-            player1PointsTxt.text = $"{playerNames[0]}: {scores[0]}";
+            UIPlayerManager.Instance.player1PointsTxt.text = $"{playerNames[0]}: {scores[0]}";
 
         if (playerNames.Length > 1)
-            player2PointsTxt.text = $"{playerNames[1]}: {scores[1]}";
+            UIPlayerManager.Instance.player2PointsTxt.text = $"{playerNames[1]}: {scores[1]}";
     }
 
     private void DetermineWinner()
@@ -179,7 +198,7 @@ public class LevelManager : MonoBehaviourPunCallbacks
     private void RPC_ShowWinnerMessage(string message)
     {
         Debug.Log(message);
-        timerText.text = message;
+        UIPlayerManager.Instance.timerText.text = message;
     }
 
     public void WinByDisconection(Player otherPlayer)
@@ -197,13 +216,15 @@ public class LevelManager : MonoBehaviourPunCallbacks
         }
 
         UIPlayerManager.Instance.ShowWinScreen(true, nickname + " won by disconection");
-        gameLeave = StartCoroutine(WaitAndLeaveGame(5f));
+        
         Debug.Log(nickname + " player id " + winner + " won by disconection");
+        gameLeave = StartCoroutine(WaitAndLeaveGame(5f));
     }
 
     IEnumerator WaitAndLeaveGame(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
+        Debug.Log("Leaving game after win by disconection");
         LeaveGame();
     }
 
@@ -214,5 +235,18 @@ public class LevelManager : MonoBehaviourPunCallbacks
         ConnectionManager.Instance.photonPunManager.LeaveRoom();
         GameManager.Instance.ChangeGameState(new GameState());
     }
-
+    void AddScore(int points)
+    {
+        LeaderboardService.SubmitScore(points, "gifts", success =>
+        {
+            if (success)
+            {
+                Debug.Log("Score submitted successfully.");
+            }
+            else
+            {
+                Debug.LogError("Failed to submit score.");
+            }
+        });
+    }
 }

@@ -144,12 +144,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 641380640710631475}
-  canSpawn: 1
-  spawnInterval: 6
+  maxObjects: 8
+  minInitialInterval: 0
+  maxInitialInterval: 0
+  minIntervalIncrease: 0
+  maxIntervalIncrease: 0
   prefabs:
   - {fileID: 6849313183483449730, guid: daeeb19b7d698a94fa0b1b5e0291eacd, type: 3}
   - {fileID: 4854863304163769549, guid: d29ca8f835bd06743a6eed5e51ec378e, type: 3}
   - {fileID: 675878460419760456, guid: 13eed0ddca0a3504ca7b052c1a9d65c1, type: 3}
+  MinigameCuca: {fileID: 0}
+  spawnDelay: 60
+  hasSpawned: 0
 --- !u!114 &641380640891877865
 MonoBehaviour:
   m_ObjectHideFlags: 0

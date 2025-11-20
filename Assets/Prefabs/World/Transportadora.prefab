@@ -31,6 +31,7 @@ Transform:
   - {fileID: 8743094260696809169}
   - {fileID: 8192911539239324628}
   - {fileID: 3449084158051436401}
+  - {fileID: 941201197058775191}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -278,6 +279,77 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7040851996310406428, guid: 176168c64480e314bad4e42d11cbb5ab, type: 3}
+--- !u!1001 &8045034566607369451
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8192911539125229919}
+    m_Modifications:
+    - target: {fileID: 7109606909417794684, guid: 130fd327bed31124ba90e63f9678da65, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109606909417794684, guid: 130fd327bed31124ba90e63f9678da65, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.929
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109606909417794684, guid: 130fd327bed31124ba90e63f9678da65, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.086
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109606909417794684, guid: 130fd327bed31124ba90e63f9678da65, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109606909417794684, guid: 130fd327bed31124ba90e63f9678da65, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109606909417794684, guid: 130fd327bed31124ba90e63f9678da65, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109606909417794684, guid: 130fd327bed31124ba90e63f9678da65, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109606909417794684, guid: 130fd327bed31124ba90e63f9678da65, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109606909417794684, guid: 130fd327bed31124ba90e63f9678da65, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109606909417794684, guid: 130fd327bed31124ba90e63f9678da65, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109606909417794684, guid: 130fd327bed31124ba90e63f9678da65, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109606909417794685, guid: 130fd327bed31124ba90e63f9678da65, type: 3}
+      propertyPath: m_Name
+      value: MINIGAMEInteractionButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109606909417794685, guid: 130fd327bed31124ba90e63f9678da65, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 130fd327bed31124ba90e63f9678da65, type: 3}
+--- !u!1 &941201197058775190 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7109606909417794685, guid: 130fd327bed31124ba90e63f9678da65, type: 3}
+  m_PrefabInstance: {fileID: 8045034566607369451}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &941201197058775191 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7109606909417794684, guid: 130fd327bed31124ba90e63f9678da65, type: 3}
+  m_PrefabInstance: {fileID: 8045034566607369451}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8192911540181714743
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -361,6 +433,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 641380640891877864, guid: 60706aba2ec4670469c428018dd1a450, type: 3}
+      propertyPath: MinigameCuca
+      value: 
+      objectReference: {fileID: 941201197058775190}
     - target: {fileID: 641380640891877864, guid: 60706aba2ec4670469c428018dd1a450, type: 3}
       propertyPath: spawnInterval
       value: 4
