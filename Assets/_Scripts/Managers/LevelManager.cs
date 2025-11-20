@@ -44,7 +44,11 @@ public class LevelManager : MonoBehaviourPunCallbacks
             gameStarted = true;
 
             foreach (var machine in toyMachines)
+            {
                 machine.StartSpawning();
+                machine.SpawnMinigame();
+            }
+                
 
             UIPlayerManager.Instance.player1PointsTxt.gameObject.SetActive(true);
             UIPlayerManager.Instance.player2PointsTxt.gameObject.SetActive(true);
@@ -92,6 +96,21 @@ public class LevelManager : MonoBehaviourPunCallbacks
             if (!playerScores.ContainsKey(actorNumber))
                 playerScores.Add(actorNumber, 0);
 
+            playerScores[actorNumber] += points;
+            SyncScoresToAll();
+        }
+        else
+        {
+            photonView.RPC("RPC_RequestAddPoints", RpcTarget.MasterClient, actorNumber, points);
+        }
+        AddScore();
+    }
+    public void AddPoints(int actorNumber, int points)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (!playerScores.ContainsKey(actorNumber))
+                playerScores.Add(actorNumber, 0);
             playerScores[actorNumber] += points;
             SyncScoresToAll();
         }

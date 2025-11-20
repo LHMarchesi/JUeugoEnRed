@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System.Collections;
 using UnityEngine;
 
 public class MiniGameNetworkManager : MonoBehaviourPunCallbacks
@@ -16,7 +17,7 @@ public class MiniGameNetworkManager : MonoBehaviourPunCallbacks
     private bool hasProcessedOpenInteraction;
 
     PlayerContext playerContext => PlayerContext.LocalPlayer;
-
+    Coroutine endMinigameDelay;
     void Awake()
     {
         if (Instance == null)
@@ -33,6 +34,7 @@ public class MiniGameNetworkManager : MonoBehaviourPunCallbacks
         {
             hasProcessedOpenInteraction = true;
             StartMiniGame();
+            endMinigameDelay = StartCoroutine(CloseAfterDelay(30f));
         }
 
     }
@@ -57,5 +59,10 @@ public class MiniGameNetworkManager : MonoBehaviourPunCallbacks
     private void RPC_CloseMiniGame()
     {
         UIPlayerManager.Instance.ShowMinigame(false);
+    }
+    IEnumerator CloseAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        CloseMiniGame();
     }
 }

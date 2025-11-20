@@ -10,16 +10,28 @@ public class UIInteractionPanel : MonoBehaviourPun, IPointerClickHandler
     public UIMartilloAnimator martilloAnimator;
     public GameObject UIcuca;
     public RectTransform[] spawnPoints;
+    public LevelManager levelManager;
     //
     private List<(int actor, UICucaracha cuc)> hitBuffer = new();
     private float bufferWindow = 0.1f;
     private int cucasToSpawn = 3;
+    private List<UICucaracha> spawnedCucas = new();
 
+    private void Start()
+    {
+        levelManager = FindObjectOfType<LevelManager>();
+    }
     private void OnEnable()
     {
+        float extraCucas = Random.Range(6, 13);
+        if(extraCucas/2 ==0 )
+            extraCucas+= 1;
+
+        cucasToSpawn += (int)extraCucas;
         Debug.Log("Minigame Cucas started");
         SpawnCucas(); // solo el master instancia
     }
+  
 
     void SpawnCucas()
     {
@@ -28,6 +40,8 @@ public class UIInteractionPanel : MonoBehaviourPun, IPointerClickHandler
             int idx = Random.Range(0, spawnPoints.Length);
 
             GameObject go = PhotonNetwork.Instantiate(UIcuca.name, Vector3.zero, Quaternion.identity);
+            UICucaracha cuc = go.GetComponent<UICucaracha>();
+            spawnedCucas.Add(cuc);
         }
     }
 
@@ -42,6 +56,7 @@ public class UIInteractionPanel : MonoBehaviourPun, IPointerClickHandler
     [PunRPC]
     void RPC_OnClick(int actor, float x, float y)
     {
+        levelManager.AddPoints(actor, 1); // sumar punto por click
         Debug.Log("Click on: " + x + ", " + y + " by actor " + actor);
         //  hitBuffer.Add((actor));
         //StartCoroutine(ProcessBuffer(x, y)); // inicio el buffer para procesar los hits juntos
@@ -103,5 +118,18 @@ public class UIInteractionPanel : MonoBehaviourPun, IPointerClickHandler
             return false;
         }
         return true;
+    }
+    private void OnDisable()
+    {
+        Debug.Log("Minigame Cucas ended");
+        MinigameEnd();
+    }
+    private void MinigameEnd()
+    {
+        foreach (var cuc in spawnedCucas)
+        {
+            if (cuc != null && cuc.IsAlive)
+                cuc.gameObject.SetActive(false);
+        }
     }
 }

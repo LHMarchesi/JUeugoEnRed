@@ -20,14 +20,22 @@ public class Spawner : MonoBehaviourPunCallbacks
     private int spawnedCount = 0;
     private float currentInterval;
 
+    public GameObject MinigameCuca;
+    public float spawnDelay = 60;
+    public bool hasSpawned = false;
     void Start()
     {
+        
         if (!PhotonNetwork.IsMasterClient)
             return;
 
         // Intervalo inicial aleatorio
         currentInterval = Random.Range(minInitialInterval, maxInitialInterval);
-     }
+        currentInterval = Mathf.Abs(currentInterval);
+        // Calculo delay de minijuego
+        float delay = Random.Range(10, 21) + currentInterval * 2 + 1;
+        spawnDelay += delay;
+    }
 
     public void StartSpawning()
     {
@@ -64,5 +72,19 @@ public class Spawner : MonoBehaviourPunCallbacks
 
         // Invocar el siguiente spawn
         Invoke(nameof(SpawnObject), currentInterval);
+    }
+
+    public void SpawnMinigame() 
+    {       
+        if (!hasSpawned)
+        {
+            hasSpawned = true;
+            Invoke(nameof(SpawnCuca), spawnDelay);
+        }
+
+    }
+    public void SpawnCuca()
+    {
+        MinigameCuca.SetActive(true);
     }
 }
