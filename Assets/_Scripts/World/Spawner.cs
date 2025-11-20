@@ -21,7 +21,7 @@ public class Spawner : MonoBehaviourPunCallbacks
     private float currentInterval;
 
     public GameObject MinigameCuca;
-    public float spawnDelay = 60f;
+    public float spawnDelay = 60;
     public bool hasSpawned = false;
     void Start()
     {

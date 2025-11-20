@@ -105,6 +105,21 @@ public class LevelManager : MonoBehaviourPunCallbacks
         }
         AddScore();
     }
+    public void AddPoints(int actorNumber, int points)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (!playerScores.ContainsKey(actorNumber))
+                playerScores.Add(actorNumber, 0);
+            playerScores[actorNumber] += points;
+            SyncScoresToAll();
+        }
+        else
+        {
+            photonView.RPC("RPC_RequestAddPoints", RpcTarget.MasterClient, actorNumber, points);
+        }
+        AddScore();
+    }
 
     [PunRPC]
     private void RPC_RequestAddPoints(int actorNumber, int points)
