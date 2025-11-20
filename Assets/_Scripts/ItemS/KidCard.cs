@@ -1,13 +1,16 @@
 using Photon.Pun;
-using System;
-using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class KidCard : ItemBase
 {
+    public TextMeshProUGUI recipeName;
+    public TextMeshProUGUI recipeIngredients;
+    public Image Icon;
     public CraftingRecipe[] allRecipes;
-    private CraftingRecipe currentRecipe;
-
     public PhotonView view;
+
+    private CraftingRecipe currentRecipe;
     private void Start()
     {
         if (PhotonNetwork.IsMasterClient)
@@ -17,15 +20,21 @@ public class KidCard : ItemBase
             view.RPC("SetRecipe", RpcTarget.AllBuffered, index);
         }
 
+        string ingredientesTexto = "";
+        foreach (var item in currentRecipe.requiredItems)
+        {
+            ingredientesTexto += $"\n• {item.itemName}";
+        }
+
+        recipeIngredients.text = $"Ingredientes: {ingredientesTexto}";
+        recipeName.text = currentRecipe.recipeName;
+        Icon.sprite = currentRecipe.recipeIcon;
     }
 
     public override ItemBase PickUp(PlayerItemHandler playerHolder)
     {
         var pickedUp = base.PickUp(playerHolder);
         PlayerItemHandler lastPlayerHolder = pickedUp.lastPlayerHolder;
-
-        Debug.Log("Last player holder: " + lastPlayerHolder);
-        UIPlayerManager.Instance.ShowRecipe(currentRecipe);
 
         return pickedUp;
     }

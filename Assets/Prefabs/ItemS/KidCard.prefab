@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 286908351735286927}
   - component: {fileID: 3357414042923908515}
   m_Layer: 0
-  m_Name: recipeNameText (TMP)
+  m_Name: recipeName_Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -89.955}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 7.77, y: -0.05}
-  m_SizeDelta: {x: 29.68, y: 6.185}
+  m_AnchoredPosition: {x: 40.9, y: -8.6}
+  m_SizeDelta: {x: 31.07, y: 6.18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &286908351735286927
 CanvasRenderer:
@@ -75,8 +75,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4282795590
+  m_fontColor: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -243,7 +243,7 @@ Transform:
   m_GameObject: {fileID: 4147864585453536361}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.37626785, y: 0.49865535, z: 0.094410926}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7183947437402768298}
@@ -371,6 +371,9 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 6148a2779e84b0c47922f967b5b5ca35, type: 2}
   isHeld: 0
   lastPlayerHolder: {fileID: 0}
+  recipeName: {fileID: 3357414042923908515}
+  recipeIngredients: {fileID: 3897081785595916315}
+  Icon: {fileID: 6712798129716681318}
   allRecipes:
   - {fileID: 11400000, guid: 67b615947562e1b49b768f9e129a670b, type: 2}
   - {fileID: 11400000, guid: 815d9559fe2a69d4e926ce00b843e9bd, type: 2}
@@ -390,8 +393,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.90737957, y: 1.0000001, z: 0.95044315}
-  m_Center: {x: -0.04631019, y: 0.0000004854541, z: -0.024778437}
+  m_Size: {x: 1.5243354, y: 1.0000001, z: 0.6763941}
+  m_Center: {x: 0.2621675, y: 0.00000047812296, z: -0.77417}
 --- !u!1 &5648755880436946596
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,7 +407,7 @@ GameObject:
   - component: {fileID: 1139378241374513106}
   - component: {fileID: 3897081785595916315}
   m_Layer: 0
-  m_Name: recipeNameText (TMP) (1)
+  m_Name: 'recipeIngredientes_Text (TMP) '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -427,8 +430,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -89.955}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -14.57, y: -0.2}
-  m_SizeDelta: {x: 29.95, y: 35.765}
+  m_AnchoredPosition: {x: -11.6, y: -10.11}
+  m_SizeDelta: {x: 48.48, y: 39.82}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1139378241374513106
 CanvasRenderer:
@@ -467,8 +470,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4281545523
+  m_fontColor: {r: 0.1981132, g: 0.1981132, b: 0.1981132, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -695,6 +698,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ba529578e1ad5e146ad878088a726d68, type: 3}
       propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ba529578e1ad5e146ad878088a726d68, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ba529578e1ad5e146ad878088a726d68, type: 3}
