@@ -2,13 +2,13 @@
 - Project name: JUeugoEnRed
 - Unity version: Unity 2021.3.16f1
 - Active scene:
-  - Name: Menu
+  - Name: PlayerPrefab
   - Tags:
     - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, PickUp
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Ground, Water, UI, Platform, CraftLayer, Cucaracha
 - Active game object:
-  - Name: GameManager
+  - Name: ItemHolder
   - Tag: Untagged
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

@@ -99,6 +99,7 @@ public class LevelManager : MonoBehaviourPunCallbacks
         {
             photonView.RPC("RPC_RequestAddPoints", RpcTarget.MasterClient, actorNumber, points);
         }
+        AddScore();
     }
 
     [PunRPC]
@@ -123,6 +124,7 @@ public class LevelManager : MonoBehaviourPunCallbacks
             int score = playerScores.ContainsKey(actor) ? playerScores[actor] : 0;
             names.Add(p.NickName);
             scores.Add(score);
+           
         }
 
         photonView.RPC("RPC_SyncScores", RpcTarget.All, names.ToArray(), scores.ToArray());
@@ -214,5 +216,18 @@ public class LevelManager : MonoBehaviourPunCallbacks
         ConnectionManager.Instance.photonPunManager.LeaveRoom();
         GameManager.Instance.ChangeGameState(new GameState());
     }
-
+    void AddScore()
+    {
+        LeaderboardService.SubmitScore(1, "gifts", success =>
+        {
+            if (success)
+            {
+                Debug.Log("Score submitted successfully.");
+            }
+            else
+            {
+                Debug.LogError("Failed to submit score.");
+            }
+        });
+    }
 }
