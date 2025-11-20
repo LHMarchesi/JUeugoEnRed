@@ -103,7 +103,7 @@ public class LevelManager : MonoBehaviourPunCallbacks
         {
             photonView.RPC("RPC_RequestAddPoints", RpcTarget.MasterClient, actorNumber, points);
         }
-        AddScore();
+        AddScore(points);
     }
     public void AddPoints(int actorNumber, int points)
     {
@@ -118,7 +118,7 @@ public class LevelManager : MonoBehaviourPunCallbacks
         {
             photonView.RPC("RPC_RequestAddPoints", RpcTarget.MasterClient, actorNumber, points);
         }
-        AddScore();
+        AddScore(points);
     }
 
     [PunRPC]
@@ -235,9 +235,9 @@ public class LevelManager : MonoBehaviourPunCallbacks
         ConnectionManager.Instance.photonPunManager.LeaveRoom();
         GameManager.Instance.ChangeGameState(new GameState());
     }
-    void AddScore()
+    void AddScore(int points)
     {
-        LeaderboardService.SubmitScore(1, "gifts", success =>
+        LeaderboardService.SubmitScore(points, "gifts", success =>
         {
             if (success)
             {
