@@ -19,16 +19,6 @@ public class KidCard : ItemBase
             int index = UnityEngine.Random.Range(0, allRecipes.Length);
             view.RPC("SetRecipe", RpcTarget.AllBuffered, index);
         }
-
-        string ingredientesTexto = "";
-        foreach (var item in currentRecipe.requiredItems)
-        {
-            ingredientesTexto += $"\n• {item.itemName}";
-        }
-
-        recipeIngredients.text = $"Ingredientes: {ingredientesTexto}";
-        recipeName.text = currentRecipe.recipeName;
-        Icon.sprite = currentRecipe.recipeIcon;
     }
 
     public override ItemBase PickUp(PlayerItemHandler playerHolder)
@@ -54,5 +44,14 @@ public class KidCard : ItemBase
     private void SetRecipe(int index)
     {
         currentRecipe = allRecipes[index];
+        string ingredientesTexto = "";
+        foreach (var item in currentRecipe.requiredItems)
+        {
+            ingredientesTexto += $"\n• {item.itemName}";
+        }
+
+        recipeIngredients.text = $"Ingredientes: {ingredientesTexto}";
+        recipeName.text = currentRecipe.recipeName;
+        Icon.sprite = currentRecipe.recipeIcon;
     }
 }

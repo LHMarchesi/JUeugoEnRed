@@ -46,6 +46,8 @@ public class MiniGameNetworkManager : MonoBehaviourPunCallbacks
         //  hitBuffer.Add((actor));
         //StartCoroutine(ProcessBuffer(x, y)); // inicio el buffer para procesar los hits juntos
     }
+
+    /*
     private IEnumerator ProcessBuffer(float x, float y)
     {
         yield return new WaitForSeconds(bufferWindow);
@@ -103,5 +105,5 @@ public class MiniGameNetworkManager : MonoBehaviourPunCallbacks
             return false;
         }
         return true;
-    }
+    }*/
 }
