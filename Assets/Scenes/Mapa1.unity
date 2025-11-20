@@ -1302,15 +1302,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4147864585453536366, guid: 451581ab5be49a1499f48ea76e9327b7, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.3762679
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4147864585453536366, guid: 451581ab5be49a1499f48ea76e9327b7, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.49865535
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4147864585453536366, guid: 451581ab5be49a1499f48ea76e9327b7, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.09441093
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4147864585453536366, guid: 451581ab5be49a1499f48ea76e9327b7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4264,7 +4264,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6629797300637803691, guid: b93fcce19c1f6a64392c5830f0f7cdff, type: 3}
+  - {fileID: 2100000, guid: 89f26c2ce0852a14b99888096a06dd2c, type: 2}
   - {fileID: -1846407553807266444, guid: b93fcce19c1f6a64392c5830f0f7cdff, type: 3}
   - {fileID: 4874126678125670354, guid: b93fcce19c1f6a64392c5830f0f7cdff, type: 3}
   m_StaticBatchInfo:
@@ -4614,7 +4614,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2413751341462511734, guid: b93fcce19c1f6a64392c5830f0f7cdff, type: 3}
+  - {fileID: 2100000, guid: 89f26c2ce0852a14b99888096a06dd2c, type: 2}
   - {fileID: -354735261257320667, guid: b93fcce19c1f6a64392c5830f0f7cdff, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -4875,7 +4875,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4406109412497306299, guid: e21d0b51a0ccb9d42abf0dc2d98ec4ee, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.12
+      value: 9.13
       objectReference: {fileID: 0}
     - target: {fileID: 4406109412497306299, guid: e21d0b51a0ccb9d42abf0dc2d98ec4ee, type: 3}
       propertyPath: m_LocalPosition.y
