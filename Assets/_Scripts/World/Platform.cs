@@ -109,34 +109,25 @@ public class Platform : MonoBehaviour
     {
         PhotonView view = PhotonView.Find(ID);
         ItemBase item = view.GetComponent<ItemBase>();
-        Transform targetHolder = null;
-       
-        
+
+        if (items.Count < 3)
+        {
+            items.Add(item);
+            totalItems.Add(item.stats.type);
+            AddItemToHolder(item, items.Count -1);
+        }
+        else
+        {
+            ItemOverflow(item);
+        }
+
         /*switch (item.stats.type)
         {
             case ItemType.down: targetHolder = downHolder; break;
             case ItemType.middle: targetHolder = middleHolder; break;
             case ItemType.top: targetHolder = topHolder; break;
         }*/
-        switch (items.Count)
-        {
-            case 0: targetHolder = downHolder; break;
-            case 1: targetHolder = middleHolder; break;
-            case 2: targetHolder = topHolder; break;
-            case 3: ItemOverflow(item); break;
-        }
-        if (targetHolder != null)
-        {
-            Rigidbody rb = item.GetComponent<Rigidbody>();
-            if (rb != null) rb.isKinematic = true;
-
-            item.transform.SetParent(targetHolder, true);
-            item.transform.localPosition = Vector3.zero;
-            item.transform.localRotation = targetHolder.rotation;
-
-            totalItems.Add(item.stats.type);
-            items.Add(item);
-        }
+        
 
         
         
@@ -146,11 +137,55 @@ public class Platform : MonoBehaviour
     {
         currentRecipe = recipe;
     }
+    private void AddItemToHolder(ItemBase item, int holderIndex)
+    {
+        Debug.Log("index: " + holderIndex);
+        int trueIndex = holderIndex % 3;
+        Transform holder = trueIndex switch
+        {
+            0 => downHolder,
+            1 => middleHolder,
+            2 => topHolder,
+            _ => null
+        };
+
+        if (holder == null) return;
+
+        Rigidbody rb = item.GetComponent<Rigidbody>();
+        if (rb) rb.isKinematic = true;
+
+        item.transform.SetParent(holder);
+        item.transform.localPosition = Vector3.zero;
+        item.transform.localRotation = Quaternion.identity;
+
+        items.Add(item);
+        totalItems.Add(item.stats.type);
+    }
 
     public void ItemOverflow(ItemBase newItem)
     {
-        ItemBase oldItem = items[index];
-        items[index] = newItem;
-        newItem.transform.position = oldItem.transform.position;
+        ItemBase oldItem = items[0];
+
+        // Detach and drop to the floor
+        oldItem.transform.SetParent(null);
+        Rigidbody rb = oldItem.GetComponent<Rigidbody>();
+        if (rb) rb.isKinematic = false;
+
+        // Maybe add force to drop it out of the platform
+        rb?.AddForce(Vector3.up * 2f, ForceMode.Impulse);
+
+
+        items.RemoveAt(0);
+        totalItems.RemoveAt(0);
+
+        // 2) Shift remaining items to new holders
+        for (int i = 0; i < items.Count; i++)
+        {
+            AddItemToHolder(items[i], i);
+        }
+
+        // 3) Place the new item in the last holder
+        AddItemToHolder(newItem, items.Count);
     }
 }
+    
