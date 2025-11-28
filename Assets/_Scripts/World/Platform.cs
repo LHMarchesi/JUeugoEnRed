@@ -1,6 +1,9 @@
 ﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class Platform : MonoBehaviour
 {
@@ -17,6 +20,8 @@ public class Platform : MonoBehaviour
     private List<ItemType> totalItems = new List<ItemType>();
     private List<ItemBase> items = new List<ItemBase>();
     int index = 0;
+
+    Coroutine delay = null;
 
     private void Awake()
     {
@@ -112,14 +117,9 @@ public class Platform : MonoBehaviour
 
         if (items.Count < 3)
         {
-            items.Add(item);
-            totalItems.Add(item.stats.type);
-            AddItemToHolder(item, items.Count -1);
+            AddItemToHolder(item, items.Count);
         }
-        else
-        {
-            ItemOverflow(item);
-        }
+        
 
         /*switch (item.stats.type)
         {
@@ -141,7 +141,7 @@ public class Platform : MonoBehaviour
     {
         Debug.Log("index: " + holderIndex);
         int trueIndex = holderIndex % 3;
-        Transform holder = trueIndex switch
+        Transform holder = holderIndex switch
         {
             0 => downHolder,
             1 => middleHolder,
@@ -162,30 +162,37 @@ public class Platform : MonoBehaviour
         totalItems.Add(item.stats.type);
     }
 
-    public void ItemOverflow(ItemBase newItem)
-    {
-        ItemBase oldItem = items[0];
+    //public void ItemOverflow(ItemBase newItem)
+    //{
+    //    ItemBase oldItem = items[0];
+    //    float coroutineTima = 0.3f;
 
-        // Detach and drop to the floor
-        oldItem.transform.SetParent(null);
-        Rigidbody rb = oldItem.GetComponent<Rigidbody>();
-        if (rb) rb.isKinematic = false;
+    //    // Detach and drop to the floor
+    //    oldItem.transform.SetParent(null);
+    //    Rigidbody rb = oldItem.GetComponent<Rigidbody>();
+    //    if (rb) rb.isKinematic = false;
 
-        // Maybe add force to drop it out of the platform
-        rb?.AddForce(Vector3.up * 2f, ForceMode.Impulse);
+    //    // Maybe add force to drop it out of the platform
+    //    rb?.AddForce(Vector3.up * 2f, ForceMode.Impulse);
 
 
-        items.RemoveAt(0);
-        totalItems.RemoveAt(0);
+    //    items.RemoveAt(0);
+    //    totalItems.RemoveAt(0);
 
-        // 2) Shift remaining items to new holders
-        for (int i = 0; i < items.Count; i++)
-        {
-            AddItemToHolder(items[i], i);
-        }
+    //    // 2) Shift remaining items to new holders
+    //    for (int i = 0; i < items.Count; i++)
+    //    {
+    //        AddItemToHolder(items[i], i);
+    //    }
 
-        // 3) Place the new item in the last holder
-        AddItemToHolder(newItem, items.Count);
-    }
+    //    // 3) Place the new item in the last holder
+    //    delay = StartCoroutine(Delay(coroutineTima, newItem, items.Count));
+    //}
+
+    //IEnumerator Delay(float time, ItemBase newItem, int holderIndex)
+    //{
+    //    yield return new WaitForSeconds(time);
+    //    AddItemToHolder(newItem, holderIndex);
+    //}
 }
     
