@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 59112674600225414}
   - component: {fileID: -5126141037842636472}
   - component: {fileID: -7241404785812488653}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CABALLO
   m_TagString: Untagged
   m_Icon: {fileID: 0}

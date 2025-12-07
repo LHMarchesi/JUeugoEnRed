@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -2366521247165959403}
   - component: {fileID: 2303059561025041014}
   - component: {fileID: 251040270163854432}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: 'COHETE '
   m_TagString: Untagged
   m_Icon: {fileID: 0}

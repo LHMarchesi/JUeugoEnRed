@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4837059340720339525}
   - component: {fileID: 4027856186303292213}
   - component: {fileID: 571154538731842671}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: tela
   m_TagString: Untagged
   m_Icon: {fileID: 0}

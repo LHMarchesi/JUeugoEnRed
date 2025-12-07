@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2811800347228247064}
   - component: {fileID: 7129871916704813982}
   - component: {fileID: 3869748622352169213}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: munieca
   m_TagString: Untagged
   m_Icon: {fileID: 0}

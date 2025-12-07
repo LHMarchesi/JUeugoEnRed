@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6653302548312962355}
   - component: {fileID: 6653302548312962352}
   - component: {fileID: 6653302548312962353}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pilas
   m_TagString: Untagged
   m_Icon: {fileID: 0}

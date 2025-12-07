@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8951052932604894779}
   - component: {fileID: 756401934051336863}
   - component: {fileID: 7263602935849905126}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: METAL
   m_TagString: Untagged
   m_Icon: {fileID: 0}

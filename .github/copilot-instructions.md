@@ -2,12 +2,13 @@
 - Project name: JUeugoEnRed
 - Unity version: Unity 2021.3.16f1
 - Active scene:
+  - Name: PlayerPrefab
   - Tags:
-    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, PickUp, Bullet
+    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, PickUp
   - Layers:
-    - Default, TransparentFX, Ignore Raycast, Ground, Water, UI, Platform, CraftLayer, Cucaracha
+    - Default, TransparentFX, Ignore Raycast, Ground, Water, UI, Platform, CraftLayer, Cucaracha, Recipe, Pieces, Toys
 - Active game object:
-  - Name: ItemSpawner
-  - Tag: Untagged
-  - Layer: Ground
+  - Name: PlayerPrefab
+  - Tag: Player
+  - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

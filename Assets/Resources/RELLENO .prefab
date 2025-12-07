@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7978646331185669619}
   - component: {fileID: -4204250164679575349}
   - component: {fileID: -4083902227882799160}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: 'RELLENO '
   m_TagString: Untagged
   m_Icon: {fileID: 0}

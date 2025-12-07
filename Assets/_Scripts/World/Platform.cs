@@ -21,8 +21,6 @@ public class Platform : MonoBehaviour
     private List<ItemBase> items = new List<ItemBase>();
     int index = 0;
 
-    Coroutine delay = null;
-
     private void Awake()
     {
         view = GetComponent<PhotonView>();
@@ -30,20 +28,25 @@ public class Platform : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
-            if (recipeTrigger.craftingRecipeOnTrigger == null) return;
 
-            currentRecipe = recipeTrigger.craftingRecipeOnTrigger;
+        if (recipeTrigger.craftingRecipeOnTrigger == null) return;
 
-            ItemBase item = other.GetComponent<ItemBase>();
-            if (item != null)
+        currentRecipe = recipeTrigger.craftingRecipeOnTrigger;
+
+        ItemBase item = other.GetComponent<ItemBase>();
+        if (item != null)
+        {
+            if(item.gameObject.layer == LayerMask.NameToLayer("Pieces"))
             {
                 int viewID = item.gameObject.GetComponent<PhotonView>().ViewID;
-            // Chequear el holder segun el tipo
-            //item.Drop(); // Soltar el item si estaba en mano
+                // Chequear el holder segun el tipo
+                //item.Drop(); // Soltar el item si estaba en mano
                 view.RPC("PutPiece", RpcTarget.AllBuffered, viewID);
+                return;
             }
-        
+            
+        }
+
     }
 
     private void Update()
@@ -51,9 +54,9 @@ public class Platform : MonoBehaviour
         downHolder.transform.Rotate(Vector3.up * Time.deltaTime * 20);
         topHolder.transform.Rotate(Vector3.up * Time.deltaTime * 20);
         middleHolder.transform.Rotate(Vector3.up * Time.deltaTime * 20);
-        
+
     }
-  
+
     public bool HasAllPieces()
     {
         // Comprobar que todos los items de la receta están presentes
@@ -69,21 +72,21 @@ public class Platform : MonoBehaviour
 
     public void TryCraft()
     {
-        
-            if (HasAllPieces())
-            {
-                PhotonNetwork.Instantiate(currentRecipe.finalItemPrefab.name,
-                            craftedItemSpawn.position + Vector3.up * 2,
-                            Quaternion.identity);
 
-                view.RPC("ClearPlatform", RpcTarget.AllBuffered);
-            }
-            else
-            {
-                Debug.Log(" Piezas incorrectas, se destruye todo.");
-                view.RPC("ClearPlatform", RpcTarget.AllBuffered);
-            }
-        
+        if (HasAllPieces())
+        {
+            PhotonNetwork.Instantiate(currentRecipe.finalItemPrefab.name,
+                        craftedItemSpawn.position + Vector3.up * 2,
+                        Quaternion.identity);
+
+            view.RPC("ClearPlatform", RpcTarget.AllBuffered);
+        }
+        else
+        {
+            Debug.Log(" Piezas incorrectas, se destruye todo.");
+            view.RPC("ClearPlatform", RpcTarget.AllBuffered);
+        }
+
     }
 
     [PunRPC]
@@ -119,7 +122,12 @@ public class Platform : MonoBehaviour
         {
             AddItemToHolder(item, items.Count);
         }
-        
+        else { 
+            
+            Debug.Log("No se pueden agregar mas items a la plataforma");
+            ClearPlatform();
+        }   
+
 
         /*switch (item.stats.type)
         {
@@ -127,10 +135,10 @@ public class Platform : MonoBehaviour
             case ItemType.middle: targetHolder = middleHolder; break;
             case ItemType.top: targetHolder = topHolder; break;
         }*/
-        
 
-        
-        
+
+
+
     }
 
     public void SetRecipe(CraftingRecipe recipe)
@@ -140,7 +148,6 @@ public class Platform : MonoBehaviour
     private void AddItemToHolder(ItemBase item, int holderIndex)
     {
         Debug.Log("index: " + holderIndex);
-        int trueIndex = holderIndex % 3;
         Transform holder = holderIndex switch
         {
             0 => downHolder,
@@ -157,42 +164,19 @@ public class Platform : MonoBehaviour
         item.transform.SetParent(holder);
         item.transform.localPosition = Vector3.zero;
         item.transform.localRotation = Quaternion.identity;
-
+        item.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         items.Add(item);
         totalItems.Add(item.stats.type);
+        //Debug.Log(items.Count + " items gameobject " + totalItems.Count + " items enums");
     }
 
-    //public void ItemOverflow(ItemBase newItem)
-    //{
-    //    ItemBase oldItem = items[0];
-    //    float coroutineTima = 0.3f;
-
-    //    // Detach and drop to the floor
-    //    oldItem.transform.SetParent(null);
-    //    Rigidbody rb = oldItem.GetComponent<Rigidbody>();
-    //    if (rb) rb.isKinematic = false;
-
-    //    // Maybe add force to drop it out of the platform
-    //    rb?.AddForce(Vector3.up * 2f, ForceMode.Impulse);
-
-
-    //    items.RemoveAt(0);
-    //    totalItems.RemoveAt(0);
-
-    //    // 2) Shift remaining items to new holders
-    //    for (int i = 0; i < items.Count; i++)
-    //    {
-    //        AddItemToHolder(items[i], i);
-    //    }
-
-    //    // 3) Place the new item in the last holder
-    //    delay = StartCoroutine(Delay(coroutineTima, newItem, items.Count));
-    //}
-
-    //IEnumerator Delay(float time, ItemBase newItem, int holderIndex)
-    //{
-    //    yield return new WaitForSeconds(time);
-    //    AddItemToHolder(newItem, holderIndex);
-    //}
+    public void RemoveItem(ItemBase item)
+    {
+        
+            items.Remove(item);
+            totalItems.Remove(item.stats.type);
+        //Destroy(item.gameObject);
+        Debug.Log(items.Count + " items gameobject " + totalItems.Count + " items enums");
+    }
 }
     

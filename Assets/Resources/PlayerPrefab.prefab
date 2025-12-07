@@ -2342,7 +2342,7 @@ MonoBehaviour:
   interactDistance: 2
   interactableMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 3585
   cam: {fileID: 5965534511314588940}
 --- !u!114 &5965534512272406657
 MonoBehaviour:
