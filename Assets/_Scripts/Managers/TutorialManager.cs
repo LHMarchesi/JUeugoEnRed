@@ -35,7 +35,13 @@ public class TutorialManager : MonoBehaviourPunCallbacks
     {
         if (!ConnectionManager.Instance.IsConnectedToServer())
         {
-            ConnectionManager.Instance.ConnectedToServer();
+            ConnectionManager.Instance.ConnectedToServer(null);
+            ConnectionManager.Instance.photonPunManager.ConnectToServer();
+        }
+        else
+        {
+            // Already connected: just proceed to lobby
+            PhotonNetwork.JoinLobby();
         }
     }
 
