@@ -1,9 +1,8 @@
 ﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class Platform : MonoBehaviour
 {
@@ -20,6 +19,8 @@ public class Platform : MonoBehaviour
     private List<ItemType> totalItems = new List<ItemType>();
     private List<ItemBase> items = new List<ItemBase>();
     int index = 0;
+
+    public Action OnCraftCompleted;
 
     private void Awake()
     {
@@ -54,7 +55,6 @@ public class Platform : MonoBehaviour
         downHolder.transform.Rotate(Vector3.up * Time.deltaTime * 20);
         topHolder.transform.Rotate(Vector3.up * Time.deltaTime * 20);
         middleHolder.transform.Rotate(Vector3.up * Time.deltaTime * 20);
-
     }
 
     public bool HasAllPieces()
@@ -63,9 +63,6 @@ public class Platform : MonoBehaviour
         foreach (var required in currentRecipe.requiredItems)
         {
             if (!totalItems.Contains(required.type)) return false;
-
-            //if (placedItems[required.type].stats != required)
-            //return false; // mismo tipo pero distinto item
         }
         return true;
     }
@@ -80,6 +77,7 @@ public class Platform : MonoBehaviour
                         Quaternion.identity);
 
             view.RPC("ClearPlatform", RpcTarget.AllBuffered);
+            OnCraftCompleted?.Invoke();
         }
         else
         {
@@ -97,18 +95,9 @@ public class Platform : MonoBehaviour
         {
             Destroy(items[i].gameObject);
         }
-        /*if (kvp.Value != null)
-        {
-            ObjectPooler pool = kvp.Value.GetPool();
-            if (pool != null)
-            {
-                pool.ReleaseObject(kvp.Value.gameObject);
-            }
-        }
-        */
+       
         items.Clear();
         totalItems.Clear();
-        //placedItems.Clear();
         Debug.Log(items.Count + " items gameobject " + totalItems.Count + " items enums");
     }
 
@@ -126,25 +115,14 @@ public class Platform : MonoBehaviour
             
             Debug.Log("No se pueden agregar mas items a la plataforma");
             ClearPlatform();
-        }   
-
-
-        /*switch (item.stats.type)
-        {
-            case ItemType.down: targetHolder = downHolder; break;
-            case ItemType.middle: targetHolder = middleHolder; break;
-            case ItemType.top: targetHolder = topHolder; break;
-        }*/
-
-
-
-
+        } 
     }
 
     public void SetRecipe(CraftingRecipe recipe)
     {
         currentRecipe = recipe;
     }
+
     private void AddItemToHolder(ItemBase item, int holderIndex)
     {
         Debug.Log("index: " + holderIndex);
