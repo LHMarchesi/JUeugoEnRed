@@ -170,6 +170,7 @@ public class LevelManager : MonoBehaviourPunCallbacks
 
     private void DetermineWinner()
     {
+        StopAllCoroutines();
         if (playerScores.Count == 0)
         {
             Debug.Log("No players found.");
@@ -199,7 +200,9 @@ public class LevelManager : MonoBehaviourPunCallbacks
         {
             string winnerName = PhotonNetwork.CurrentRoom.GetPlayer(winners[0]).NickName;
             photonView.RPC("RPC_ShowWinnerMessage", RpcTarget.All, $"{winnerName} ganó con {highestScore} puntos.");
+            UIPlayerManager.Instance.ShowWinScreen(true, winnerName + " won");
         }
+        gameLeave = StartCoroutine(WaitAndLeaveGame(5f));
     }
 
     [PunRPC]
