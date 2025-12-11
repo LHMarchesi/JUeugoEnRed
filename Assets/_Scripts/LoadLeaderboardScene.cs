@@ -12,4 +12,5 @@ public class LoadLeaderboardScene : MonoBehaviour
     {
        TransitionManager.Instance.PlayTransitionAndLoadScene(TransitionType.FadeOut, 0);
     }
+
 }
