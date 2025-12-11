@@ -9,10 +9,16 @@ public class KidCard : ItemBase
     public Image Icon;
     public CraftingRecipe[] allRecipes;
     public PhotonView view;
+    public bool isLocal;
 
     private CraftingRecipe currentRecipe;
     private void Start()
     {
+        if (isLocal)
+        {
+            int index = UnityEngine.Random.Range(0, allRecipes.Length);
+            SetRecipe(index);
+        } else
         if (PhotonNetwork.IsMasterClient)
         {
             // Asignar receta aleatoria

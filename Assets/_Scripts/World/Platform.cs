@@ -1,9 +1,7 @@
 ﻿using Photon.Pun;
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class Platform : MonoBehaviour
 {
@@ -16,6 +14,8 @@ public class Platform : MonoBehaviour
     public CraftingRecipe currentRecipe = null;
     public RecipeTrigger recipeTrigger;
     public PhotonView view;
+
+    public Action OnCraftCompleted;
 
     private List<ItemType> totalItems = new List<ItemType>();
     private List<ItemBase> items = new List<ItemBase>();
@@ -78,7 +78,7 @@ public class Platform : MonoBehaviour
             PhotonNetwork.Instantiate(currentRecipe.finalItemPrefab.name,
                         craftedItemSpawn.position + Vector3.up * 2,
                         Quaternion.identity);
-
+            OnCraftCompleted?.Invoke();
             view.RPC("ClearPlatform", RpcTarget.AllBuffered);
         }
         else

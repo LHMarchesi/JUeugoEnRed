@@ -1,6 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
 using System.Collections;
+using System;
 
 public class GiftboxScript : MonoBehaviourPun
 {
@@ -14,7 +15,7 @@ public class GiftboxScript : MonoBehaviourPun
     [SerializeField] private LevelManager lvlManager;
     private Material defaultMaterial;
     private bool hasProcessedThisOpen;
-
+    public Action OnItemSended;
     private void Start()
     {
         defaultMaterial = receiverFeedback.GetComponent<Renderer>().material;
@@ -56,7 +57,7 @@ public class GiftboxScript : MonoBehaviourPun
 
                 if (item.stats.itemID == recipeTrigger.GetFinalItemID())
                 {
-                    Debug.Log("Item Correcto");
+                    OnItemSended?.Invoke();
                     PhotonNetwork.Destroy(item.gameObject);
                     receiverFeedback.GetComponent<Renderer>().material = greenMaterial;
                     recipeTrigger.DestroyCard();
@@ -64,8 +65,6 @@ public class GiftboxScript : MonoBehaviourPun
                 }
                 else
                 {
-                    Debug.Log("Item Incorrecto");
-                    PhotonNetwork.Destroy(item.gameObject);
                     receiverFeedback.GetComponent<Renderer>().material = redMaterial;
 
                 }

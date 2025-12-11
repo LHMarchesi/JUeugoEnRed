@@ -1,11 +1,12 @@
 ﻿using Photon.Pun;
+using System;
 using UnityEngine;
 
 public class RecipeTrigger : MonoBehaviour
 {
     public CraftingRecipe craftingRecipeOnTrigger;
     public KidCard cardHolded;
-    
+    public Action onRecipePlaced;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -14,8 +15,9 @@ public class RecipeTrigger : MonoBehaviour
         {
             cardHolded = kidCard;
             craftingRecipeOnTrigger = kidCard.GetCurrentRecipe();
-           
-            kidCard.lastPlayerHolder.DropHeld();
+            onRecipePlaced?.Invoke();
+
+            if (kidCard.lastPlayerHolder != null) { kidCard.lastPlayerHolder.DropHeld(); }
         }
 
     }
