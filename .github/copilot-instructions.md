@@ -8,13 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Ground, Water, UI, Platform, CraftLayer, Cucaracha, Recipe, Pieces, Toys
 - Active game object:
-<<<<<<< Updated upstream
   - Name: DialogueController
   - Tag: Untagged
   - Layer: UI
-=======
-  - Name: esceario tutorial
-  - Tag: Untagged
-  - Layer: Ground
->>>>>>> Stashed changes
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

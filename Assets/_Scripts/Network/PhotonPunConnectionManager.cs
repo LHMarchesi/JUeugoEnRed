@@ -84,13 +84,12 @@ public class PhotonPunConnectionManager : MonoBehaviourPunCallbacks
         RoomOptions options = new RoomOptions
         {
             MaxPlayers = 2,
-            IsOpen = false,
-            IsVisible = false
+            IsOpen = true,
+            IsVisible = true
         };
 
         // Intenta unirse a una sala aleatoria, si no existe la crea
-        if (OnJoin != null)
-            OnJoinedRoomEvent += OnJoin;
+        OnJoinedRoomEvent = OnJoin;
         PhotonNetwork.JoinRandomOrCreateRoom(null, 0, MatchmakingMode.FillRoom, null, null, null, options);
     }
 

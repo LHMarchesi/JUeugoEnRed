@@ -18,16 +18,20 @@ public class UIMainMenuManager : MonoBehaviour
         joinRandomButton.onClick.AddListener(HandleJoinRandomClick);
         nicknameField.onValueChanged.AddListener(CheckNickname);
 
+        // Al inicio mostramos panel de loading hasta conectar
+
         // Falta detectar si ya estamos conectados para cuando volvemos desde la partida al menu
         nicknameField.gameObject.SetActive(true);
         playerNameTxt.gameObject.SetActive(false);
         connectButton.interactable = false;
 
-        // Al inicio mostramos panel de loading hasta conectar
+
         if (!ConnectionManager.Instance.IsConnectedToServer())
         {
             ConnectionManager.Instance.ConnectedToServer(UnShowLoadingPanel);
         }
+        //else
+            //connectButton.interactable = true;
 
     }
     private void CheckNickname(string arg0)

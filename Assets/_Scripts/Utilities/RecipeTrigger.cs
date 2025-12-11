@@ -1,21 +1,20 @@
 ﻿using Photon.Pun;
-using System;
 using UnityEngine;
 
 public class RecipeTrigger : MonoBehaviour
 {
     public CraftingRecipe craftingRecipeOnTrigger;
     public KidCard cardHolded;
-    public Action onRecipePlaced;
+    
 
     private void OnTriggerEnter(Collider other)
     {
         KidCard kidCard = other.GetComponent<KidCard>();
         if (kidCard != null)
         {
-            onRecipePlaced?.Invoke();
             cardHolded = kidCard;
             craftingRecipeOnTrigger = kidCard.GetCurrentRecipe();
+           
             kidCard.lastPlayerHolder.DropHeld();
         }
 
