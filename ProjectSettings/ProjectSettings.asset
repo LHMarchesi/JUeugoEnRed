@@ -815,7 +815,13 @@ PlayerSettings:
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
   cloudServicesEnabled:
+    Build: 0
+    Collab: 0
+    Game Performance: 0
+    Purchasing: 0
+    UDP: 0
     UNet: 1
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -830,11 +836,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: d614b243-4d64-4364-b5c7-79e8e4ed455a
+  cloudProjectId: 6cdf1e5a-02e7-403d-9a87-5ba113503447
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
   projectName: 3dController
-  organizationId: lautarohm
+  organizationId: delfipolo
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 
