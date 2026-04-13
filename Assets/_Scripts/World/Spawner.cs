@@ -1,5 +1,7 @@
 ﻿using Photon.Pun;
 using UnityEngine;
+using UnityEngine.Analytics;
+using Unity.Services.Analytics;
 
 public class Spawner : MonoBehaviourPunCallbacks
 {
@@ -51,13 +53,22 @@ public class Spawner : MonoBehaviourPunCallbacks
         }
 
         // Spawn aleatorio
+        string prefab = prefabs[Random.Range(0, prefabs.Length)].name;
         PhotonNetwork.Instantiate(
-            prefabs[Random.Range(0, prefabs.Length)].name,
+            prefab,
             spawnPoint.position,
             spawnPoint.rotation
         );
+        
+        CustomEvent myEvent = new CustomEvent("COMPONENT_SPAWNED")
+        {
+            { "ComponentType", prefab }
+        };
+        AnalyticsService.Instance.RecordEvent(myEvent);
+        Analytics.FlushEvents();
+        Debug.Log("objeto" + prefab + "creado");
 
-        spawnedCount++;
+    spawnedCount++;
 
         // Aumento aleatorio del intervalo
         float randomIncrease = Random.Range(minIntervalIncrease, maxIntervalIncrease);
